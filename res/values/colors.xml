@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backgroundColor">#FF4CAF50</color>
+    <color name="mainColor">#66906c</color>
+    <color name="rippleColor">#33000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="indicatorColor">#66906c</color>
+    <color name="primary_green">#66906C</color>
+    <color name="secondary_green">#1f8410</color>
+    <color name="beige">#FEF8E1</color>
+    <color name="background_green">#CBDAB4</color>
+    <color name="primary_orange">#e08e3f</color>
+    <color name="secondary_orange">#dd8633</color>
+
+</resources>

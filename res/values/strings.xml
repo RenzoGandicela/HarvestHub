@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HarvestHub</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="setting">Setting</string>
+    <string name="announcement">Announcement</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="calendar">Calendar</string>
+    <string name="social">Social</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+    <string name="communicate">Communicate</string>
+</resources>
