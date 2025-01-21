@@ -14,4 +14,6 @@
     <color name="primary_orange">#e08e3f</color>
     <color name="secondary_orange">#dd8633</color>
 
+    <color name="icon_text_color_selected">#66906C</color>
+    <color name="icon_text_color_unselected">#757575</color>
 </resources>

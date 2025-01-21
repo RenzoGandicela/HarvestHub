@@ -7,4 +7,9 @@
 
     <color name="nav_menu_text_color">#66906c</color>
 
+    <style name="Theme.HarvestHub.NoActionBar" parent="Theme.HarvestHub">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

@@ -23,6 +23,7 @@ import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this);
+        
         setContentView(R.layout.activity_main);
 
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);

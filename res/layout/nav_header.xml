@@ -2,28 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
+    android:background="@color/primary_green"
     android:gravity="bottom"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="16dp"
-    android:background="@drawable/wave"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- Profile Image -->
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImg"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/profile"/>
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_person"/>
 
     <TextView
         android:id="@+id/userNameTxt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User Name"
-        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:text="Username"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -31,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="user@email.com"
-        android:textColor="@android:color/white"/>
+        android:textColor="@color/white"/>
 
     <!-- Username -->
 
