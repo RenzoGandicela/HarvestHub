@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/beige"
+    android:background="@color/social_background"
     android:padding="16dp"
     tools:context=".nav_fragment.SocialFragment">
 
@@ -16,8 +16,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:padding="16dp"
-        android:background="@color/primary_green"
-        android:textColor="@color/white"/>
+        android:background="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"/>
 
     <!-- Blinks Section -->
     <TextView
@@ -26,6 +26,7 @@
         android:text="Blinks"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,7 @@
         android:text="Server list"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"/>
 

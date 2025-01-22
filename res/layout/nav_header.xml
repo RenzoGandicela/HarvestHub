@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/primary_green"
+    android:background="@color/mainColor"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp">
@@ -11,24 +11,23 @@
         android:id="@+id/profileImg"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@drawable/ic_person"/>
+        android:src="@drawable/ic_profile_placeholder" />
 
     <TextView
         android:id="@+id/userNameTxt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Username"
+        android:text="User Name"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/emailTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="user@email.com"
-        android:textColor="@color/white"/>
+        android:text="user@example.com"
+        android:textColor="@color/white" />
 
     <!-- Username -->
 
@@ -70,25 +69,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/tab_border"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Meals Received"
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:gravity="center" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="---"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <!-- Tab 3: Points -->
@@ -96,25 +95,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/tab_border"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Points"
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:gravity="center" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="100"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

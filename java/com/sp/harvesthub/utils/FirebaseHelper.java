@@ -6,6 +6,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.util.HashMap;
 import java.util.Map;
+import android.util.Log;
 
 public class FirebaseHelper {
     private static final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -29,7 +30,13 @@ public class FirebaseHelper {
             channelData.put("id", "general_chat");
             channelData.put("name", "general-chat");
             channelData.put("description", "General discussion");
-            channelRef.setValue(channelData);
+            channelRef.setValue(channelData, (error, ref) -> {
+                if (error != null) {
+                    Log.e("FirebaseHelper", "Error adding channel: " + error.getMessage());
+                } else {
+                    Log.d("FirebaseHelper", "Channel added successfully");
+                }
+            });
 
             // Add sample message
             DatabaseReference messageRef = getMessagesRef("fc3_enjoyers", "general_chat").push();
@@ -46,8 +53,15 @@ public class FirebaseHelper {
             blinkData.put("imageURL", "https://api.dicebear.com/7.x/avatars/png?seed=sample_user");
             blinkData.put("userId", "sample_user");
             blinkData.put("timestamp", System.currentTimeMillis());
-            blinkRef.setValue(blinkData);
+            blinkRef.setValue(blinkData, (error, ref) -> {
+                if (error != null) {
+                    Log.e("FirebaseHelper", "Error adding blink: " + error.getMessage());
+                } else {
+                    Log.d("FirebaseHelper", "Blink added successfully");
+                }
+            });
         } catch (Exception e) {
+            Log.e("FirebaseHelper", "Error initializing sample data: " + e.getMessage());
             e.printStackTrace();
         }
     }

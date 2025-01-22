@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.HarvestHub" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_green</item>
-        <item name="colorPrimaryVariant">@color/secondary_green</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/primary_orange</item>
-        <item name="colorSecondaryVariant">@color/secondary_orange</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <style name="Theme.HarvestHub" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorPrimaryVariant">@color/dark_primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/dark_secondary</item>
+        <item name="colorSecondaryVariant">@color/dark_secondary_variant</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnBackground">@color/dark_on_background</item>
+        <item name="colorOnSurface">@color/dark_on_surface</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/dark_text_primary</item>
+        <item name="android:textColorSecondary">@color/dark_text_secondary</item>
+        
+        <!-- Custom colors for chat and social -->
+        <item name="beigeBackground">@color/dark_beige</item>
+        <item name="chatTextColor">@color/white</item>
+        
+        <!-- Status bar and navigation bar -->
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
+        
+        <!-- No ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        
+        <!-- Navigation drawer arrow -->
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
+    </style>
+
+    <!-- Chat and Social specific styles -->
+    <style name="ChatBubble.Sent" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/dark_primary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ChatBubble.Received" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/dark_beige</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="SocialText" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
