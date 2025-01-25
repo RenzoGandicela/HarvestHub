@@ -26,14 +26,6 @@
         android:textStyle="bold" />
 
     <!-- Chat Button -->
-    <Button
-        android:id="@+id/chatButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:background="@drawable/chat2" />
 
     <!-- ListView for Food Items -->
     <ListView
