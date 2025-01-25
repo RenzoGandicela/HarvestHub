@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HarvestHubMap"
+        tools:targetApi="31">
+
+        <!-- Set map activity as the launcher -->
+        <activity
+            android:name=".map"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Chat activity -->
+        <activity
+            android:name=".chat"
+            android:exported="true" />
+
+        <!-- Other Activities -->
+        <activity
+            android:name=".googleMaps"
+            android:exported="true"
+            android:label="googlemaps" />
+        <activity
+            android:name=".Location1Activity"
+            android:exported="true"
+            android:label="Location 1 Page" />
+        <activity
+            android:name=".Location2Activity"
+            android:exported="true"
+            android:label="Location 2 Page" />
+        <activity
+            android:name=".Location3Activity"
+            android:exported="true"
+            android:label="Location 3 Page" />
+        <activity
+            android:name=".Location4Activity"
+            android:exported="true"
+            android:label="Location 4 Page" />
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDygiyK5pjtseTqWT2EotjWfiD28SBV-ZU" />
+    </application>
+</manifest>
