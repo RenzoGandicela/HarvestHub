@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "663429611626",
+    "project_id": "fridgeforum",
+    "storage_bucket": "fridgeforum.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663429611626:android:171da92ac719319ca20a13",
+        "android_client_info": {
+          "package_name": "com.sp.harvesthubmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5ZA1_SLdrn8pgxNuMYn4Pck9-22piqzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
