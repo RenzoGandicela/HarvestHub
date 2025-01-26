@@ -33,17 +33,32 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
 
+        <!-- Splash Screen - Main Launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.sp.harvesthub.activities.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.HarvestHub.NoActionBar">
+            android:theme="@style/Theme.HarvestHub.NoActionBar"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Login Activity -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+
+        <!-- Other Activities -->
         <activity
             android:name=".activities.BlinkViewerActivity"
             android:theme="@style/Theme.HarvestHub.NoActionBar"/>
@@ -56,6 +71,11 @@
             android:name=".activities.ChatActivity"
             android:theme="@style/Theme.HarvestHub.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
+            
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
             
     </application>
 

@@ -1,66 +1,76 @@
 package com.sp.harvesthub.nav_fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.sp.harvesthub.R;
+import com.sp.harvesthub.adapters.FeaturedAdapter;
+import com.sp.harvesthub.models.FeaturedHelperClass;
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AnnouncementFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AnnouncementFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AnnouncementFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnnouncementFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnnouncementFragment newInstance(String param1, String param2) {
-        AnnouncementFragment fragment = new AnnouncementFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private static final String TAG = "AnnouncementFragment";
+    private RecyclerView featuredRecycler;
+    private FeaturedAdapter adapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_announcement, container, false);
+        
+        Log.d(TAG, "onCreateView: Initializing RecyclerView");
+        
+        featuredRecycler = view.findViewById(R.id.featured_recycler);
+        featuredRecycler.setLayoutManager(new LinearLayoutManager(getContext(), 
+            LinearLayoutManager.HORIZONTAL, false));
+        featuredRecycler.setHasFixedSize(true);
+        
+        setupFeaturedRecycler();
+        
+        return view;
+    }
+
+    private void setupFeaturedRecycler() {
+        try {
+            ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
+
+            featuredLocations.add(new FeaturedHelperClass(
+                R.drawable.food_sharing, 
+                "Food Sharing Event @Dover",
+                "Join us for a vibrant food-sharing event at Dover Community Hub! Share your homemade dishes, learn new recipes, and connect with fellow food enthusiasts.",
+                "\uD83D\uDCCD Dover Community Hub",
+                "\uD83D\uDCC5 Date: 10/10/2025\n⏰ Time: 6:00 PM - 9:00 PM"
+            ));
+
+            featuredLocations.add(new FeaturedHelperClass(
+                R.drawable.community_garden, 
+                "Urban Farming Workshop",
+                "Learn essential urban farming techniques, sustainable practices, and how to grow your own vegetables in limited spaces.",
+                "\uD83D\uDCCD Tampines Hub",
+                "\uD83D\uDCC5 Date: 15/10/2025\n⏰ Time: 9:00 AM - 12:00 PM"
+            ));
+
+            Log.d(TAG, "setupFeaturedRecycler: Created " + featuredLocations.size() + " items");
+
+            adapter = new FeaturedAdapter(requireContext(), featuredLocations);
+            featuredRecycler.setAdapter(adapter);
+            
+            Log.d(TAG, "setupFeaturedRecycler: Adapter set successfully");
+        } catch (Exception e) {
+            Log.e(TAG, "setupFeaturedRecycler: Error setting up recycler", e);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_announcement, container, false);
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
