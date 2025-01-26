@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "873148003931",
+    "firebase_url": "https://splashcreen2-default-rtdb.firebaseio.com",
+    "project_id": "splashcreen2",
+    "storage_bucket": "splashcreen2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873148003931:android:b44d2e57343b4ff691717e",
+        "android_client_info": {
+          "package_name": "com.sp.calendarapp2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTdndXefgo5SdpzzzRvFgaGI0iXDKSfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873148003931:android:4eb4dfc4e4ad1bd891717e",
+        "android_client_info": {
+          "package_name": "com.sp.harvesthub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTdndXefgo5SdpzzzRvFgaGI0iXDKSfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873148003931:android:9ec11f4cf92c363b91717e",
+        "android_client_info": {
+          "package_name": "com.sp.splashscreen2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTdndXefgo5SdpzzzRvFgaGI0iXDKSfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
