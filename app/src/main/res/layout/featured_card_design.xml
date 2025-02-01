@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
-    android:layout_height="wrap_content"
+    android:layout_width="160dp"
+    android:layout_height="300dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="15dp"
-    app:cardElevation="5dp">
+    app:cardElevation="8dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="310dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <ImageView
+        <TextView
             android:id="@+id/featured_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="65dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/app_name"/>
+            android:src="@drawable/food_sharing"
+            android:text="IMAGE" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/featured_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Food Sharing Event @Dover"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/featured_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/featured_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="📍 Dover"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/featured_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/featured_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:text="Join us for a vibrant food-sharing event at Dover, where community members come together to share delicious dishes."
+            android:textSize="8sp" />
 
-            <TextView
-                android:id="@+id/featured_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textStyle="italic" />
+        <TextView
+            android:id="@+id/featured_details"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="📅 Date: 10/10/2025\n⏰ Time: 6pm\n📍 Location: Dover Community Hall"
+            android:textSize="10sp" />
 
-            <TextView
-                android:id="@+id/featured_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/remindButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#688E6A"
+            android:minHeight="48dp"
+            android:text="Remind Me"
+            android:textColor="#FFFFFF" />
 
-            <Button
-                android:id="@+id/remindButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                android:text="@string/remind_me" />
-        </LinearLayout>
+
     </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

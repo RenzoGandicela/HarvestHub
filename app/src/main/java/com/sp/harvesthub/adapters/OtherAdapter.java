@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,30 +16,30 @@ import com.sp.splashscreen2.R;
 
 import java.util.ArrayList;
 
-public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.FeaturedViewHolder> {
+public class OtherAdapter extends RecyclerView.Adapter<OtherAdapter.OtherViewHolder> {
 
-    private ArrayList<FeaturedHelperClass> featuredLocations;
+    private ArrayList<FeaturedHelperClass> otherLocations;
     private Context context;
 
-    public FeaturedAdapter(Context context, ArrayList<FeaturedHelperClass> featuredLocations) {
+    public OtherAdapter(Context context, ArrayList<FeaturedHelperClass> otherLocations) {
         this.context = context;
-        if (featuredLocations == null) {
-            this.featuredLocations = new ArrayList<>();
+        if (otherLocations == null) {
+            this.otherLocations = new ArrayList<>(); // Empty list initialization
         } else {
-            this.featuredLocations = featuredLocations;
+            this.otherLocations = otherLocations;
         }
     }
 
     @NonNull
     @Override
-    public FeaturedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OtherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.featured_card_design, parent, false);
-        return new FeaturedViewHolder(view);
+        return new OtherViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
-        FeaturedHelperClass featuredHelperClass = featuredLocations.get(position);
+    public void onBindViewHolder(@NonNull OtherViewHolder holder, int position) {
+        FeaturedHelperClass featuredHelperClass = otherLocations.get(position);
 
         holder.image.setText(featuredHelperClass.getImage());
         holder.title.setText(featuredHelperClass.getTitle());
@@ -50,10 +49,10 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
 
         // Handling based on event type
         if (featuredHelperClass.getEventType() == 1) {
-            // Type 1: Adjust UI for event type 1 (e.g., change background color)
+            // Type 1: Standard event handling (if necessary, customize as per your design)
             holder.title.setTextColor(context.getResources().getColor(R.color.teal_700));
         } else if (featuredHelperClass.getEventType() == 2) {
-            // Type 2: Adjust UI for event type 2
+            // Type 2: Other event handling (if necessary, customize as per your design)
             holder.title.setTextColor(context.getResources().getColor(R.color.teal_200));
         }
 
@@ -67,16 +66,16 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
 
     @Override
     public int getItemCount() {
-        return (featuredLocations != null) ? featuredLocations.size() : 0;
+        return otherLocations.size();
     }
 
-    public static class FeaturedViewHolder extends RecyclerView.ViewHolder {
+    public static class OtherViewHolder extends RecyclerView.ViewHolder {
 
         TextView image;
         TextView title, description, location, details;
         Button remindBtn;
 
-        public FeaturedViewHolder(@NonNull View itemView) {
+        public OtherViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // Initialize variables
