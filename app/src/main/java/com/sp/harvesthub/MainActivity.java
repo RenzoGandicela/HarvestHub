@@ -1,5 +1,6 @@
 package com.sp.harvesthub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+
+import com.sp.harvesthub.activities.LoginActivity;
 import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
 import com.sp.harvesthub.nav_fragment.BookmarkFragment;
 import com.sp.harvesthub.nav_fragment.CalendarFragment;
@@ -25,6 +28,8 @@ import com.sp.harvesthub.nav_fragment.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private TextView userNameTxt, emailTxt;
     private ImageView profileImg;
+    private FirebaseAuth auth;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
@@ -56,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
+        
+        auth = FirebaseAuth.getInstance();
         
         setContentView(R.layout.activity_main);
 
@@ -122,31 +130,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
-        if (itemId == R.id.nav_announcement) {
-            replaceFragment(new AnnouncementFragment());
-            setTitle(getString(R.string.announcement));
-        } else if (itemId == R.id.nav_bookmark) {
-            replaceFragment(new BookmarkFragment());
-            setTitle(getString(R.string.bookmark));
-        } else if (itemId == R.id.nav_calendar) {
-            replaceFragment(new CalendarFragment());
-            setTitle(getString(R.string.calendar));
-        } else if (itemId == R.id.nav_setting) {
-            replaceFragment(new SettingFragment());
-            setTitle(getString(R.string.setting));
-        } else if (itemId == R.id.nav_social) {
-            replaceFragment(new SocialFragment());
-            setTitle(getString(R.string.social));
-        } else if (itemId == R.id.nav_share) {
+        if (id == R.id.nav_home) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        } else if (id == R.id.nav_announcement) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AnnouncementFragment()).commit();
+        } else if (id == R.id.nav_bookmark) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BookmarkFragment()).commit();
+        } else if (id == R.id.nav_calendar) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalendarFragment()).commit();
+        } else if (id == R.id.nav_setting) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingFragment()).commit();
+        } else if (id == R.id.nav_social) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SocialFragment()).commit();
+        } else if (id == R.id.nav_share) {
             Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, getString(R.string.logout), Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_logout) {
+            auth.signOut();
+            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

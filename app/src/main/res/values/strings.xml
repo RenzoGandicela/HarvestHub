@@ -50,4 +50,14 @@
     <string name="save_note">Save Note</string>
     <string name="delete_note">Delete Note</string>
     <string name="featured_events">Featured Events</string>
+    <string name="profile_saved">Profile updated successfully</string>
+    <string name="profile_save_error">Failed to update profile</string>
+    <string name="about_me">About Me</string>
+    <string name="save_description">Save Description</string>
+    
+    <!-- Add these profile-related strings -->
+    <string name="label_username">Username</string>
+    <string name="label_email">Email</string>
+    <string name="label_role">Role</string>
+    <string name="hint_about_me">Tell us about yourself...</string>
 </resources>

@@ -77,6 +77,11 @@
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar"/>
             
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
     </application>
 
 </manifest>
