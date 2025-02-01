@@ -24,6 +24,7 @@ color dark_secondary_variant
 color dark_surface
 color dark_text_primary
 color dark_text_secondary
+color gray
 color icon_text_color_selected
 color icon_text_color_state
 color icon_text_color_unselected
@@ -58,6 +59,7 @@ drawable channel_item_background
 drawable channel_list_border
 drawable community_garden
 drawable default_profile
+drawable default_profile_background
 drawable edit_text_background
 drawable food_sharing
 drawable form_background
@@ -67,6 +69,7 @@ drawable ic_announcement
 drawable ic_attach
 drawable ic_bookmark
 drawable ic_calendar
+drawable ic_delete
 drawable ic_favorite
 drawable ic_hashtag
 drawable ic_heart
@@ -105,6 +108,7 @@ font agbalumo
 font aoboshi_one
 font carter_one
 font caveat_brush
+id action_clear_chat
 id add_event_button
 id add_event_button_type2
 id attachButton
@@ -118,6 +122,7 @@ id calendarView
 id cardView
 id channelNameTxt
 id channelsRecyclerView
+id chatImageView
 id deleteNote
 id desc
 id dialogBox
@@ -153,14 +158,17 @@ id forgetpassword_button
 id forgotTitle
 id fragment_container
 id imageView
+id leftSpace
 id loginRedirectText
 id login_button
 id login_email
 id login_password
 id logoImage
 id map
+id messageContainer
 id messageImage
 id messageInput
+id messageText
 id messageTxt
 id messagesRecyclerView
 id navFragment
@@ -184,10 +192,12 @@ id profileImg
 id profileRole
 id profileUsername
 id remindButton
+id rightSpace
 id role_spinner
 id saveDescriptionButton
 id saveNote
 id sendButton
+id senderName
 id senderNameTxt
 id serverDescriptionTxt
 id serverIconImg
@@ -204,6 +214,7 @@ id submit_event_button_type2
 id textView3
 id textView4
 id themeSwitch
+id timestamp
 id timestampTxt
 id toolbar
 id userNameTxt
@@ -220,6 +231,8 @@ layout activity_server
 layout activity_sign_up
 layout activity_splash
 layout app_bar_main
+layout chat_bubble
+layout chat_image_item
 layout dialog_forgot
 layout featured_card_design
 layout fragment_announcement
@@ -238,6 +251,7 @@ layout item_message_sent
 layout item_server
 layout nav_header
 menu bottom_nav_menu
+menu chat_menu
 menu nav_menu
 mipmap ic_launcher
 mipmap ic_launcher_round

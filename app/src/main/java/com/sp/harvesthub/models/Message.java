@@ -1,8 +1,8 @@
 package com.sp.harvesthub.models;
 
 public class Message {
-    private String text;
-    private String imageURL;
+    private String message;
+    private String imageUrl;
     private String senderId;
     private String senderName;
     private String senderProfilePic;
@@ -12,26 +12,62 @@ public class Message {
         // Required empty constructor for Firebase
     }
 
-    public Message(String text, String imageURL, String senderId, String senderName, String senderProfilePic, long timestamp) {
-        this.text = text;
-        this.imageURL = imageURL;
+    public Message(String message, String imageUrl, String senderId, String senderName, String senderProfilePic, long timestamp) {
+        this.message = message;
+        this.imageUrl = imageUrl;
         this.senderId = senderId;
         this.senderName = senderName;
         this.senderProfilePic = senderProfilePic;
         this.timestamp = timestamp;
     }
 
-    // Getters and setters
-    public String getText() { return text; }
-    public void setText(String text) { this.text = text; }
-    public String getImageURL() { return imageURL; }
-    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
-    public String getSenderId() { return senderId; }
-    public void setSenderId(String senderId) { this.senderId = senderId; }
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
-    public String getSenderProfilePic() { return senderProfilePic; }
-    public void setSenderProfilePic(String senderProfilePic) { this.senderProfilePic = senderProfilePic; }
+    // Getters
+    public String getMessage() {
+        return message;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public String getSenderProfilePic() {
+        return senderProfilePic;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    // Setters
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public void setSenderProfilePic(String senderProfilePic) {
+        this.senderProfilePic = senderProfilePic;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 } 

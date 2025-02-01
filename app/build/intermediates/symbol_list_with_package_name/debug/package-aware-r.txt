@@ -1579,6 +1579,7 @@ color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
 color foreground_material_light
+color gray
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color icon_text_color_selected
@@ -3214,6 +3215,7 @@ drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
 drawable community_garden
 drawable default_profile
+drawable default_profile_background
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
@@ -3240,6 +3242,7 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
+drawable ic_delete
 drawable ic_favorite
 drawable ic_hashtag
 drawable ic_heart
@@ -3426,6 +3429,7 @@ id action_bar_root
 id action_bar_spinner
 id action_bar_subtitle
 id action_bar_title
+id action_clear_chat
 id action_container
 id action_context_bar
 id action_divider
@@ -3502,6 +3506,7 @@ id chain2
 id chains
 id channelNameTxt
 id channelsRecyclerView
+id chatImageView
 id checkbox
 id checked
 id chronometer
@@ -3667,6 +3672,7 @@ id jumpToStart
 id labeled
 id layout
 id left
+id leftSpace
 id leftToRight
 id legacy
 id light
@@ -3710,8 +3716,10 @@ id material_timepicker_view
 id material_value_index
 id matrix
 id message
+id messageContainer
 id messageImage
 id messageInput
+id messageText
 id messageTxt
 id messagesRecyclerView
 id middle
@@ -3833,6 +3841,7 @@ id remindButton
 id report_drawn
 id reverseSawtooth
 id right
+id rightSpace
 id rightToLeft
 id right_icon
 id right_side
@@ -3869,6 +3878,7 @@ id select_dialog_listview
 id selected
 id selection_type
 id sendButton
+id senderName
 id senderNameTxt
 id serverDescriptionTxt
 id serverIconImg
@@ -3957,6 +3967,7 @@ id textinput_prefix_text
 id textinput_suffix_text
 id themeSwitch
 id time
+id timestamp
 id timestampTxt
 id title
 id titleDividerNoCustom
@@ -4135,6 +4146,8 @@ layout activity_splash
 layout app_bar_main
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
+layout chat_bubble
+layout chat_image_item
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -4250,6 +4263,7 @@ layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 menu bottom_nav_menu
+menu chat_menu
 menu nav_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
