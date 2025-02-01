@@ -153,7 +153,7 @@ public class Login extends AppCompatActivity {
                                 intent = new Intent(Login.this, Announcements.class);
                                 break;
                             case "seller":
-                                intent = new Intent(Login.this, SellerDashboard.class);
+                                intent = new Intent(Login.this, Announcements.class);
                                 break;
                             default:
                                 Toast.makeText(Login.this, "Invalid role type: " + role, Toast.LENGTH_SHORT).show();
