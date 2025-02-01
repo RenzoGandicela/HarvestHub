@@ -4,7 +4,10 @@ package com.sp.harvesthub.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,24 +20,105 @@ import java.lang.String;
 
 public final class ActivityAnnouncementsBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
+
+  @NonNull
+  public final Button addEventButton;
+
+  @NonNull
+  public final Button addEventButtonType2;
+
+  @NonNull
+  public final EditText eventDescription;
+
+  @NonNull
+  public final EditText eventDescriptionType2;
+
+  @NonNull
+  public final EditText eventDetails;
+
+  @NonNull
+  public final EditText eventDetails2;
+
+  @NonNull
+  public final LinearLayout eventFormLayout;
+
+  @NonNull
+  public final LinearLayout eventFormLayoutType2;
+
+  @NonNull
+  public final EditText eventImage;
+
+  @NonNull
+  public final EditText eventImage2;
+
+  @NonNull
+  public final EditText eventLocation;
+
+  @NonNull
+  public final EditText eventLocationType2;
+
+  @NonNull
+  public final EditText eventTitle;
+
+  @NonNull
+  public final EditText eventTitleType2;
 
   @NonNull
   public final LinearLayout featuredBackground;
 
   @NonNull
+  public final LinearLayout featuredBackgroundType2;
+
+  @NonNull
   public final RecyclerView featuredRecycler;
 
-  private ActivityAnnouncementsBinding(@NonNull LinearLayout rootView,
-      @NonNull LinearLayout featuredBackground, @NonNull RecyclerView featuredRecycler) {
+  @NonNull
+  public final RecyclerView featuredRecyclerType2;
+
+  @NonNull
+  public final Button submitEventButton;
+
+  @NonNull
+  public final Button submitEventButtonType2;
+
+  private ActivityAnnouncementsBinding(@NonNull ScrollView rootView, @NonNull Button addEventButton,
+      @NonNull Button addEventButtonType2, @NonNull EditText eventDescription,
+      @NonNull EditText eventDescriptionType2, @NonNull EditText eventDetails,
+      @NonNull EditText eventDetails2, @NonNull LinearLayout eventFormLayout,
+      @NonNull LinearLayout eventFormLayoutType2, @NonNull EditText eventImage,
+      @NonNull EditText eventImage2, @NonNull EditText eventLocation,
+      @NonNull EditText eventLocationType2, @NonNull EditText eventTitle,
+      @NonNull EditText eventTitleType2, @NonNull LinearLayout featuredBackground,
+      @NonNull LinearLayout featuredBackgroundType2, @NonNull RecyclerView featuredRecycler,
+      @NonNull RecyclerView featuredRecyclerType2, @NonNull Button submitEventButton,
+      @NonNull Button submitEventButtonType2) {
     this.rootView = rootView;
+    this.addEventButton = addEventButton;
+    this.addEventButtonType2 = addEventButtonType2;
+    this.eventDescription = eventDescription;
+    this.eventDescriptionType2 = eventDescriptionType2;
+    this.eventDetails = eventDetails;
+    this.eventDetails2 = eventDetails2;
+    this.eventFormLayout = eventFormLayout;
+    this.eventFormLayoutType2 = eventFormLayoutType2;
+    this.eventImage = eventImage;
+    this.eventImage2 = eventImage2;
+    this.eventLocation = eventLocation;
+    this.eventLocationType2 = eventLocationType2;
+    this.eventTitle = eventTitle;
+    this.eventTitleType2 = eventTitleType2;
     this.featuredBackground = featuredBackground;
+    this.featuredBackgroundType2 = featuredBackgroundType2;
     this.featuredRecycler = featuredRecycler;
+    this.featuredRecyclerType2 = featuredRecyclerType2;
+    this.submitEventButton = submitEventButton;
+    this.submitEventButtonType2 = submitEventButtonType2;
   }
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -59,9 +143,99 @@ public final class ActivityAnnouncementsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.add_event_button;
+      Button addEventButton = ViewBindings.findChildViewById(rootView, id);
+      if (addEventButton == null) {
+        break missingId;
+      }
+
+      id = R.id.add_event_button_type2;
+      Button addEventButtonType2 = ViewBindings.findChildViewById(rootView, id);
+      if (addEventButtonType2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_description;
+      EditText eventDescription = ViewBindings.findChildViewById(rootView, id);
+      if (eventDescription == null) {
+        break missingId;
+      }
+
+      id = R.id.event_description_type2;
+      EditText eventDescriptionType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventDescriptionType2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_details;
+      EditText eventDetails = ViewBindings.findChildViewById(rootView, id);
+      if (eventDetails == null) {
+        break missingId;
+      }
+
+      id = R.id.event_details2;
+      EditText eventDetails2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventDetails2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_form_layout;
+      LinearLayout eventFormLayout = ViewBindings.findChildViewById(rootView, id);
+      if (eventFormLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.event_form_layout_type2;
+      LinearLayout eventFormLayoutType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventFormLayoutType2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_image;
+      EditText eventImage = ViewBindings.findChildViewById(rootView, id);
+      if (eventImage == null) {
+        break missingId;
+      }
+
+      id = R.id.event_image2;
+      EditText eventImage2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventImage2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_location;
+      EditText eventLocation = ViewBindings.findChildViewById(rootView, id);
+      if (eventLocation == null) {
+        break missingId;
+      }
+
+      id = R.id.event_location_type2;
+      EditText eventLocationType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventLocationType2 == null) {
+        break missingId;
+      }
+
+      id = R.id.event_title;
+      EditText eventTitle = ViewBindings.findChildViewById(rootView, id);
+      if (eventTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.event_title_type2;
+      EditText eventTitleType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventTitleType2 == null) {
+        break missingId;
+      }
+
       id = R.id.featured_background;
       LinearLayout featuredBackground = ViewBindings.findChildViewById(rootView, id);
       if (featuredBackground == null) {
+        break missingId;
+      }
+
+      id = R.id.featured_background_type2;
+      LinearLayout featuredBackgroundType2 = ViewBindings.findChildViewById(rootView, id);
+      if (featuredBackgroundType2 == null) {
         break missingId;
       }
 
@@ -71,8 +245,30 @@ public final class ActivityAnnouncementsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityAnnouncementsBinding((LinearLayout) rootView, featuredBackground,
-          featuredRecycler);
+      id = R.id.featured_recycler_type2;
+      RecyclerView featuredRecyclerType2 = ViewBindings.findChildViewById(rootView, id);
+      if (featuredRecyclerType2 == null) {
+        break missingId;
+      }
+
+      id = R.id.submit_event_button;
+      Button submitEventButton = ViewBindings.findChildViewById(rootView, id);
+      if (submitEventButton == null) {
+        break missingId;
+      }
+
+      id = R.id.submit_event_button_type2;
+      Button submitEventButtonType2 = ViewBindings.findChildViewById(rootView, id);
+      if (submitEventButtonType2 == null) {
+        break missingId;
+      }
+
+      return new ActivityAnnouncementsBinding((ScrollView) rootView, addEventButton,
+          addEventButtonType2, eventDescription, eventDescriptionType2, eventDetails, eventDetails2,
+          eventFormLayout, eventFormLayoutType2, eventImage, eventImage2, eventLocation,
+          eventLocationType2, eventTitle, eventTitleType2, featuredBackground,
+          featuredBackgroundType2, featuredRecycler, featuredRecyclerType2, submitEventButton,
+          submitEventButtonType2);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

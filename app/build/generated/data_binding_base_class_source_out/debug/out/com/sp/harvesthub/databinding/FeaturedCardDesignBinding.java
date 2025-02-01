@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,13 +21,16 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
   private final CardView rootView;
 
   @NonNull
+  public final CardView cardView;
+
+  @NonNull
   public final TextView featuredDescription;
 
   @NonNull
   public final TextView featuredDetails;
 
   @NonNull
-  public final ImageView featuredImage;
+  public final TextView featuredImage;
 
   @NonNull
   public final TextView featuredLocation;
@@ -39,11 +41,12 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
   @NonNull
   public final Button remindButton;
 
-  private FeaturedCardDesignBinding(@NonNull CardView rootView,
+  private FeaturedCardDesignBinding(@NonNull CardView rootView, @NonNull CardView cardView,
       @NonNull TextView featuredDescription, @NonNull TextView featuredDetails,
-      @NonNull ImageView featuredImage, @NonNull TextView featuredLocation,
+      @NonNull TextView featuredImage, @NonNull TextView featuredLocation,
       @NonNull TextView featuredTitle, @NonNull Button remindButton) {
     this.rootView = rootView;
+    this.cardView = cardView;
     this.featuredDescription = featuredDescription;
     this.featuredDetails = featuredDetails;
     this.featuredImage = featuredImage;
@@ -79,6 +82,8 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      CardView cardView = (CardView) rootView;
+
       id = R.id.featured_description;
       TextView featuredDescription = ViewBindings.findChildViewById(rootView, id);
       if (featuredDescription == null) {
@@ -92,7 +97,7 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
       }
 
       id = R.id.featured_image;
-      ImageView featuredImage = ViewBindings.findChildViewById(rootView, id);
+      TextView featuredImage = ViewBindings.findChildViewById(rootView, id);
       if (featuredImage == null) {
         break missingId;
       }
@@ -115,7 +120,7 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FeaturedCardDesignBinding((CardView) rootView, featuredDescription,
+      return new FeaturedCardDesignBinding((CardView) rootView, cardView, featuredDescription,
           featuredDetails, featuredImage, featuredLocation, featuredTitle, remindButton);
     }
     String missingId = rootView.getResources().getResourceName(id);

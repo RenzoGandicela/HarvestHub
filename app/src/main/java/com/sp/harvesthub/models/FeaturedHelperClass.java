@@ -6,7 +6,18 @@ public class FeaturedHelperClass {
     private String description;
     private String location;
     private String details;
-    private int eventType;  // New field for event type
+    private int eventType;  // 1 for regular events, 2 for donation drives
+    private long timestamp;
+
+    public FeaturedHelperClass(String image, String title, String description, String location, String details) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.details = details;
+        this.eventType = 1;
+        this.timestamp = System.currentTimeMillis();
+    }
 
     public FeaturedHelperClass(String image, String title, String description, String location, String details, int eventType) {
         this.image = image;
@@ -15,6 +26,7 @@ public class FeaturedHelperClass {
         this.location = location;
         this.details = details;
         this.eventType = eventType;
+        this.timestamp = System.currentTimeMillis();
     }
 
     // Getters and setters for the fields
@@ -64,5 +76,13 @@ public class FeaturedHelperClass {
 
     public void setEventType(int eventType) {
         this.eventType = eventType;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }
