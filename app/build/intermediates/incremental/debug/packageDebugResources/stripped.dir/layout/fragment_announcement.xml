@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Type 1 Events Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Featured Events"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/add_event_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Event"/>
+
+        <!-- Type 1 Event Form -->
+        <LinearLayout
+            android:id="@+id/event_form_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:background="@drawable/form_background">
+
+            <EditText
+                android:id="@+id/event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Title"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Details (Date and Time)"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Image URL"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/submit_event_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Event"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/featured_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
+
+        <!-- Type 2 Events Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donation Drives"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"/>
+
+        <Button
+            android:id="@+id/add_event_button_type2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Donation Drive"/>
+
+        <!-- Type 2 Event Form -->
+        <LinearLayout
+            android:id="@+id/event_form_layout_type2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:background="@drawable/form_background">
+
+            <EditText
+                android:id="@+id/event_title_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Donation Drive Title"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_description_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_details2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Details (Date and Time)"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_location_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_image2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Image URL"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/submit_event_button_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Donation Drive"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/featured_recycler_type2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
+
+    </LinearLayout>
+</ScrollView>
