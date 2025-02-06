@@ -36,12 +36,16 @@
         "source": "com.sp.harvesthub.app-main-7:/layout/chat_image_item.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_home.xml",
-        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_home.xml"
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/food_card.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_setting.xml",
         "source": "com.sp.harvesthub.app-main-7:/layout/fragment_setting.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/food_card_tags_halal.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card_tags_halal.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/featured_card_design.xml",
@@ -62,6 +66,10 @@
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_dashboard.xml",
         "source": "com.sp.harvesthub.app-main-7:/layout/activity_dashboard.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_food.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_food.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_social.xml",
@@ -86,6 +94,14 @@
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_server.xml",
         "source": "com.sp.harvesthub.app-main-7:/layout/activity_server.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_logmeal.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_logmeal.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/food_card_tags_spicy.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card_tags_spicy.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_splash.xml",
@@ -114,6 +130,10 @@
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_bookmark.xml",
         "source": "com.sp.harvesthub.app-main-7:/layout/fragment_bookmark.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/food_recyclerview_layout.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_recyclerview_layout.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_map.xml",

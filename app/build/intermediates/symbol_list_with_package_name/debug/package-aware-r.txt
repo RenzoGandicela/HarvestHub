@@ -706,6 +706,7 @@ attr imagePanX
 attr imagePanY
 attr imageRotate
 attr imageZoom
+attr implementationMode
 attr indeterminateAnimationType
 attr indeterminateProgressStyle
 attr indicatorColor
@@ -1102,6 +1103,7 @@ attr round
 attr roundPercent
 attr saturation
 attr scaleFromTextSize
+attr scaleType
 attr scopeUris
 attr scrimAnimationDuration
 attr scrimBackground
@@ -3222,6 +3224,9 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable edit_text_background
+drawable ellipse_11
+drawable ellipse_2
+drawable error_image
 drawable food_sharing
 drawable form_background
 drawable googleg_disabled_color_18
@@ -3258,9 +3263,6 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
-drawable ic_other_sign_in
-drawable ic_passkey
-drawable ic_password
 drawable ic_person
 drawable ic_profile
 drawable ic_profile_placeholder
@@ -3353,6 +3355,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable order
+drawable placeholder_image
 drawable preference_list_divider_material
 drawable profile
 drawable settings
@@ -3370,6 +3373,7 @@ font agbalumo
 font aoboshi_one
 font carter_one
 font caveat_brush
+font young_serif
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3452,6 +3456,7 @@ id aligned
 id all
 id allStates
 id always
+id analyzeButton
 id androidx_window_activity_scope
 id animateToEnd
 id animateToStart
@@ -3465,6 +3470,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id available
 id axisRelative
 id barrier
 id baseline
@@ -3493,6 +3499,7 @@ id buttonPanel
 id cache_measures
 id calendarView
 id callMeasure
+id camButton
 id cancel_button
 id cardView
 id carryVelocity
@@ -3517,6 +3524,7 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
+id compatible
 id compress
 id confirm_button
 id constraint
@@ -3602,6 +3610,8 @@ id event_title_type2
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id expirationDate
+id expirationDateEdit
 id fade
 id featured_background
 id featured_background_type2
@@ -3613,6 +3623,9 @@ id featured_recycler
 id featured_recycler_type2
 id featured_title
 id fill
+id fillCenter
+id fillEnd
+id fillStart
 id fill_horizontal
 id fill_vertical
 id filled
@@ -3625,6 +3638,11 @@ id fixed
 id flip
 id floating
 id follow_system
+id food
+id foodImage
+id foodName
+id foodNameText
+id foodOverlay
 id forever
 id forgetpassword_button
 id forgotTitle
@@ -3641,6 +3659,8 @@ id graph_wrap
 id group_divider
 id grouping
 id groups
+id halalTag
+id halalText
 id header_title
 id hide_ime_id
 id hideable
@@ -3663,6 +3683,7 @@ id immediateStop
 id included
 id indeterminate
 id info
+id ingredientsText
 id invisible
 id inward
 id italic
@@ -3682,6 +3703,8 @@ id linear
 id listMode
 id list_item
 id locale
+id location
+id locationEdit
 id loginRedirectText
 id login_button
 id login_email
@@ -3818,6 +3841,7 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id performance
 id pin
 id position
 id postLayout
@@ -3833,9 +3857,12 @@ id profileRole
 id profileUsername
 id progress_circular
 id progress_horizontal
+id quantity
+id quantityEdit
 id radio
 id ratio
 id rectangles
+id recyclerView
 id recycler_view
 id remindButton
 id report_drawn
@@ -3907,6 +3934,8 @@ id snapMargins
 id south
 id spacer
 id special_effects_controller_view_tag
+id spicyTag
+id spicyText
 id spinner
 id spline
 id split_action_bar
@@ -3992,10 +4021,12 @@ id unchecked
 id uniform
 id unlabeled
 id up
+id uploadButton
 id useLogo
 id userNameTxt
 id userProfileImage
 id usernameTxt
+id vendor
 id vertical
 id vertical_only
 id view_offset_helper
@@ -4137,7 +4168,9 @@ layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
 layout activity_dashboard
+layout activity_food
 layout activity_login
+layout activity_logmeal
 layout activity_main
 layout activity_seller_dashboard
 layout activity_server
@@ -4167,11 +4200,14 @@ layout design_text_input_start_icon
 layout dialog_forgot
 layout expand_button
 layout featured_card_design
+layout food_card
+layout food_card_tags_halal
+layout food_card_tags_spicy
+layout food_recyclerview_layout
 layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
-layout fragment_home
 layout fragment_map
 layout fragment_profile
 layout fragment_setting
@@ -4264,6 +4300,7 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 menu bottom_nav_menu
 menu chat_menu
+menu menu
 menu nav_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
@@ -4299,8 +4336,6 @@ string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string about
 string about_me
-string android_credentials_TYPE_PASSWORD_CREDENTIAL
-string androidx_credentials_TYPE_PUBLIC_KEY_CREDENTIAL
 string androidx_startup
 string announcement
 string app_name
@@ -5114,7 +5149,6 @@ style Theme_Design_Light_NoActionBar
 style Theme_Design_NoActionBar
 style Theme_HarvestHub
 style Theme_HarvestHub_NoActionBar
-style Theme_Hidden
 style Theme_Material3_Dark
 style Theme_Material3_Dark_BottomSheetDialog
 style Theme_Material3_Dark_Dialog
@@ -5192,7 +5226,6 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
-style Theme_PlayCore_Transparent
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -5822,6 +5855,7 @@ styleable PreferenceFragmentCompat android_layout android_divider android_divide
 styleable PreferenceGroup android_orderingFromXml initialExpandedChildrenCount orderingFromXml
 styleable PreferenceImageView android_maxWidth android_maxHeight maxHeight maxWidth
 styleable PreferenceTheme checkBoxPreferenceStyle dialogPreferenceStyle dropdownPreferenceStyle editTextPreferenceStyle preferenceCategoryStyle preferenceCategoryTitleTextAppearance preferenceCategoryTitleTextColor preferenceFragmentCompatStyle preferenceFragmentListStyle preferenceFragmentStyle preferenceInformationStyle preferenceScreenStyle preferenceStyle preferenceTheme seekBarPreferenceStyle switchPreferenceCompatStyle switchPreferenceStyle
+styleable PreviewView implementationMode scaleType
 styleable PropertySet android_visibility android_alpha layout_constraintTag motionProgress visibilityMode
 styleable RadialViewGroup materialCircleRadius
 styleable RangeSlider minSeparation values
@@ -5871,4 +5905,5 @@ styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration
 styleable include constraintSet
 xml backup_rules
 xml data_extraction_rules
+xml file_paths
 xml image_share_filepaths

@@ -36,6 +36,10 @@
         "source": "com.sp.harvesthub.app-main-7:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_error_image.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/error_image.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/mipmap-hdpi_ic_launcher.webp.flat",
         "source": "com.sp.harvesthub.app-main-7:/mipmap-hdpi/ic_launcher.webp"
     },
@@ -64,12 +68,12 @@
         "source": "com.sp.harvesthub.app-main-7:/drawable/bg_message_sent.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_server.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/layout/activity_server.xml"
-    },
-    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/font_aoboshi_one.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/font/aoboshi_one.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_server.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_server.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ic_launcher_background.xml.flat",
@@ -92,6 +96,14 @@
         "source": "com.sp.harvesthub.app-main-7:/layout/featured_card_design.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/font_young_serif.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/font/young_serif.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_food_card_tags_spicy.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card_tags_spicy.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_share.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/drawable/share.xml"
     },
@@ -108,12 +120,28 @@
         "source": "com.sp.harvesthub.app-main-7:/drawable/white_box.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_food_card_tags_halal.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card_tags_halal.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable-night_channel_list_border.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/drawable-night/channel_list_border.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_placeholder_image.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/placeholder_image.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/layout_item_channel.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/layout/item_channel.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_logmeal.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_logmeal.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_food_recyclerview_layout.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_recyclerview_layout.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/mipmap-anydpi_ic_launcher.xml.flat",
@@ -184,6 +212,10 @@
         "source": "com.sp.harvesthub.app-main-7:/drawable/ic_person.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ellipse_11.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/ellipse_11.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_announcement.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/layout/fragment_announcement.xml"
     },
@@ -200,16 +232,20 @@
         "source": "com.sp.harvesthub.app-main-7:/drawable/home.png"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_logo2.png.flat",
-        "source": "com.sp.harvesthub.app-main-7:/drawable/logo2.png"
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/ic_launcher_foreground.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_profile.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/layout/fragment_profile.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_logo2.png.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/logo2.png"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_food.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_food.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/xml_data_extraction_rules.xml.flat",
@@ -240,16 +276,20 @@
         "source": "com.sp.harvesthub.app-main-7:/drawable/ic_send.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/xml_file_paths.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/xml/file_paths.xml"
+    },
+    {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_logo3.jpg.flat",
         "source": "com.sp.harvesthub.app-main-7:/drawable/logo3.jpg"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ic_hashtag.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/drawable/ic_hashtag.xml"
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ellipse_2.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/ellipse_2.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_home.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_home.xml"
+        "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_ic_hashtag.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/drawable/ic_hashtag.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_form_background.xml.flat",
@@ -310,6 +350,10 @@
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/font_caveat_brush.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/font/caveat_brush.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_food_card.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_card.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/mipmap-xxhdpi_ic_launcher.webp.flat",
@@ -382,6 +426,10 @@
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/layout_dialog_forgot.xml.flat",
         "source": "com.sp.harvesthub.app-main-7:/layout/dialog_forgot.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/menu_menu.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/menu/menu.xml"
     },
     {
         "merged": "com.sp.harvesthub.app-merged_res-5:/drawable_calendar.png.flat",

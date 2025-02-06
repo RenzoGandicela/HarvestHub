@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +30,15 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_recyclerview_layout);
+        setContentView(R.layout.activity_food);  // We'll create this layout
+
+        // Set up toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Food Listings");
+        }
 
         recyclerView = findViewById(R.id.recyclerView);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
@@ -73,24 +81,5 @@ public class FoodActivity extends AppCompatActivity {
                 Log.e("Firebase", "Database error: " + error.getMessage());
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.logMeal) {
-            Intent intent = new Intent(this, LogMealActivity.class);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.food) {
-            Intent intent = new Intent(this, FoodActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -35,12 +35,24 @@ public class FoodItem implements Serializable {
         return halal;
     }
 
+    public void setHalal(boolean halal) {
+        this.halal = halal;
+    }
+
     public boolean isSpicy() {
         return spicy;
     }
 
+    public void setSpicy(boolean spicy) {
+        this.spicy = spicy;
+    }
+
     public List<String> getIngredients() {
         return ingredients;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getImageURL() {

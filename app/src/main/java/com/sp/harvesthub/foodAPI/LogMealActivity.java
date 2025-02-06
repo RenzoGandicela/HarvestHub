@@ -477,11 +477,7 @@ public class LogMealActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.logMeal) {
-            Intent intent = new Intent(this, LogMealActivity.class);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.food) {
+        if (item.getItemId() == R.id.food) {
             Intent intent = new Intent(this, FoodActivity.class);
             startActivity(intent);
         }

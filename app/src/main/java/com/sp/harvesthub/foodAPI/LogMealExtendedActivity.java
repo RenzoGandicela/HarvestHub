@@ -6,19 +6,32 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sp.harvesthub.foodListings.FoodItemExtended;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+
 public class LogMealExtendedActivity extends AppCompatActivity {
 
+    private static final String TAG = "LogMealExtendedActivity";
     private DatabaseReference extendedFoodsRef;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Remove setContentView if you don't have a specific layout for this activity
-
+        
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance();
+        
         extendedFoodsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                 .getReference("testing");
 
@@ -26,30 +39,65 @@ public class LogMealExtendedActivity extends AppCompatActivity {
         if (foodItem != null) {
             saveToExtendedDatabase(foodItem);
         } else {
-            Log.e("LogMealExtendedActivity", "No food item received");
+            Log.e(TAG, "No food item received");
             Toast.makeText(this, "Error: No food data received", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     private void saveToExtendedDatabase(FoodItemExtended foodItem) {
-        String key = extendedFoodsRef.push().getKey();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null) {
+            Log.e(TAG, "No user is signed in");
+            Toast.makeText(this, "Error: No user is signed in", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_CANCELED);
+            finish();
+            return;
+        }
+
+        String sellerId = currentUser.getUid();
+        
+        // Create reference to user's items node
+        DatabaseReference userItemsRef = extendedFoodsRef.child(sellerId).child("items");
+        String key = userItemsRef.push().getKey();
+        
         if (key != null) {
-            extendedFoodsRef.child(key).setValue(foodItem)
+            // Get current timestamp in ISO 8601 format
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String timestamp = sdf.format(new Date());
+
+            // Create a Map to include all the food item data
+            Map<String, Object> foodData = new HashMap<>();
+            foodData.put("title", foodItem.getDishName());  // Using dishName as title
+            foodData.put("description", String.join(", ", foodItem.getIngredients())); // Using ingredients as description
+            foodData.put("expiryDate", foodItem.getExpirationDate());
+            foodData.put("location", foodItem.getLocation());
+            foodData.put("quantity", foodItem.getQuantity());
+            foodData.put("sellerId", sellerId);
+            foodData.put("status", foodItem.isAvailable() ? "available" : "unavailable");
+            foodData.put("createdAt", timestamp);
+            foodData.put("updatedAt", timestamp);
+            
+            // Additional food-specific data
+            foodData.put("halal", foodItem.isHalal());
+            foodData.put("spicy", foodItem.isSpicy());
+
+            userItemsRef.child(key).setValue(foodData)
                     .addOnSuccessListener(aVoid -> {
-                        Log.d("LogMealExtendedActivity", "Successfully saved to testing database");
+                        Log.d(TAG, "Successfully saved to testing database under user: " + sellerId);
                         Toast.makeText(this, "Food saved to extended database!", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
                         finish();
                     })
                     .addOnFailureListener(e -> {
-                        Log.e("LogMealExtendedActivity", "Failed to save to testing database", e);
+                        Log.e(TAG, "Failed to save to testing database", e);
                         Toast.makeText(this, "Error saving to extended database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         setResult(RESULT_CANCELED);
                         finish();
                     });
         } else {
-            Log.e("LogMealExtendedActivity", "Failed to generate key for new record");
+            Log.e(TAG, "Failed to generate key for new record");
             Toast.makeText(this, "Error: Could not create database entry", Toast.LENGTH_SHORT).show();
             setResult(RESULT_CANCELED);
             finish();

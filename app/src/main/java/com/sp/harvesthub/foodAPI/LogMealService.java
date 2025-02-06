@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class LogMealService {
     private static final String API_URL = "https://api.logmeal.com/v2/image/recognition/complete";
-    private static final String API_KEY = "ce5a3d19a9f7c7736261cc1e3295f2f1f079bf37"; // Replace with actual API key
+    private static final String API_KEY = "fa69de69adc7ff42e6f386fcb33e880f3b6f3c39"; // Replace with actual API key
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
