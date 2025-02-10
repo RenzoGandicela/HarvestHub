@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.activities.DashboardActivity;
 import com.sp.harvesthub.models.FeaturedHelperClass;
@@ -26,6 +28,11 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
 
     public interface OnEventClickListener {
         void onRemindClick(FeaturedHelperClass event);
+        void onEventClick(FeaturedHelperClass event, int position);
+    }
+
+    public void setOnEventClickListener(OnEventClickListener listener) {
+        this.listener = listener;
     }
 
     public FeaturedAdapter(Context context, ArrayList<FeaturedHelperClass> featuredLocations) {
@@ -49,10 +56,22 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
         FeaturedHelperClass featuredHelperClass = featuredLocations.get(position);
         
+        // Load image using Glide
+        Glide.with(context)
+            .load(featuredHelperClass.getImage())
+            .placeholder(R.color.primary_green)
+            .error(R.color.primary_green)
+            .into(holder.image);
+            
         holder.title.setText(featuredHelperClass.getTitle());
         holder.description.setText(featuredHelperClass.getDescription());
         holder.location.setText(featuredHelperClass.getLocation());
         holder.details.setText(featuredHelperClass.getDetails());
+        
+        // Set text colors for better visibility
+        holder.description.setTextColor(context.getResources().getColor(R.color.black));
+        holder.location.setTextColor(context.getResources().getColor(R.color.gray));
+        holder.details.setTextColor(context.getResources().getColor(R.color.black));
         
         // Apply different styles based on event type
         if (featuredHelperClass.getEventType() == 1) {
@@ -65,11 +84,23 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
             holder.cardView.setBackgroundResource(R.drawable.teal_round);
         }
 
+        // Set click listeners
+        holder.cardView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEventClick(featuredHelperClass, holder.getAdapterPosition());
+            }
+        });
+
         // Update reminder functionality
         holder.remindBtn.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onRemindClick(featuredHelperClass);
-            }
+            String eventDetails = featuredHelperClass.getDetails();
+            String eventTitle = featuredHelperClass.getTitle();
+            String eventDescription = featuredHelperClass.getDescription();
+            Intent intent = new Intent(context, DashboardActivity.class);
+            intent.putExtra("eventTitle", eventTitle);
+            intent.putExtra("eventDescription", eventDescription);
+            intent.putExtra("eventDetails", eventDetails);
+            context.startActivity(intent);
         });
     }
 
@@ -79,7 +110,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     }
 
     public static class FeaturedViewHolder extends RecyclerView.ViewHolder {
-        TextView image;
+        ImageView image;
         TextView title, description, location, details;
         Button remindBtn;
         CardView cardView;

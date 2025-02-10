@@ -14,7 +14,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import android.view.Menu;
+import com.sp.harvesthub.nav_fragment.ChatFragment;
 
+import com.bumptech.glide.Glide;
 import com.sp.harvesthub.activities.LoginActivity;
 import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
 import com.sp.harvesthub.nav_fragment.BookmarkFragment;
@@ -29,7 +32,13 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,8 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
     private TextView userNameTxt, emailTxt;
-    private ImageView profileImg;
+    private CircleImageView profileImg;
     private FirebaseAuth auth;
+    private DatabaseReference userRef;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
@@ -95,11 +105,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         emailTxt = headerView.findViewById(R.id.emailTxt);
         profileImg = headerView.findViewById(R.id.profileImg);
 
+        // Load user data
+        loadUserData();
+
         nav_view.setNavigationItemSelectedListener(this);
 
-        // Initialize bottom navigation
+        // Initialize bottom navigation with updated listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            
+            // Clear drawer selection when using bottom nav
+            nav_view.setCheckedItem(R.id.nav_none);
             
             if (itemId == R.id.nav_home) {
                 replaceFragment(new HomeFragment());
@@ -117,34 +133,88 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             
             return true;
         });
-
-        // Set default selected item
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
     }
 
     private void replaceFragment(Fragment fragment) {
+        // Clear selection of navigation drawer
+        nav_view.setCheckedItem(R.id.nav_none);
+        
+        // Clear selection of bottom navigation
+        if (!(fragment instanceof HomeFragment) && 
+            !(fragment instanceof MapFragment) && 
+            !(fragment instanceof FavouritesFragment) && 
+            !(fragment instanceof ProfileFragment)) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_none);
+        }
+        
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
 
+    private void loadUserData() {
+        if (auth.getCurrentUser() != null) {
+            String userId = auth.getCurrentUser().getUid();
+            userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String username = snapshot.child("username").getValue(String.class);
+                        String email = snapshot.child("email").getValue(String.class);
+                        String profilePicture = snapshot.child("profilePicture").getValue(String.class);
+
+                        // Update UI
+                        if (username != null) userNameTxt.setText(username);
+                        if (email != null) emailTxt.setText(email);
+                        
+                        // Load profile picture
+                        if (profilePicture != null && !profilePicture.isEmpty()) {
+                            Glide.with(MainActivity.this)
+                                .load(profilePicture)
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.default_profile)
+                                .into(profileImg);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(MainActivity.this, "Error loading user data: " + error.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
+        // Clear bottom navigation selection when using drawer
+        bottomNavigationView.setSelectedItemId(R.id.nav_none);
+
         if (id == R.id.nav_home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            replaceFragment(new HomeFragment());
+            setTitle(getString(R.string.home));
         } else if (id == R.id.nav_announcement) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AnnouncementFragment()).commit();
+            replaceFragment(new AnnouncementFragment());
+            setTitle(getString(R.string.announcement));
         } else if (id == R.id.nav_bookmark) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BookmarkFragment()).commit();
+            replaceFragment(new BookmarkFragment());
+            setTitle(getString(R.string.bookmark));
         } else if (id == R.id.nav_calendar) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalendarFragment()).commit();
+            replaceFragment(new CalendarFragment());
+            setTitle(getString(R.string.calendar));
         } else if (id == R.id.nav_setting) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingFragment()).commit();
+            replaceFragment(new SettingFragment());
+            setTitle(getString(R.string.setting));
         } else if (id == R.id.nav_social) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SocialFragment()).commit();
+            replaceFragment(new SocialFragment());
+            setTitle(getString(R.string.social));
         } else if (id == R.id.nav_share) {
             Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_logout) {
@@ -154,8 +224,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer_layout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_chat) {
+            // Clear both navigation selections when opening chat
+            nav_view.setCheckedItem(R.id.nav_none);
+            bottomNavigationView.setSelectedItemId(R.id.nav_none);
+            
+            // Replace current fragment with ChatFragment
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new ChatFragment())
+                .addToBackStack(null)
+                .commit();
+                
+            setTitle("Chat");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

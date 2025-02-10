@@ -1,12 +1,17 @@
 package com.sp.harvesthub.nav_fragment;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -15,12 +20,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.adapters.FeaturedAdapter;
 import com.sp.harvesthub.models.Announcement;
@@ -29,17 +37,25 @@ import com.sp.harvesthub.utils.AnnouncementManager;
 import com.sp.harvesthub.utils.FirebaseHelper;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AnnouncementFragment extends Fragment implements FeaturedAdapter.OnEventClickListener {
     private static final String TAG = "AnnouncementFragment";
+    private static final int PICK_IMAGE_REQUEST = 1;
     private RecyclerView featuredRecycler, featuredRecyclerType2;
     private FeaturedAdapter featuredAdapter, donationAdapter;
     private Button addEventButton, submitEventButton, addEventButtonType2, submitEventButtonType2;
+    private Button uploadImageButton, uploadImageButton2;
+    private ImageView eventImagePreview, eventImagePreview2;
     private LinearLayout eventFormLayout, eventFormLayoutType2;
-    private EditText eventTitle, eventDescription, eventDetails, eventLocation, eventImage;
-    private EditText eventTitleType2, eventDescriptionType2, eventDetails2, eventLocationType2, eventImage2;
+    private EditText eventTitle, eventDescription, eventDetails, eventLocation;
+    private EditText eventTitleType2, eventDescriptionType2, eventDetails2, eventLocationType2;
     private ArrayList<FeaturedHelperClass> eventList, donationList;
     private DatabaseReference eventsRef, donationRef;
+    private StorageReference storageRef;
+    private Uri imageUri1, imageUri2;
+    private String currentEditingEventId;
+    private int currentUploadType = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +64,7 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         donationList = new ArrayList<>();
         eventsRef = FirebaseDatabase.getInstance().getReference("Announcements");
         donationRef = FirebaseDatabase.getInstance().getReference("DonationDrives");
+        storageRef = FirebaseStorage.getInstance().getReference("event_images");
     }
 
     @Override
@@ -69,8 +86,12 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         // Initialize Buttons and Forms
         addEventButton = view.findViewById(R.id.add_event_button);
         addEventButtonType2 = view.findViewById(R.id.add_event_button_type2);
-        submitEventButton = view.findViewById(R.id.submit_event_button);
-        submitEventButtonType2 = view.findViewById(R.id.submit_event_button_type2);
+        submitEventButton = view.findViewById(R.id.submitEventButton);
+        submitEventButtonType2 = view.findViewById(R.id.submitEventButton2);
+        uploadImageButton = view.findViewById(R.id.uploadImageButton);
+        uploadImageButton2 = view.findViewById(R.id.uploadImageButton2);
+        eventImagePreview = view.findViewById(R.id.eventImagePreview);
+        eventImagePreview2 = view.findViewById(R.id.eventImagePreview2);
         eventFormLayout = view.findViewById(R.id.event_form_layout);
         eventFormLayoutType2 = view.findViewById(R.id.event_form_layout_type2);
 
@@ -79,14 +100,12 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         eventDescription = view.findViewById(R.id.event_description);
         eventDetails = view.findViewById(R.id.event_details);
         eventLocation = view.findViewById(R.id.event_location);
-        eventImage = view.findViewById(R.id.event_image);
 
         // Initialize EditTexts for donation events
         eventTitleType2 = view.findViewById(R.id.event_title_type2);
         eventDescriptionType2 = view.findViewById(R.id.event_description_type2);
         eventDetails2 = view.findViewById(R.id.event_details2);
         eventLocationType2 = view.findViewById(R.id.event_location_type2);
-        eventImage2 = view.findViewById(R.id.event_image2);
 
         // Initially hide forms
         eventFormLayout.setVisibility(View.GONE);
@@ -112,6 +131,42 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         addEventButtonType2.setOnClickListener(v -> toggleEventForm(true, 2));
         submitEventButton.setOnClickListener(v -> submitEvent(1));
         submitEventButtonType2.setOnClickListener(v -> submitEvent(2));
+        
+        uploadImageButton.setOnClickListener(v -> {
+            currentUploadType = 1;
+            openImageChooser();
+        });
+        
+        uploadImageButton2.setOnClickListener(v -> {
+            currentUploadType = 2;
+            openImageChooser();
+        });
+
+        featuredAdapter.setOnEventClickListener(this);
+        donationAdapter.setOnEventClickListener(this);
+    }
+
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (currentUploadType == 1) {
+                imageUri1 = data.getData();
+                eventImagePreview.setVisibility(View.VISIBLE);
+                Glide.with(this).load(imageUri1).into(eventImagePreview);
+            } else if (currentUploadType == 2) {
+                imageUri2 = data.getData();
+                eventImagePreview2.setVisibility(View.VISIBLE);
+                Glide.with(this).load(imageUri2).into(eventImagePreview2);
+            }
+        }
     }
 
     private void toggleEventForm(boolean show, int type) {
@@ -125,41 +180,101 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
     }
 
     private void submitEvent(int type) {
-        String title, description, details, location, image;
-        DatabaseReference ref = (type == 1) ? eventsRef : donationRef;
-        
-        if (type == 1) {
-            title = eventTitle.getText().toString().trim();
-            description = eventDescription.getText().toString().trim();
-            details = eventDetails.getText().toString().trim();
-            location = eventLocation.getText().toString().trim();
-            image = eventImage.getText().toString().trim();
-        } else {
-            title = eventTitleType2.getText().toString().trim();
-            description = eventDescriptionType2.getText().toString().trim();
-            details = eventDetails2.getText().toString().trim();
-            location = eventLocationType2.getText().toString().trim();
-            image = eventImage2.getText().toString().trim();
-        }
+        String title = type == 1 ? eventTitle.getText().toString() : eventTitleType2.getText().toString();
+        String description = type == 1 ? eventDescription.getText().toString() : eventDescriptionType2.getText().toString();
+        String details = type == 1 ? eventDetails.getText().toString() : eventDetails2.getText().toString();
+        String location = type == 1 ? eventLocation.getText().toString() : eventLocationType2.getText().toString();
+        Uri imageUri = type == 1 ? imageUri1 : imageUri2;
 
         if (title.isEmpty() || description.isEmpty() || details.isEmpty() || location.isEmpty()) {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        FeaturedHelperClass event = new FeaturedHelperClass(image, title, description, location, details, type);
-        String eventId = ref.push().getKey();
-        
-        if (eventId != null) {
-            ref.child(eventId).setValue(event)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(getContext(), "Event added successfully!", Toast.LENGTH_SHORT).show();
-                    toggleEventForm(false, type);
-                    clearForm();
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), 
-                    "Failed to add event: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        if (imageUri == null) {
+            Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        // Show loading progress
+        Toast.makeText(getContext(), "Uploading...", Toast.LENGTH_SHORT).show();
+
+        // Upload image first
+        String imageFileName = UUID.randomUUID().toString();
+        StorageReference imageRef = storageRef.child(imageFileName);
+
+        imageRef.putFile(imageUri)
+            .addOnSuccessListener(taskSnapshot -> {
+                // Get the download URL
+                imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                    // Now save the event with the image URL
+                    DatabaseReference ref = type == 1 ? eventsRef : donationRef;
+                    
+                    FeaturedHelperClass event = new FeaturedHelperClass(
+                        downloadUri.toString(),
+                        title,
+                        description,
+                        location,
+                        details,
+                        type
+                    );
+
+                    String eventId = currentEditingEventId != null ? currentEditingEventId : ref.push().getKey();
+                    
+                    if (eventId != null) {
+                        ref.child(eventId).setValue(event)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getContext(), 
+                                    currentEditingEventId != null ? "Event updated successfully!" : "Event added successfully!", 
+                                    Toast.LENGTH_SHORT).show();
+                                toggleEventForm(false, type);
+                                clearForm();
+                                currentEditingEventId = null;
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), 
+                                "Failed to save event: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                });
+            })
+            .addOnFailureListener(e -> Toast.makeText(getContext(), 
+                "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onEventClick(FeaturedHelperClass event, int position) {
+        // Load event data into form for editing
+        DatabaseReference ref = event.getEventType() == 1 ? eventsRef : donationRef;
+        ref.orderByChild("title").equalTo(event.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot eventSnapshot : snapshot.getChildren()) {
+                    currentEditingEventId = eventSnapshot.getKey();
+                    if (event.getEventType() == 1) {
+                        eventTitle.setText(event.getTitle());
+                        eventDescription.setText(event.getDescription());
+                        eventDetails.setText(event.getDetails());
+                        eventLocation.setText(event.getLocation());
+                        eventImagePreview.setVisibility(View.VISIBLE);
+                        Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview);
+                        toggleEventForm(true, 1);
+                    } else {
+                        eventTitleType2.setText(event.getTitle());
+                        eventDescriptionType2.setText(event.getDescription());
+                        eventDetails2.setText(event.getDetails());
+                        eventLocationType2.setText(event.getLocation());
+                        eventImagePreview2.setVisibility(View.VISIBLE);
+                        Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview2);
+                        toggleEventForm(true, 2);
+                    }
+                    break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error loading event: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadEvents() {
@@ -288,12 +403,15 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         eventDescription.setText("");
         eventDetails.setText("");
         eventLocation.setText("");
-        eventImage.setText("");
         eventTitleType2.setText("");
         eventDescriptionType2.setText("");
         eventDetails2.setText("");
         eventLocationType2.setText("");
-        eventImage2.setText("");
+        eventImagePreview.setVisibility(View.GONE);
+        eventImagePreview2.setVisibility(View.GONE);
+        imageUri1 = null;
+        imageUri2 = null;
+        currentEditingEventId = null;
     }
 
     @Override

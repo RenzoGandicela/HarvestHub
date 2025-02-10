@@ -24,6 +24,7 @@ color dark_secondary_variant
 color dark_surface
 color dark_text_primary
 color dark_text_secondary
+color edit_icon_color
 color gray
 color icon_text_color_selected
 color icon_text_color_state
@@ -47,6 +48,7 @@ color teal_200
 color teal_700
 color white
 drawable announcement
+drawable arrow
 drawable background
 drawable baseline_lock_reset_24
 drawable bg_message_input
@@ -57,6 +59,7 @@ drawable calendar
 drawable cart
 drawable channel_item_background
 drawable channel_list_border
+drawable chat_input_background
 drawable community_garden
 drawable default_profile
 drawable default_profile_background
@@ -69,7 +72,9 @@ drawable ic_announcement
 drawable ic_attach
 drawable ic_bookmark
 drawable ic_calendar
+drawable ic_chat
 drawable ic_delete
+drawable ic_edit
 drawable ic_favorite
 drawable ic_hashtag
 drawable ic_heart
@@ -108,6 +113,7 @@ font agbalumo
 font aoboshi_one
 font carter_one
 font caveat_brush
+id action_chat
 id action_clear_chat
 id add_event_button
 id add_event_button_type2
@@ -123,6 +129,8 @@ id cardView
 id channelNameTxt
 id channelsRecyclerView
 id chatImageView
+id chatListView
+id chatRecyclerView
 id deleteNote
 id desc
 id dialogBox
@@ -130,9 +138,12 @@ id dialogForgot
 id displayNote
 id drawer_layout
 id editNote
+id editUsernameButton
 id emailBox
 id emailTxt
 id eventDetailsTxt
+id eventImagePreview
+id eventImagePreview2
 id event_description
 id event_description_type2
 id event_details
@@ -159,6 +170,7 @@ id forgotTitle
 id fragment_container
 id imageView
 id leftSpace
+id liveCameraView
 id loginRedirectText
 id login_button
 id login_email
@@ -209,6 +221,8 @@ id signup_email
 id signup_password
 id signup_username
 id slogan_name
+id submitEventButton
+id submitEventButton2
 id submit_event_button
 id submit_event_button_type2
 id textView3
@@ -217,13 +231,17 @@ id themeSwitch
 id timestamp
 id timestampTxt
 id toolbar
+id uploadImageButton
+id uploadImageButton2
 id userNameTxt
 id userProfileImage
+id usernameInput
 id usernameTxt
 layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
 layout activity_dashboard
+layout activity_location1
 layout activity_login
 layout activity_main
 layout activity_seller_dashboard
@@ -233,11 +251,14 @@ layout activity_splash
 layout app_bar_main
 layout chat_bubble
 layout chat_image_item
+layout chat_message_item
+layout dialog_edit_username
 layout dialog_forgot
 layout featured_card_design
 layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
+layout fragment_chat
 layout fragment_favourites
 layout fragment_home
 layout fragment_map
@@ -253,6 +274,7 @@ layout nav_header
 menu bottom_nav_menu
 menu chat_menu
 menu nav_menu
+menu toolbar_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw happyintro

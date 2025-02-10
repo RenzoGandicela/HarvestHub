@@ -122,45 +122,44 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(List<String> imageUrls) {
-        String messageText = messageInput.getText().toString().trim();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        
-        // Debug log
-        Log.d("ChatActivity", "Sending message with user ID: " + userId);
-        
-        // Get the actual username from Firebase Database
-        FirebaseDatabase.getInstance().getReference()
-            .child("Users")
-            .child(userId)
-            .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String username = snapshot.child("username").getValue(String.class);
-                    Log.d("ChatActivity", "Username from Firebase: " + username); // Debug log
-                    
-                    if (username == null || username.isEmpty()) {
-                        username = "User " + userId.substring(0, 4);
-                    }
-                    
-                    if (!messageText.isEmpty() || (imageUrls != null && !imageUrls.isEmpty())) {
-                        ChatMessage chatMessage = new ChatMessage(userId, username, messageText, imageUrls);
-                        databaseRef.push().setValue(chatMessage)
-                            .addOnSuccessListener(aVoid -> {
-                                messageInput.setText("");
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(ChatActivity.this, 
-                                    "Failed to send message: " + e.getMessage(), 
-                                    Toast.LENGTH_SHORT).show();
-                            });
-                    }
-                }
+        String content = messageInput.getText().toString().trim();
+        if ((content.isEmpty() && (imageUrls == null || imageUrls.isEmpty()))) {
+            return;
+        }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle error...
-                }
-            });
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserId);
+        
+        userRef.get().addOnSuccessListener(snapshot -> {
+            String username = snapshot.child("username").getValue(String.class);
+            if (username == null) {
+                username = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            }
+
+            // Create message data with all required fields
+            Map<String, Object> messageData = new HashMap<>();
+            messageData.put("content", content.isEmpty() ? "(image)" : content);
+            messageData.put("senderId", currentUserId);
+            messageData.put("timestamp", System.currentTimeMillis());
+            messageData.put("username", username);
+
+            // Add images if present
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                messageData.put("images", imageUrls);
+            }
+
+            // Push the message
+            DatabaseReference newMessageRef = databaseRef.push();
+            newMessageRef.setValue(messageData)
+                .addOnSuccessListener(aVoid -> {
+                    messageInput.setText("");
+                    messagesRecyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+                })
+                .addOnFailureListener(e -> 
+                    Toast.makeText(ChatActivity.this, 
+                        "Failed to send message: " + e.getMessage(), 
+                        Toast.LENGTH_SHORT).show());
+        });
     }
 
     private void selectImages() {
@@ -176,41 +175,47 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messagesList.clear();
-                for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot messageSnap : snapshot.getChildren()) {
                     try {
-                        ChatMessage chatMessage = messageSnapshot.getValue(ChatMessage.class);
-                        if (chatMessage != null) {
-                            // Debug log
-                            Log.d("ChatActivity", "Loading message from: " + chatMessage.getSenderId());
+                        String content = messageSnap.child("content").getValue(String.class);
+                        String senderId = messageSnap.child("senderId").getValue(String.class);
+                        String username = messageSnap.child("username").getValue(String.class);
+                        Long timestamp = messageSnap.child("timestamp").getValue(Long.class);
+                        
+                        if (content != null && senderId != null && timestamp != null) {
+                            Message message = new Message(content, null, senderId, username, null, timestamp);
                             
-                            String imageUrl = chatMessage.getImageUrls() != null && !chatMessage.getImageUrls().isEmpty() 
-                                ? chatMessage.getImageUrls().get(0)
-                                : null;
-                                
-                            Message message = new Message(
-                                chatMessage.getMessage(),
-                                imageUrl,
-                                chatMessage.getSenderId().trim(), // Ensure no whitespace
-                                chatMessage.getUsername(),
-                                null,
-                                chatMessage.getTimestamp()
-                            );
+                            // Handle images if present
+                            if (messageSnap.hasChild("images")) {
+                                List<String> images = new ArrayList<>();
+                                for (DataSnapshot imageSnap : messageSnap.child("images").getChildren()) {
+                                    String imageUrl = imageSnap.getValue(String.class);
+                                    if (imageUrl != null) {
+                                        images.add(imageUrl);
+                                    }
+                                }
+                                if (!images.isEmpty()) {
+                                    message.setImageUrl(images.get(0)); // For now, just use the first image
+                                }
+                            }
+                            
                             messagesList.add(message);
                         }
                     } catch (Exception e) {
-                        Log.e("ChatActivity", "Error loading message: " + e.getMessage());
+                        Log.e("ChatActivity", "Error parsing message: " + e.getMessage());
                     }
                 }
                 messageAdapter.notifyDataSetChanged();
                 if (!messagesList.isEmpty()) {
-                    messagesRecyclerView.scrollToPosition(messagesList.size() - 1);
+                    messagesRecyclerView.smoothScrollToPosition(messagesList.size() - 1);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("ChatActivity", "Error loading messages: " + error.getMessage());
-                Toast.makeText(ChatActivity.this, "Failed to load messages", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, 
+                    "Failed to load messages: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
             }
         });
     }

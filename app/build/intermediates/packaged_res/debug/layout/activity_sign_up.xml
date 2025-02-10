@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="Sign up to continue!"
         android:textSize="18sp"
+        android:textColor="@color/black"
         android:fontFamily="@font/aoboshi_one" />
 
     <LinearLayout
@@ -44,12 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
+            android:textColorHint="@color/gray"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:background="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,12 +60,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:textColorHint="@color/gray"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:background="#FFFFFF"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:textColorHint="@color/gray"
             app:passwordToggleEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -78,28 +84,31 @@
                 android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:background="#FFFFFF"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Spinner for Role Selection -->
+        <!-- Role Selection Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Select Role:"
             android:textSize="16sp"
-            android:textColor="#000" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/role_spinner"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
-            android:background="#FFFFFF"
+            android:background="@color/gray"
+            android:popupBackground="@color/gray"
+            android:textColor="@color/white"
+            android:spinnerMode="dropdown"
             android:entries="@array/roles_array"/>
-
 
         <Button
             android:id="@+id/signup_button"

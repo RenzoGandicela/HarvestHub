@@ -12,20 +12,20 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_server.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\nav_header.xml",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\nav_header.xml"
-    },
-    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_calendar.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_calendar.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_map.xml",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_map.xml"
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\nav_header.xml",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\nav_header.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\item_message_sent.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\item_message_sent.xml"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_map.xml",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_map.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\dialog_forgot.xml",
@@ -44,12 +44,12 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\app_bar_main.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/chat_bubble.xml",
-        "source": "com.sp.harvesthub.app-main-7:/layout/chat_bubble.xml"
-    },
-    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_home.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\dialog_edit_username.xml",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\dialog_edit_username.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_social.xml",
@@ -80,6 +80,10 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\chat_image_item.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_chat.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_chat.xml"
+    },
+    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_login.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_login.xml"
     },
@@ -100,12 +104,20 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_dashboard.xml"
     },
     {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\chat_message_item.xml",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\chat_message_item.xml"
+    },
+    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_blink_viewer.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_sign_up.xml",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_sign_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_location1.xml",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_location1.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\item_blink.xml",

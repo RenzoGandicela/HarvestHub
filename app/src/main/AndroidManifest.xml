@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +33,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyBx9hPyev6cP5-8ZHPokIagPP2OM2ZelJI" />
 
         <!-- Splash Screen - Main Launcher -->
         <activity
@@ -75,6 +77,28 @@
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+
+        <!-- Location Activities -->
+        <activity
+            android:name=".activities.Location1Activity"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
+        <activity
+            android:name=".activities.Location2Activity"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
+        <activity
+            android:name=".activities.Location3Activity"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
+        <activity
+            android:name=".activities.Location4Activity"
             android:theme="@style/Theme.HarvestHub.NoActionBar"/>
             
     </application>
