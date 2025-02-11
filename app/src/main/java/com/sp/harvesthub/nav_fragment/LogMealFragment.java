@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Switch;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -31,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +51,7 @@ import com.sp.harvesthub.foodAPI.LogMealExtendedActivity;
 import com.sp.harvesthub.foodListings.FoodActivity;
 import com.sp.harvesthub.foodListings.FoodItem;
 import com.sp.harvesthub.foodListings.FoodItemExtended;
+import com.sp.harvesthub.foodListings.FoodFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,6 +85,7 @@ public class LogMealFragment extends Fragment {
     private Uri photoURI;
     private DatabaseReference foodsRef;
     private FirebaseAuth auth;
+    private StorageReference storageRef;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +94,33 @@ public class LogMealFragment extends Fragment {
         logMealService = new LogMealService();
         foodsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/").getReference("foods");
         auth = FirebaseAuth.getInstance();
+        storageRef = FirebaseStorage.getInstance().getReference();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.food) {
+            // Replace current fragment with FoodFragment
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new FoodFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+            return true;
+        } else if (item.getItemId() == R.id.logMeal) {
+            // Replace current fragment with LogMealFragment
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new LogMealFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -112,6 +143,19 @@ public class LogMealFragment extends Fragment {
         uploadButton = view.findViewById(R.id.uploadButton);
         analyzeButton = view.findViewById(R.id.analyzeButton);
         camButton = view.findViewById(R.id.camButton);
+
+        // Initialize switches
+        Switch halalSwitch = view.findViewById(R.id.switchHalal);
+        Switch spicySwitch = view.findViewById(R.id.switchSpicy);
+
+        // Set up switch listeners
+        halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            halalSwitch.setText(isChecked ? " True" : " False");
+        });
+
+        spicySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            spicySwitch.setText(isChecked ? " True" : " False");
+        });
     }
 
     private void setupButtonListeners() {
@@ -124,10 +168,25 @@ public class LogMealFragment extends Fragment {
                 return;
             }
 
-            // Validate all required fields first
+            // Get all input values
+            String ingredients = ((EditText) requireView().findViewById(R.id.ingredientsEdit))
+                    .getText().toString().trim();
             String expirationDate = expirationDateEdit.getText().toString().trim();
             String location = locationEdit.getText().toString().trim();
             String quantity = quantityEdit.getText().toString().trim();
+            
+            // Get switch states
+            Switch halalSwitch = requireView().findViewById(R.id.switchHalal);
+            Switch spicySwitch = requireView().findViewById(R.id.switchSpicy);
+            boolean isHalal = halalSwitch.isChecked();
+            boolean isSpicy = spicySwitch.isChecked();
+
+            // Validate all fields
+            if (ingredients.isEmpty()) {
+                ((EditText) requireView().findViewById(R.id.ingredientsEdit)).setError("Please enter ingredients");
+                ((EditText) requireView().findViewById(R.id.ingredientsEdit)).requestFocus();
+                return;
+            }
 
             if (expirationDate.isEmpty()) {
                 expirationDateEdit.setError("Please enter expiration date");
@@ -159,16 +218,95 @@ public class LogMealFragment extends Fragment {
                 Toast.makeText(getContext(), "Image file is too large. Please choose a smaller image.", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // Store the input values to be used after image analysis
+            List<String> ingredientsList = Arrays.asList(ingredients.split(",\\s*"));
             
-            // If all validations pass, analyze the image
-            analyzeImage(selectedImageFile);
+            String description = ((EditText) requireView().findViewById(R.id.descEdit))
+                    .getText().toString().trim();
+
+            // Add description validation
+            if (description.isEmpty()) {
+                ((EditText) requireView().findViewById(R.id.descEdit)).setError("Please enter a description");
+                ((EditText) requireView().findViewById(R.id.descEdit)).requestFocus();
+                return;
+            }
+
+            // Add this method to validate date format
+            if (!isValidDateFormat(expirationDate)) {
+                expirationDateEdit.setError("Please use format: YYYY-MM-DD HH:mm");
+                expirationDateEdit.requestFocus();
+                return;
+            }
+
+            // If all validations pass, analyze the image and save data
+            analyzeImage(selectedImageFile, new ApiCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    String dishName = extractDishName(result);
+                    
+                    // Upload image first, then save data
+                    if (selectedImageFile != null) {
+                        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+                            .format(new Date());
+                        String imagePath = "listings/" + auth.getCurrentUser().getUid() + "/" + timestamp + ".jpg";
+                        StorageReference imageRef = storageRef.child(imagePath);
+                        
+                        UploadTask uploadTask = imageRef.putFile(Uri.fromFile(selectedImageFile));
+                        uploadTask.continueWithTask(task -> {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            return imageRef.getDownloadUrl();
+                        }).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                // Create and save food item with image URL
+                                FoodItemExtended foodItem = new FoodItemExtended(
+                                    dishName,
+                                    isHalal,
+                                    isSpicy,
+                                    ingredientsList,
+                                    expirationDate,
+                                    location,
+                                    quantity,
+                                    true  // default to available
+                                );
+                                foodItem.setDescription(description);
+                                foodItem.setImageUrl(downloadUri.toString());
+                                
+                                // Save to both databases
+                                saveFoodData(foodItem);
+                                saveToExtendedDatabase(foodItem);
+                                
+                                // Update UI to show success
+                                requireActivity().runOnUiThread(() -> {
+                                    foodNameText.setText("Detected Food: " + dishName);
+                                    Toast.makeText(getContext(), "Food item saved successfully!", Toast.LENGTH_SHORT).show();
+                                });
+                            } else {
+                                requireActivity().runOnUiThread(() -> 
+                                    Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                                );
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    requireActivity().runOnUiThread(() -> 
+                        Toast.makeText(getContext(), "Error analyzing image: " + error, Toast.LENGTH_SHORT).show()
+                    );
+                }
+            });
         });
         
         camButton.setOnClickListener(v -> {
             if (hasPermissions(REQUIRED_PERMISSIONS)) {
                 dispatchTakePictureIntent();
             } else {
-                requestPermissions(REQUIRED_PERMISSIONS, CAMERA_REQUEST_CODE);
+                ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, CAMERA_REQUEST_CODE);
             }
         });
     }
@@ -249,171 +387,38 @@ public class LogMealFragment extends Fragment {
         return image;
     }
 
-    private void analyzeImage(File imageFile) {
-        logMealService.analyzeFoodImage(imageFile, new ApiCallback() {
-            @Override
-            public void onSuccess(String result) {
-                requireActivity().runOnUiThread(() -> {
-                    String detectedDishName = extractTopDishName(result);
-                    if (detectedDishName.isEmpty()) {
-                        foodNameText.setText("No food detected.");
-                        Toast.makeText(getContext(), "No food detected.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    foodNameText.setText("Detected Food: " + detectedDishName);
-                    saveOrRetrieveFoodFromFirebase(detectedDishName);
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                requireActivity().runOnUiThread(() -> 
-                    Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show());
-            }
-        });
-    }
-
-    private String extractTopDishName(String result) {
-        try {
-            String[] sections = result.split("\n\n");
-            if (sections.length == 0) return "";
-
-            String detectedDishText = sections[0];
-            if (detectedDishText.contains("\n")) {
-                String[] lines = detectedDishText.split("\n");
-                if (lines.length > 1) {
-                    String topDishLine = lines[1].trim();
-                    int openParenIndex = topDishLine.indexOf("(");
-                    if (openParenIndex != -1) {
-                        return topDishLine.substring(3, openParenIndex).trim();
-                    }
+    private void analyzeImage(File imageFile, ApiCallback callback) {
+        if (logMealService != null) {
+            logMealService.analyzeImage(imageFile, new ApiCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    requireActivity().runOnUiThread(() -> {
+                        foodNameText.setText("Detected Food: " + extractDishName(result));
+                    });
+                    callback.onSuccess(result);
                 }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error extracting top dish name: " + e.getMessage());
-        }
-        return "";
-    }
 
-    private void saveOrRetrieveFoodFromFirebase(String dishName) {
-        foodsRef.child(dishName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Food exists in foods database - load its data
-                    FoodItem existingFood = snapshot.getValue(FoodItem.class);
-                    if (existingFood != null) {
-                        // Update UI with existing data
-                        foodNameText.setText("Detected Food: " + existingFood.getDishName());
-                        ingredientsText.setText("Ingredients: " + String.join(", ", existingFood.getIngredients()));
-                        halalText.setText("Halal: " + (existingFood.isHalal() ? "Yes" : "No"));
-                        spicyText.setText("Spicy: " + (existingFood.isSpicy() ? "Yes" : "No"));
-                        
-                        // Still prompt for new details for testing database
-                        promptUserForFoodDetails(dishName);
-                    }
-                } else {
-                    // Food doesn't exist, proceed with new data collection
-                    promptUserForFoodDetails(dishName);
+                @Override
+                public void onFailure(String error) {
+                    callback.onFailure(error);
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.e(TAG, "Database error: " + error.getMessage());
-                Toast.makeText(getContext(), "Database error occurred.", Toast.LENGTH_SHORT).show();
-                promptUserForFoodDetails(dishName);
-            }
-        });
-    }
-
-    private void promptUserForFoodDetails(String dishName) {
-        showHalalDialog(dishName);
-    }
-
-    private void showHalalDialog(String dishName) {
-        try {
-            final boolean[] isHalal = {false};
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("Is " + dishName + " Halal?")
-                   .setCancelable(false)
-                   .setSingleChoiceItems(new String[]{"Yes", "No"}, -1, (dialog, which) -> {
-                       isHalal[0] = (which == 0);
-                   })
-                   .setPositiveButton("Next", (dialog, which) -> {
-                       dialog.dismiss();
-                       showSpicyDialog(dishName, isHalal[0]);
-                   })
-                   .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-            
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            Log.d(TAG, "Showing halal dialog for dish: " + dishName);
-        } catch (Exception e) {
-            Log.e(TAG, "Error showing halal dialog: " + e.getMessage(), e);
+            });
         }
     }
 
-    private void showSpicyDialog(String dishName, boolean isHalal) {
-        final boolean[] isSpicy = {false};
-        new AlertDialog.Builder(requireContext())
-            .setTitle("Is " + dishName + " Spicy?")
-            .setSingleChoiceItems(new String[]{"Yes", "No"}, -1, (dialog, which) -> {
-                isSpicy[0] = (which == 0);
-            })
-            .setPositiveButton("Next", (dialog, which) -> showIngredientsDialog(dishName, isHalal, isSpicy[0]))
-            .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
-            .show();
-    }
-
-    private void showIngredientsDialog(String dishName, boolean isHalal, boolean isSpicy) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
-        dialogBuilder.setTitle("Enter Ingredients for " + dishName);
-
-        final EditText ingredientsInput = new EditText(requireContext());
-        ingredientsInput.setHint("Enter ingredients separated by commas");
-        dialogBuilder.setView(ingredientsInput);
-
-        dialogBuilder.setPositiveButton("Save", (dialog, which) -> {
-            String ingredientsText = ingredientsInput.getText().toString().trim();
-            
-            // Validate ingredients
-            if (ingredientsText.isEmpty()) {
-                Toast.makeText(getContext(), "Please enter ingredients", Toast.LENGTH_SHORT).show();
-                return;
+    private String extractDishName(String result) {
+        // The result contains "Detected Food:" followed by the first food item
+        String[] lines = result.split("\n");
+        if (lines.length >= 2) {
+            // Get the first food item line and extract just the name (before the probability)
+            String foodLine = lines[1].substring(3); // Skip the "1. " prefix
+            int probIndex = foodLine.indexOf(" (");
+            if (probIndex > 0) {
+                return foodLine.substring(0, probIndex);
             }
-
-            // Double check required fields again before saving
-            String expirationDate = expirationDateEdit.getText().toString().trim();
-            String location = locationEdit.getText().toString().trim();
-            String quantity = quantityEdit.getText().toString().trim();
-
-            if (expirationDate.isEmpty() || location.isEmpty() || quantity.isEmpty()) {
-                Toast.makeText(getContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            List<String> ingredientsList = Arrays.asList(ingredientsText.split(",\\s*"));
-
-            // Create FoodItem for foods database (with limited fields)
-            FoodItem basicFoodItem = new FoodItem();
-            basicFoodItem.setDishName(dishName);
-            basicFoodItem.setHalal(isHalal);
-            basicFoodItem.setSpicy(isSpicy);
-            basicFoodItem.setIngredients(ingredientsList);
-
-            // Save basic food data
-            saveFoodData(basicFoodItem);
-
-            // Create extended food item for testing database
-            FoodItemExtended extendedFoodItem = new FoodItemExtended(
-                dishName, isHalal, isSpicy, ingredientsList,
-                expirationDate, location, quantity, true);
-            saveToExtendedDatabase(extendedFoodItem);
-        });
-
-        dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        dialogBuilder.show();
+            return foodLine;
+        }
+        return "Unknown Food";
     }
 
     private void saveFoodData(FoodItem foodItem) {
@@ -506,60 +511,46 @@ public class LogMealFragment extends Fragment {
     }
 
     private void saveToExtendedDatabase(FoodItemExtended foodItem) {
-        try {
-            // Get current user
-            if (auth.getCurrentUser() == null) {
-                Toast.makeText(getContext(), "Please sign in to save food data", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (auth.getCurrentUser() == null) {
+            Toast.makeText(getContext(), "Please sign in first", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            String userId = auth.getCurrentUser().getUid();
-            DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
-                    .getReference("listings")
-                    .child(userId)
-                    .child("items");
+        String userId = auth.getCurrentUser().getUid();
+        DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("listings")
+                .child(userId)
+                .child("items");
 
-            // Generate a unique key for the item
-            String itemKey = listingsRef.push().getKey();
-            if (itemKey == null) {
-                Toast.makeText(getContext(), "Error generating database key", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        // Format the date to match website format
+        String formattedDate = expirationDateEdit.getText().toString().replace(" ", "T");
 
-            // Create timestamp
-            String timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-                    .format(new Date());
+        // Create a map with all the required fields
+        Map<String, Object> foodData = new HashMap<>();
+        foodData.put("title", foodItem.getDishName());
+        foodData.put("description", foodItem.getDescription());
+        foodData.put("imageUrl", foodItem.getImageUrl());
+        foodData.put("ingredients", foodItem.getIngredients());
+        foodData.put("expiryDate", formattedDate);
+        foodData.put("location", foodItem.getLocation());
+        foodData.put("quantity", foodItem.getQuantity());
+        foodData.put("halal", foodItem.isHalal());
+        foodData.put("spicy", foodItem.isSpicy());
+        foodData.put("status", "available");
+        foodData.put("createdAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date()));
+        foodData.put("updatedAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date()));
 
-            // Create the data map without a description field
-            Map<String, Object> foodData = new HashMap<>();
-            foodData.put("title", foodItem.getDishName());
-            foodData.put("halal", foodItem.isHalal());
-            foodData.put("spicy", foodItem.isSpicy());
-            foodData.put("ingredients", foodItem.getIngredients());
-            foodData.put("expiryDate", foodItem.getExpirationDate());
-            foodData.put("location", foodItem.getLocation());
-            foodData.put("quantity", foodItem.getQuantity());
-            foodData.put("sellerId", userId);
-            foodData.put("status", foodItem.isAvailable() ? "available" : "unavailable");
-            foodData.put("createdAt", timestamp);
-            foodData.put("updatedAt", timestamp);
-
-            // Save to listings database
+        // Generate a new unique key for this item
+        String itemKey = listingsRef.push().getKey();
+        if (itemKey != null) {
             listingsRef.child(itemKey).setValue(foodData)
-                    .addOnSuccessListener(aVoid -> {
-                        Log.d(TAG, "Successfully saved to listings database");
-                        Toast.makeText(getContext(), "Food data saved successfully!", Toast.LENGTH_SHORT).show();
-                        clearForm();
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e(TAG, "Error saving to listings database: " + e.getMessage(), e);
-                        Toast.makeText(getContext(), "Error saving food data: " + e.getMessage(), 
-                            Toast.LENGTH_SHORT).show();
-                    });
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error in saveToExtendedDatabase: " + e.getMessage(), e);
-            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Food listing saved successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to save food listing: " + e.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                });
         }
     }
 
@@ -626,5 +617,17 @@ public class LogMealFragment extends Fragment {
         spicyText.setText("Spicy: -");
         imageView.setImageResource(android.R.color.darker_gray);
         selectedImageFile = null;
+    }
+
+    // Add this method to validate date format
+    private boolean isValidDateFormat(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            sdf.setLenient(false);
+            sdf.parse(date);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 } 

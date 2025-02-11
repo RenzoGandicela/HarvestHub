@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,9 @@ public final class ActivityLogmealBinding implements ViewBinding {
   public final Button camButton;
 
   @NonNull
+  public final EditText descEdit;
+
+  @NonNull
   public final TextView expirationDate;
 
   @NonNull
@@ -45,6 +49,9 @@ public final class ActivityLogmealBinding implements ViewBinding {
 
   @NonNull
   public final ImageView imageView;
+
+  @NonNull
+  public final EditText ingredientsEdit;
 
   @NonNull
   public final TextView ingredientsText;
@@ -65,29 +72,41 @@ public final class ActivityLogmealBinding implements ViewBinding {
   public final TextView spicyText;
 
   @NonNull
+  public final Switch switchHalal;
+
+  @NonNull
+  public final Switch switchSpicy;
+
+  @NonNull
   public final Button uploadButton;
 
   private ActivityLogmealBinding(@NonNull FrameLayout rootView, @NonNull Button analyzeButton,
-      @NonNull TextView available, @NonNull Button camButton, @NonNull TextView expirationDate,
-      @NonNull EditText expirationDateEdit, @NonNull TextView foodNameText,
-      @NonNull TextView halalText, @NonNull ImageView imageView, @NonNull TextView ingredientsText,
+      @NonNull TextView available, @NonNull Button camButton, @NonNull EditText descEdit,
+      @NonNull TextView expirationDate, @NonNull EditText expirationDateEdit,
+      @NonNull TextView foodNameText, @NonNull TextView halalText, @NonNull ImageView imageView,
+      @NonNull EditText ingredientsEdit, @NonNull TextView ingredientsText,
       @NonNull TextView location, @NonNull EditText locationEdit, @NonNull TextView quantity,
-      @NonNull EditText quantityEdit, @NonNull TextView spicyText, @NonNull Button uploadButton) {
+      @NonNull EditText quantityEdit, @NonNull TextView spicyText, @NonNull Switch switchHalal,
+      @NonNull Switch switchSpicy, @NonNull Button uploadButton) {
     this.rootView = rootView;
     this.analyzeButton = analyzeButton;
     this.available = available;
     this.camButton = camButton;
+    this.descEdit = descEdit;
     this.expirationDate = expirationDate;
     this.expirationDateEdit = expirationDateEdit;
     this.foodNameText = foodNameText;
     this.halalText = halalText;
     this.imageView = imageView;
+    this.ingredientsEdit = ingredientsEdit;
     this.ingredientsText = ingredientsText;
     this.location = location;
     this.locationEdit = locationEdit;
     this.quantity = quantity;
     this.quantityEdit = quantityEdit;
     this.spicyText = spicyText;
+    this.switchHalal = switchHalal;
+    this.switchSpicy = switchSpicy;
     this.uploadButton = uploadButton;
   }
 
@@ -136,6 +155,12 @@ public final class ActivityLogmealBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.descEdit;
+      EditText descEdit = ViewBindings.findChildViewById(rootView, id);
+      if (descEdit == null) {
+        break missingId;
+      }
+
       id = R.id.expirationDate;
       TextView expirationDate = ViewBindings.findChildViewById(rootView, id);
       if (expirationDate == null) {
@@ -163,6 +188,12 @@ public final class ActivityLogmealBinding implements ViewBinding {
       id = R.id.imageView;
       ImageView imageView = ViewBindings.findChildViewById(rootView, id);
       if (imageView == null) {
+        break missingId;
+      }
+
+      id = R.id.ingredientsEdit;
+      EditText ingredientsEdit = ViewBindings.findChildViewById(rootView, id);
+      if (ingredientsEdit == null) {
         break missingId;
       }
 
@@ -202,6 +233,18 @@ public final class ActivityLogmealBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.switchHalal;
+      Switch switchHalal = ViewBindings.findChildViewById(rootView, id);
+      if (switchHalal == null) {
+        break missingId;
+      }
+
+      id = R.id.switchSpicy;
+      Switch switchSpicy = ViewBindings.findChildViewById(rootView, id);
+      if (switchSpicy == null) {
+        break missingId;
+      }
+
       id = R.id.uploadButton;
       Button uploadButton = ViewBindings.findChildViewById(rootView, id);
       if (uploadButton == null) {
@@ -209,8 +252,9 @@ public final class ActivityLogmealBinding implements ViewBinding {
       }
 
       return new ActivityLogmealBinding((FrameLayout) rootView, analyzeButton, available, camButton,
-          expirationDate, expirationDateEdit, foodNameText, halalText, imageView, ingredientsText,
-          location, locationEdit, quantity, quantityEdit, spicyText, uploadButton);
+          descEdit, expirationDate, expirationDateEdit, foodNameText, halalText, imageView,
+          ingredientsEdit, ingredientsText, location, locationEdit, quantity, quantityEdit,
+          spicyText, switchHalal, switchSpicy, uploadButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

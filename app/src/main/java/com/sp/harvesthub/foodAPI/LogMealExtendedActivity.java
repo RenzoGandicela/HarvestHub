@@ -22,7 +22,7 @@ import java.util.TimeZone;
 public class LogMealExtendedActivity extends AppCompatActivity {
 
     private static final String TAG = "LogMealExtendedActivity";
-    private DatabaseReference extendedFoodsRef;
+    private DatabaseReference listingsRef;
     private FirebaseAuth auth;
 
     @Override
@@ -32,12 +32,12 @@ public class LogMealExtendedActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
         
-        extendedFoodsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
-                .getReference("testing");
+        listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("listings");
 
         FoodItemExtended foodItem = (FoodItemExtended) getIntent().getSerializableExtra("foodItem");
         if (foodItem != null) {
-            saveToExtendedDatabase(foodItem);
+            saveToListingsDatabase(foodItem);
         } else {
             Log.e(TAG, "No food item received");
             Toast.makeText(this, "Error: No food data received", Toast.LENGTH_SHORT).show();
@@ -45,7 +45,7 @@ public class LogMealExtendedActivity extends AppCompatActivity {
         }
     }
 
-    private void saveToExtendedDatabase(FoodItemExtended foodItem) {
+    private void saveToListingsDatabase(FoodItemExtended foodItem) {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser == null) {
             Log.e(TAG, "No user is signed in");
@@ -58,7 +58,7 @@ public class LogMealExtendedActivity extends AppCompatActivity {
         String sellerId = currentUser.getUid();
         
         // Create reference to user's items node
-        DatabaseReference userItemsRef = extendedFoodsRef.child(sellerId).child("items");
+        DatabaseReference userItemsRef = listingsRef.child(sellerId).child("items");
         String key = userItemsRef.push().getKey();
         
         if (key != null) {
@@ -69,8 +69,10 @@ public class LogMealExtendedActivity extends AppCompatActivity {
 
             // Create a Map to include all the food item data
             Map<String, Object> foodData = new HashMap<>();
-            foodData.put("title", foodItem.getDishName());  // Using dishName as title
-            foodData.put("description", String.join(", ", foodItem.getIngredients())); // Using ingredients as description
+            foodData.put("title", foodItem.getDishName());
+            foodData.put("halal", foodItem.isHalal());
+            foodData.put("spicy", foodItem.isSpicy());
+            foodData.put("ingredients", foodItem.getIngredients());
             foodData.put("expiryDate", foodItem.getExpirationDate());
             foodData.put("location", foodItem.getLocation());
             foodData.put("quantity", foodItem.getQuantity());
@@ -79,20 +81,14 @@ public class LogMealExtendedActivity extends AppCompatActivity {
             foodData.put("createdAt", timestamp);
             foodData.put("updatedAt", timestamp);
             
-            // Additional food-specific data
-            foodData.put("halal", foodItem.isHalal());
-            foodData.put("spicy", foodItem.isSpicy());
-
             userItemsRef.child(key).setValue(foodData)
                     .addOnSuccessListener(aVoid -> {
-                        Log.d(TAG, "Successfully saved to testing database under user: " + sellerId);
-                        Toast.makeText(this, "Food saved to extended database!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Successfully saved to listings database");
                         setResult(RESULT_OK);
                         finish();
                     })
                     .addOnFailureListener(e -> {
-                        Log.e(TAG, "Failed to save to testing database", e);
-                        Toast.makeText(this, "Error saving to extended database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Failed to save to listings database", e);
                         setResult(RESULT_CANCELED);
                         finish();
                     });

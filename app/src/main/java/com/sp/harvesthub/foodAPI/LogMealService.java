@@ -21,7 +21,7 @@ public class LogMealService {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public void analyzeFoodImage(File imageFile, ApiCallback callback) {
+    public void analyzeImage(File imageFile, ApiCallback callback) {
         executorService.execute(() -> {
             OkHttpClient client = new OkHttpClient();
 

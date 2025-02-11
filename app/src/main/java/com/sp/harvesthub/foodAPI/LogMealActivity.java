@@ -267,28 +267,6 @@ public class LogMealActivity extends AppCompatActivity {
     }
 
     private void analyzeImage(File imageFile) {
-        logMealService.analyzeFoodImage(imageFile, new ApiCallback() {
-            @Override
-            public void onSuccess(String result) {
-                runOnUiThread(() -> {
-                    String detectedDishName = extractTopDishName(result);
-
-                    if (detectedDishName.isEmpty()) {
-                        foodNameText.setText("No food detected.");
-                        Toast.makeText(LogMealActivity.this, "No food detected.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    foodNameText.setText("Detected Food: " + detectedDishName);
-                    promptUserForFoodDetails(detectedDishName);
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                runOnUiThread(() -> Toast.makeText(LogMealActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show());
-            }
-        });
     }
 
     private String extractTopDishName(String result) {

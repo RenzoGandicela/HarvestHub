@@ -1,11 +1,7 @@
 package com.sp.harvesthub.foodListings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,8 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.harvesthub.R;
-import com.sp.harvesthub.foodAPI.LogMealActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +24,7 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food);  // We'll create this layout
+        setContentView(R.layout.activity_food);
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,18 +42,12 @@ public class FoodActivity extends AppCompatActivity {
         foodAdapter = new FoodAdapter(this, foodList);
         recyclerView.setAdapter(foodAdapter);
 
-        foodAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(FoodItem foodItem) {
-                // Handle item click if needed
-            }
-        });
-
         fetchFoodData();
     }
 
     private void fetchFoodData() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("foods");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("foods");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

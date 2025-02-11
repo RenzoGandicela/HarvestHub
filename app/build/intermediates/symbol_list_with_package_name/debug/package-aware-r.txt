@@ -3551,6 +3551,7 @@ id deleteNote
 id deltaRelative
 id dependency_ordering
 id desc
+id descEdit
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -3683,6 +3684,7 @@ id immediateStop
 id included
 id indeterminate
 id info
+id ingredientsEdit
 id ingredientsText
 id invisible
 id inward
@@ -3705,6 +3707,7 @@ id list_item
 id locale
 id location
 id locationEdit
+id logMeal
 id loginRedirectText
 id login_button
 id login_email
@@ -3960,6 +3963,8 @@ id submit_area
 id submit_event_button
 id submit_event_button_type2
 id supportScrollUp
+id switchHalal
+id switchSpicy
 id switchWidget
 id tabMode
 id tag_accessibility_actions

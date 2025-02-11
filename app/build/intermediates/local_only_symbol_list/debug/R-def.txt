@@ -133,6 +133,7 @@ id channelsRecyclerView
 id chatImageView
 id deleteNote
 id desc
+id descEdit
 id dialogBox
 id dialogForgot
 id displayNote
@@ -175,10 +176,12 @@ id fragment_container
 id halalTag
 id halalText
 id imageView
+id ingredientsEdit
 id ingredientsText
 id leftSpace
 id location
 id locationEdit
+id logMeal
 id loginRedirectText
 id login_button
 id login_email
@@ -236,6 +239,8 @@ id spicyTag
 id spicyText
 id submit_event_button
 id submit_event_button_type2
+id switchHalal
+id switchSpicy
 id textView3
 id textView4
 id themeSwitch
