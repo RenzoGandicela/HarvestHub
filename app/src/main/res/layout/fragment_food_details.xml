@@ -166,7 +166,7 @@
         android:layout_marginBottom="64dp"
         android:backgroundTint="@color/primary_green"
         android:fontFamily="@font/young_serif"
-        android:text="Back to Listings"
+        android:text="Back"
         android:textColor="@android:color/white" />
 
 </RelativeLayout> 

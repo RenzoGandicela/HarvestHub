@@ -25,6 +25,7 @@ import com.sp.harvesthub.nav_fragment.MapFragment;
 import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
+import com.sp.harvesthub.foodListings.FoodFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
@@ -97,36 +98,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         nav_view.setNavigationItemSelectedListener(this);
 
-        // Initialize bottom navigation
+        // Set default fragment to FoodFragment after login
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new FoodFragment())
+                    .commit();
+        }
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
             int itemId = item.getItemId();
-            
+
             if (itemId == R.id.nav_home) {
-                replaceFragment(new LogMealFragment());
+                selectedFragment = new FoodFragment();
                 setTitle(getString(R.string.home));
             } else if (itemId == R.id.nav_map) {
-                replaceFragment(new MapFragment());
+                selectedFragment = new MapFragment();
                 setTitle(getString(R.string.map));
+            } else if (itemId == R.id.nav_add) {
+                selectedFragment = new LogMealFragment();
+                setTitle("Add Listing");
             } else if (itemId == R.id.nav_favorites) {
-                replaceFragment(new FavouritesFragment());
+                selectedFragment = new FavouritesFragment();
                 setTitle(getString(R.string.favorites));
             } else if (itemId == R.id.nav_profile) {
-                replaceFragment(new ProfileFragment());
+                selectedFragment = new ProfileFragment();
                 setTitle(getString(R.string.profile));
+            } else if (itemId == R.id.nav_announcement) {
+                selectedFragment = new AnnouncementFragment();
+                setTitle(getString(R.string.announcement));
+            } else if (itemId == R.id.nav_bookmark) {
+                selectedFragment = new BookmarkFragment();
+                setTitle(getString(R.string.bookmark));
+            } else if (itemId == R.id.nav_calendar) {
+                selectedFragment = new CalendarFragment();
+                setTitle(getString(R.string.calendar));
+            } else if (itemId == R.id.nav_setting) {
+                selectedFragment = new SettingFragment();
+                setTitle(getString(R.string.setting));
+            } else if (itemId == R.id.nav_social) {
+                selectedFragment = new SocialFragment();
+                setTitle(getString(R.string.social));
+            } else if (itemId == R.id.nav_share) {
+                Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.nav_logout) {
+                auth.signOut();
+                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
             }
-            
+
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
+            }
             return true;
         });
 
-        // Set default selected item
+        // Set default selected item to home
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
     }
 
     @Override
@@ -134,17 +165,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogMealFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new FoodFragment())
+                    .commit();
         } else if (id == R.id.nav_announcement) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AnnouncementFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new AnnouncementFragment())
+                    .commit();
         } else if (id == R.id.nav_bookmark) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BookmarkFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new BookmarkFragment())
+                    .commit();
         } else if (id == R.id.nav_calendar) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalendarFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new CalendarFragment())
+                    .commit();
         } else if (id == R.id.nav_setting) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new SettingFragment())
+                    .commit();
         } else if (id == R.id.nav_social) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SocialFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new SocialFragment())
+                    .commit();
         } else if (id == R.id.nav_share) {
             Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_logout) {

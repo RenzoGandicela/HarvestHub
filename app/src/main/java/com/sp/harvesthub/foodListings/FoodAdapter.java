@@ -53,9 +53,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             holder.spicyTag.setVisibility(View.INVISIBLE);
         }
         
-        // Set location text
+        // Set location text with capitalization
         if (food.getLocation() != null && !food.getLocation().isEmpty()) {
-            holder.locationText.setText(food.getLocation());
+            String location = food.getLocation();
+            location = location.substring(0, 1).toUpperCase() + location.substring(1);
+            holder.locationText.setText(location);
             holder.locationText.setVisibility(View.VISIBLE);
         } else {
             holder.locationText.setVisibility(View.GONE);

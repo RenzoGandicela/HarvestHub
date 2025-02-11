@@ -4,7 +4,10 @@ package com.sp.harvesthub.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +23,25 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
   private final FrameLayout rootView;
 
   @NonNull
+  public final ImageButton filterButton;
+
+  @NonNull
   public final RecyclerView recyclerView;
 
+  @NonNull
+  public final EditText searchEditText;
+
+  @NonNull
+  public final ImageView searchIcon;
+
   private FoodRecyclerviewLayoutBinding(@NonNull FrameLayout rootView,
-      @NonNull RecyclerView recyclerView) {
+      @NonNull ImageButton filterButton, @NonNull RecyclerView recyclerView,
+      @NonNull EditText searchEditText, @NonNull ImageView searchIcon) {
     this.rootView = rootView;
+    this.filterButton = filterButton;
     this.recyclerView = recyclerView;
+    this.searchEditText = searchEditText;
+    this.searchIcon = searchIcon;
   }
 
   @Override
@@ -55,13 +71,32 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.filterButton;
+      ImageButton filterButton = ViewBindings.findChildViewById(rootView, id);
+      if (filterButton == null) {
+        break missingId;
+      }
+
       id = R.id.recyclerView;
       RecyclerView recyclerView = ViewBindings.findChildViewById(rootView, id);
       if (recyclerView == null) {
         break missingId;
       }
 
-      return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, recyclerView);
+      id = R.id.searchEditText;
+      EditText searchEditText = ViewBindings.findChildViewById(rootView, id);
+      if (searchEditText == null) {
+        break missingId;
+      }
+
+      id = R.id.searchIcon;
+      ImageView searchIcon = ViewBindings.findChildViewById(rootView, id);
+      if (searchIcon == null) {
+        break missingId;
+      }
+
+      return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, filterButton, recyclerView,
+          searchEditText, searchIcon);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

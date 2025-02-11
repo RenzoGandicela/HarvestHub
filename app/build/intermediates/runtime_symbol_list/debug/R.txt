@@ -3174,6 +3174,7 @@ int drawable abc_textfield_search_activated_mtrl_alpha 0x7f080074
 int drawable abc_textfield_search_default_mtrl_alpha 0x7f080075
 int drawable abc_textfield_search_material 0x7f080076
 int drawable abc_vector_test 0x7f080077
+int drawable add_circle 0x7f08013e
 int drawable announcement 0x7f080078
 int drawable avd_hide_password 0x7f080079
 int drawable avd_show_password 0x7f08007a
@@ -3248,6 +3249,7 @@ int drawable ic_clear_black_24 0x7f0800be
 int drawable ic_clock_black_24dp 0x7f0800bf
 int drawable ic_delete 0x7f0800c0
 int drawable ic_favorite 0x7f0800c1
+int drawable ic_filter 0x7f08013d
 int drawable ic_hashtag 0x7f0800c2
 int drawable ic_heart 0x7f0800c3
 int drawable ic_heart_filled 0x7f08013b
@@ -3635,6 +3637,10 @@ int id fillStart 0x7f0a00fb
 int id fill_horizontal 0x7f0a00fc
 int id fill_vertical 0x7f0a00fd
 int id filled 0x7f0a00fe
+int id filterAvailable 0x7f0a02b6
+int id filterButton 0x7f0a02b1
+int id filterHalal 0x7f0a02b7
+int id filterSpicy 0x7f0a02b8
 int id fitCenter 0x7f0a00ff
 int id fitEnd 0x7f0a0100
 int id fitStart 0x7f0a0101
@@ -3790,6 +3796,7 @@ int id mtrl_picker_title_text 0x7f0a0193
 int id mtrl_view_tag_bottom_padding 0x7f0a0194
 int id multiply 0x7f0a0195
 int id navFragment 0x7f0a0196
+int id nav_add 0x7f0a02b9
 int id nav_announcement 0x7f0a0197
 int id nav_bookmark 0x7f0a0198
 int id nav_calendar 0x7f0a0199
@@ -3901,6 +3908,8 @@ int id scrollIndicatorDown 0x7f0a0201
 int id scrollIndicatorUp 0x7f0a0202
 int id scrollView 0x7f0a0203
 int id scrollable 0x7f0a0204
+int id searchEditText 0x7f0a02b2
+int id searchIcon 0x7f0a02b3
 int id search_badge 0x7f0a0205
 int id search_bar 0x7f0a0206
 int id search_button 0x7f0a0207
@@ -4216,6 +4225,7 @@ int layout design_text_input_start_icon 0x7f0d003c
 int layout dialog_forgot 0x7f0d003d
 int layout expand_button 0x7f0d003e
 int layout featured_card_design 0x7f0d003f
+int layout filter_dialog_layout 0x7f0d00a3
 int layout food_card 0x7f0d0040
 int layout food_card_tags_halal 0x7f0d0041
 int layout food_card_tags_spicy 0x7f0d0042

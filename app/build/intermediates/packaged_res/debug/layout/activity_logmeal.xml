@@ -31,7 +31,8 @@
                 android:text="Take a photo"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                app:cornerRadius="16dp" />
+                app:cornerRadius="16dp"
+                android:layout_marginRight="0.75dp"/>
 
             <Button
                 android:id="@+id/uploadButton"
@@ -42,6 +43,7 @@
                 android:text="Upload Image"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
+                android:layout_marginLeft="0.75dp"
                 app:cornerRadius="16dp" />
         </LinearLayout>
 

@@ -143,6 +143,17 @@ public class LogMealFragment extends Fragment {
         locationEdit = view.findViewById(R.id.locationEdit);
         quantityEdit = view.findViewById(R.id.quantityEdit);
 
+        Switch spicySwitch = view.findViewById(R.id.switchSpicy);
+        Switch halalSwitch = view.findViewById(R.id.switchHalal);
+
+        spicySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            spicySwitch.setText(isChecked ? " True" : " False");
+        });
+
+        halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            halalSwitch.setText(isChecked ? " True" : " False");
+        });
+
         // Set click listeners
         uploadButton.setOnClickListener(v -> openFilePicker());
         analyzeButton.setOnClickListener(v -> {

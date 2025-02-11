@@ -46,6 +46,7 @@ color social_background
 color teal_200
 color teal_700
 color white
+drawable add_circle
 drawable announcement
 drawable background
 drawable baseline_lock_reset_24
@@ -74,6 +75,7 @@ drawable ic_bookmark
 drawable ic_calendar
 drawable ic_delete
 drawable ic_favorite
+drawable ic_filter
 drawable ic_hashtag
 drawable ic_heart
 drawable ic_heart_filled
@@ -171,6 +173,10 @@ id featured_location
 id featured_recycler
 id featured_recycler_type2
 id featured_title
+id filterAvailable
+id filterButton
+id filterHalal
+id filterSpicy
 id food
 id foodImage
 id foodName
@@ -204,6 +210,7 @@ id messageText
 id messageTxt
 id messagesRecyclerView
 id navFragment
+id nav_add
 id nav_announcement
 id nav_bookmark
 id nav_calendar
@@ -232,6 +239,8 @@ id rightSpace
 id role_spinner
 id saveDescriptionButton
 id saveNote
+id searchEditText
+id searchIcon
 id sellerIdText
 id sendButton
 id senderName
@@ -281,6 +290,7 @@ layout chat_bubble
 layout chat_image_item
 layout dialog_forgot
 layout featured_card_design
+layout filter_dialog_layout
 layout food_card
 layout food_card_tags_halal
 layout food_card_tags_spicy

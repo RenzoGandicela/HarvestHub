@@ -88,12 +88,36 @@ public class FoodDetailsFragment extends Fragment {
                     .load(foodItem.getImageUrl())
                     .into(foodImage);
 
-            // Set texts
-            foodName.setText(foodItem.getDishName());
+            // Set texts with capitalized dish name
+            foodName.setText(capitalizeDishName(foodItem.getDishName()));
             quantityText.setText("Available Quantity: " + foodItem.getQuantity());
             sellerIdText.setText("Supplied by: @" + foodItem.getSellerId());
-            locationText.setText("Location: " + foodItem.getLocation());
-            expiryDateText.setText("Expiry Date: " + foodItem.getExpirationDate());
+
+            // Capitalize location
+            String location = foodItem.getLocation();
+            if (location != null && !location.isEmpty()) {
+                location = location.substring(0, 1).toUpperCase() + location.substring(1);
+                locationText.setText("Location: " + location);
+            }
+
+            // Format expiry date
+            String expiryDate = foodItem.getExpirationDate();
+            if (expiryDate != null && !expiryDate.isEmpty()) {
+                try {
+                    // Parse the original date format
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
+                    // Create the desired output format
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                    
+                    Date date = inputFormat.parse(expiryDate);
+                    String formattedDate = outputFormat.format(date);
+                    expiryDateText.setText("Expiry Date: " + formattedDate);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error formatting date: " + e.getMessage());
+                    expiryDateText.setText("Expiry Date: " + expiryDate);
+                }
+            }
+
             descriptionText.setText(foodItem.getDescription());
             
             // Format and set upload time
@@ -248,5 +272,21 @@ public class FoodDetailsFragment extends Fragment {
         } else {
             likeButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_heart_outline));
         }
+    }
+
+    private String capitalizeDishName(String dishName) {
+        if (dishName == null || dishName.isEmpty()) {
+            return "";
+        }
+        String[] words = dishName.toLowerCase().split("\\s+");
+        StringBuilder capitalizedName = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalizedName.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+        return capitalizedName.toString().trim();
     }
 } 
