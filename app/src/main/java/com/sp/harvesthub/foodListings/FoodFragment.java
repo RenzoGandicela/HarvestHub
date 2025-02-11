@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.widget.NestedScrollView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,9 @@ public class FoodFragment extends Fragment {
     private boolean isHalalChecked = false;
     private boolean isSpicyChecked = false;
     private boolean isAvailableChecked = false;
+    private NestedScrollView scrollView;
+    private FloatingActionButton scrollToTopButton;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,8 +106,27 @@ public class FoodFragment extends Fragment {
             });
         }
 
-        fetchListingsData();
+        // Initialize scroll view and button
+        scrollView = view.findViewById(R.id.scrollView);
+        scrollToTopButton = view.findViewById(R.id.scrollToTopButton);
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
 
+        // Set up scroll listener
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) 
+            (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                if (scrollY > 500) {
+                    scrollToTopButton.show();
+                } else {
+                    scrollToTopButton.hide();
+                }
+        });
+
+        // Set up scroll to top button
+        scrollToTopButton.setOnClickListener(v -> {
+            scrollView.smoothScrollTo(0, 0);
+        });
+
+        // Set up start sharing button
         Button startSharingButton = view.findViewById(R.id.startSharingButton);
         startSharingButton.setOnClickListener(v -> {
             // Navigate to LogMealFragment
@@ -109,7 +134,12 @@ public class FoodFragment extends Fragment {
             transaction.replace(R.id.fragment_container, new LogMealFragment());
             transaction.addToBackStack(null);
             transaction.commit();
+            
+            // Select the nav_add item in bottom navigation
+            bottomNavigationView.setSelectedItemId(R.id.nav_add);
         });
+
+        fetchListingsData();
 
         return view;
     }

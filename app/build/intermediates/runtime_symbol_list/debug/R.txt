@@ -3236,6 +3236,7 @@ int drawable ic_add_24 0x7f0800b2
 int drawable ic_announcement 0x7f0800b3
 int drawable ic_arrow_back_black_24 0x7f0800b4
 int drawable ic_arrow_down_24dp 0x7f0800b5
+int drawable ic_arrow_up 0x7f080140
 int drawable ic_attach 0x7f0800b6
 int drawable ic_bookmark 0x7f0800b7
 int drawable ic_calendar 0x7f0800b8
@@ -3908,6 +3909,7 @@ int id screen 0x7f0a020d
 int id scroll 0x7f0a020e
 int id scrollIndicatorDown 0x7f0a020f
 int id scrollIndicatorUp 0x7f0a0210
+int id scrollToTopButton 0x7f0a02bb
 int id scrollView 0x7f0a0211
 int id scrollable 0x7f0a0212
 int id searchEditText 0x7f0a0213

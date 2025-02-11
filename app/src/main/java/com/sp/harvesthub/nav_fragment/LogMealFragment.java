@@ -99,32 +99,6 @@ public class LogMealFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.food) {
-            // Replace current fragment with FoodFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new FoodFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
-        } else if (item.getItemId() == R.id.logMeal) {
-            // Replace current fragment with LogMealFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new LogMealFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_logmeal, container, false);
         

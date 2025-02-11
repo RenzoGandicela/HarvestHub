@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sp.harvesthub.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -32,6 +34,12 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
 
   @NonNull
   public final RecyclerView recyclerView;
+
+  @NonNull
+  public final FloatingActionButton scrollToTopButton;
+
+  @NonNull
+  public final NestedScrollView scrollView;
 
   @NonNull
   public final EditText searchEditText;
@@ -53,13 +61,16 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
 
   private FoodRecyclerviewLayoutBinding(@NonNull FrameLayout rootView,
       @NonNull ImageButton filterButton, @NonNull TextView listingText,
-      @NonNull RecyclerView recyclerView, @NonNull EditText searchEditText,
+      @NonNull RecyclerView recyclerView, @NonNull FloatingActionButton scrollToTopButton,
+      @NonNull NestedScrollView scrollView, @NonNull EditText searchEditText,
       @NonNull ImageView searchIcon, @NonNull Button startSharingButton, @NonNull TextView textView,
       @NonNull TextView textView2, @NonNull TextView welcomeText) {
     this.rootView = rootView;
     this.filterButton = filterButton;
     this.listingText = listingText;
     this.recyclerView = recyclerView;
+    this.scrollToTopButton = scrollToTopButton;
+    this.scrollView = scrollView;
     this.searchEditText = searchEditText;
     this.searchIcon = searchIcon;
     this.startSharingButton = startSharingButton;
@@ -113,6 +124,18 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.scrollToTopButton;
+      FloatingActionButton scrollToTopButton = ViewBindings.findChildViewById(rootView, id);
+      if (scrollToTopButton == null) {
+        break missingId;
+      }
+
+      id = R.id.scrollView;
+      NestedScrollView scrollView = ViewBindings.findChildViewById(rootView, id);
+      if (scrollView == null) {
+        break missingId;
+      }
+
       id = R.id.searchEditText;
       EditText searchEditText = ViewBindings.findChildViewById(rootView, id);
       if (searchEditText == null) {
@@ -150,8 +173,8 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
       }
 
       return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, filterButton, listingText,
-          recyclerView, searchEditText, searchIcon, startSharingButton, textView, textView2,
-          welcomeText);
+          recyclerView, scrollToTopButton, scrollView, searchEditText, searchIcon,
+          startSharingButton, textView, textView2, welcomeText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -3237,6 +3237,7 @@ drawable ic_add_24
 drawable ic_announcement
 drawable ic_arrow_back_black_24
 drawable ic_arrow_down_24dp
+drawable ic_arrow_up
 drawable ic_attach
 drawable ic_bookmark
 drawable ic_calendar
@@ -3909,6 +3910,7 @@ id screen
 id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
+id scrollToTopButton
 id scrollView
 id scrollable
 id searchEditText

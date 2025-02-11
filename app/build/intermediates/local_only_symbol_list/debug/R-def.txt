@@ -70,6 +70,7 @@ drawable form_background
 drawable home
 drawable ic_add_24
 drawable ic_announcement
+drawable ic_arrow_up
 drawable ic_attach
 drawable ic_bookmark
 drawable ic_calendar
@@ -241,6 +242,8 @@ id rightSpace
 id role_spinner
 id saveDescriptionButton
 id saveNote
+id scrollToTopButton
+id scrollView
 id searchEditText
 id searchIcon
 id sellerIdText
