@@ -114,23 +114,24 @@ public class FoodDetailsFragment extends Fragment {
             if (auth.getCurrentUser() != null) {
                 String userId = auth.getCurrentUser().getUid();
                 String itemId = foodItem.getItemId();
+                String originalSellerId = foodItem.getOriginalSellerId(); // Use original seller ID
                 
                 // Get total likes count and check if user liked
-                listingsRef.child(foodItem.getSellerId())
+                listingsRef.child(originalSellerId) // Use original seller ID here
                         .child("items")
                         .child(itemId)
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                // Check if likes node exists
-                                DataSnapshot likesSnapshot = snapshot.child("likes");
-                                if (likesSnapshot.exists()) {
+                                // Check if likedBy node exists
+                                DataSnapshot likedBySnapshot = snapshot.child("likedBy");
+                                if (likedBySnapshot.exists()) {
                                     // Update total likes count
-                                    long likeCount = likesSnapshot.getChildrenCount();
+                                    long likeCount = likedBySnapshot.getChildrenCount();
                                     likeCountText.setText(String.valueOf(likeCount));
                                     
                                     // Check if current user has liked
-                                    isLiked = likesSnapshot.hasChild(userId);
+                                    isLiked = likedBySnapshot.hasChild(userId);
                                     updateLikeButton();
                                 } else {
                                     likeCountText.setText("0");
@@ -148,33 +149,59 @@ public class FoodDetailsFragment extends Fragment {
                 // Update like button click listener
                 likeButton.setOnClickListener(v -> {
                     if (auth.getCurrentUser() != null) {
-                        DatabaseReference likeRef = listingsRef
-                                .child(foodItem.getSellerId())
+                        DatabaseReference itemRef = listingsRef
+                                .child(originalSellerId)
                                 .child("items")
-                                .child(itemId)
-                                .child("likes")
-                                .child(userId);
+                                .child(itemId);
 
                         if (isLiked) {
-                            // Unlike
-                            likeRef.removeValue()
+                            // Unlike - update both likedBy and likes count
+                            itemRef.child("likedBy").child(userId).removeValue()
                                     .addOnSuccessListener(aVoid -> {
-                                        isLiked = false;
-                                        updateLikeButton();
+                                        // Update likes count
+                                        itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                                            int newLikeCount = (int) snapshot.getChildrenCount();
+                                            itemRef.child("likes").setValue(newLikeCount)
+                                                    .addOnSuccessListener(unused -> {
+                                                        isLiked = false;
+                                                        updateLikeButton();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e(TAG, "Failed to update likes count: " + e.getMessage());
+                                                        Toast.makeText(getContext(), "Failed to update likes count", 
+                                                            Toast.LENGTH_SHORT).show();
+                                                    });
+                                        });
                                     })
-                                    .addOnFailureListener(e -> 
-                                        Toast.makeText(getContext(), "Failed to unlike", Toast.LENGTH_SHORT).show()
-                                    );
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "Unlike failed: " + e.getMessage());
+                                        Toast.makeText(getContext(), "Failed to unlike: " + e.getMessage(), 
+                                            Toast.LENGTH_SHORT).show();
+                                    });
                         } else {
-                            // Like
-                            likeRef.setValue(true)
+                            // Like - update both likedBy and likes count
+                            itemRef.child("likedBy").child(userId).setValue(true)
                                     .addOnSuccessListener(aVoid -> {
-                                        isLiked = true;
-                                        updateLikeButton();
+                                        // Update likes count
+                                        itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                                            int newLikeCount = (int) snapshot.getChildrenCount();
+                                            itemRef.child("likes").setValue(newLikeCount)
+                                                    .addOnSuccessListener(unused -> {
+                                                        isLiked = true;
+                                                        updateLikeButton();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e(TAG, "Failed to update likes count: " + e.getMessage());
+                                                        Toast.makeText(getContext(), "Failed to update likes count", 
+                                                            Toast.LENGTH_SHORT).show();
+                                                    });
+                                        });
                                     })
-                                    .addOnFailureListener(e -> 
-                                        Toast.makeText(getContext(), "Failed to like", Toast.LENGTH_SHORT).show()
-                                    );
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "Like failed: " + e.getMessage());
+                                        Toast.makeText(getContext(), "Failed to like: " + e.getMessage(), 
+                                            Toast.LENGTH_SHORT).show();
+                                    });
                         }
                     } else {
                         Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
@@ -183,9 +210,12 @@ public class FoodDetailsFragment extends Fragment {
             } else {
                 // User not logged in
                 likeCountText.setText("0");
-                likeButton.setOnClickListener(v -> 
-                    Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show()
-                );
+                likeButton.setOnClickListener(v -> {
+                    // Prompt user to login
+                    Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
+                    // Optionally redirect to login
+                    // startActivity(new Intent(requireContext(), LoginActivity.class));
+                });
             }
         }
 

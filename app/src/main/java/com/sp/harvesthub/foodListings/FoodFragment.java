@@ -65,19 +65,32 @@ public class FoodFragment extends Fragment {
                                     FoodItemExtended foodItem = new FoodItemExtended();
                                     foodItem.setItemId(itemSnapshot.getKey());
                                     
-                                    // Map all fields from database
+                                    // Store both the username for display and original sellerId for database operations
+                                    foodItem.setOriginalSellerId(userId); // Store original seller ID
+                                    foodItem.setSellerId(username != null ? username : userId); // Use username for display
+                                    
+                                    // Safely get boolean values with default false
+                                    Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
+                                    Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
+                                    foodItem.setHalal(halal != null ? halal : false);
+                                    foodItem.setSpicy(spicy != null ? spicy : false);
+                                    
+                                    // Map other fields
                                     foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
-                                    foodItem.setHalal(itemSnapshot.child("halal").getValue(Boolean.class));
-                                    foodItem.setSpicy(itemSnapshot.child("spicy").getValue(Boolean.class));
                                     foodItem.setLocation(itemSnapshot.child("location").getValue(String.class));
                                     foodItem.setExpirationDate(itemSnapshot.child("expiryDate").getValue(String.class));
                                     foodItem.setQuantity(itemSnapshot.child("quantity").getValue(String.class));
                                     foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
                                     foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
-                                    foodItem.setSellerId(username != null ? username : userId); // Use username if available
                                     foodItem.setCreatedAt(itemSnapshot.child("createdAt").getValue(String.class));
                                     foodItem.setUpdatedAt(itemSnapshot.child("updatedAt").getValue(String.class));
                                     
+                                    // Get likes count
+                                    DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
+                                    if (likedBySnapshot.exists()) {
+                                        foodItem.setLikesCount((int) likedBySnapshot.getChildrenCount());
+                                    }
+
                                     // Handle ingredients list
                                     List<String> ingredients = new ArrayList<>();
                                     DataSnapshot ingredientsSnapshot = itemSnapshot.child("ingredients");
@@ -90,7 +103,7 @@ public class FoodFragment extends Fragment {
 
                                     foodList.add(foodItem);
                                 } catch (Exception e) {
-                                    Log.e(TAG, "Error parsing food item: " + e.getMessage());
+                                    Log.e(TAG, "Error parsing food item: " + e.getMessage(), e);
                                 }
                             }
                             foodAdapter.notifyDataSetChanged();

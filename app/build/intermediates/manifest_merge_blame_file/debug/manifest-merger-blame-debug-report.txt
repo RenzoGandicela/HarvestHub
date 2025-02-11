@@ -218,10 +218,11 @@
 126-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:98:13-64
 127
 128        <provider
+128-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:100:9-108:20
 129            android:name="androidx.core.content.FileProvider"
 129-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:101:13-62
 130            android:authorities="com.sp.harvesthub.fileprovider"
-130-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:102:13-64
+130-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:102:13-65
 131            android:exported="false"
 131-->C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:103:13-37
 132            android:grantUriPermissions="true" >

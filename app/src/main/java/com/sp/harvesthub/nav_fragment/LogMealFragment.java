@@ -1,6 +1,7 @@
 package com.sp.harvesthub.nav_fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -124,259 +125,148 @@ public class LogMealFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_logmeal, container, false);
-        initializeViews(view);
-        setupButtonListeners();
-        return view;
-    }
-
-    private void initializeViews(View view) {
+        
+        // Initialize views and services
+        logMealService = new LogMealService();
         imageView = view.findViewById(R.id.imageView);
         foodNameText = view.findViewById(R.id.foodNameText);
         ingredientsText = view.findViewById(R.id.ingredientsText);
         halalText = view.findViewById(R.id.halalText);
         spicyText = view.findViewById(R.id.spicyText);
+        Button uploadButton = view.findViewById(R.id.uploadButton);
+        Button analyzeButton = view.findViewById(R.id.analyzeButton);
+        Button camButton = view.findViewById(R.id.camButton);
+        
         expirationDateEdit = view.findViewById(R.id.expirationDateEdit);
         locationEdit = view.findViewById(R.id.locationEdit);
         quantityEdit = view.findViewById(R.id.quantityEdit);
-        uploadButton = view.findViewById(R.id.uploadButton);
-        analyzeButton = view.findViewById(R.id.analyzeButton);
-        camButton = view.findViewById(R.id.camButton);
 
-        // Initialize switches
-        Switch halalSwitch = view.findViewById(R.id.switchHalal);
-        Switch spicySwitch = view.findViewById(R.id.switchSpicy);
-
-        // Set up switch listeners
-        halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            halalSwitch.setText(isChecked ? " True" : " False");
-        });
-
-        spicySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            spicySwitch.setText(isChecked ? " True" : " False");
-        });
-    }
-
-    private void setupButtonListeners() {
+        // Set click listeners
         uploadButton.setOnClickListener(v -> openFilePicker());
-        
         analyzeButton.setOnClickListener(v -> {
-            // First check if image is selected
-            if (selectedImageFile == null) {
-                Toast.makeText(getContext(), "Please select or capture an image first.", Toast.LENGTH_SHORT).show();
-                return;
+            if (selectedImageFile != null) {
+                Log.d(TAG, "Analyzing image...");
+                analyzeImage(selectedImageFile);
+            } else {
+                Toast.makeText(requireContext(), "Please select or capture an image first.", Toast.LENGTH_SHORT).show();
             }
-
-            // Get all input values
-            String ingredients = ((EditText) requireView().findViewById(R.id.ingredientsEdit))
-                    .getText().toString().trim();
-            String expirationDate = expirationDateEdit.getText().toString().trim();
-            String location = locationEdit.getText().toString().trim();
-            String quantity = quantityEdit.getText().toString().trim();
-            
-            // Get switch states
-            Switch halalSwitch = requireView().findViewById(R.id.switchHalal);
-            Switch spicySwitch = requireView().findViewById(R.id.switchSpicy);
-            boolean isHalal = halalSwitch.isChecked();
-            boolean isSpicy = spicySwitch.isChecked();
-
-            // Validate all fields
-            if (ingredients.isEmpty()) {
-                ((EditText) requireView().findViewById(R.id.ingredientsEdit)).setError("Please enter ingredients");
-                ((EditText) requireView().findViewById(R.id.ingredientsEdit)).requestFocus();
-                return;
-            }
-
-            if (expirationDate.isEmpty()) {
-                expirationDateEdit.setError("Please enter expiration date");
-                expirationDateEdit.requestFocus();
-                return;
-            }
-
-            if (location.isEmpty()) {
-                locationEdit.setError("Please enter location");
-                locationEdit.requestFocus();
-                return;
-            }
-
-            if (quantity.isEmpty()) {
-                quantityEdit.setError("Please enter quantity");
-                quantityEdit.requestFocus();
-                return;
-            }
-            
-            // Check if file exists and is not empty
-            if (!selectedImageFile.exists() || selectedImageFile.length() == 0) {
-                Toast.makeText(getContext(), "Invalid image file. Please try again.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            
-            // Check file size (e.g., max 5MB)
-            long maxSize = 5 * 1024 * 1024; // 5MB in bytes
-            if (selectedImageFile.length() > maxSize) {
-                Toast.makeText(getContext(), "Image file is too large. Please choose a smaller image.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Store the input values to be used after image analysis
-            List<String> ingredientsList = Arrays.asList(ingredients.split(",\\s*"));
-            
-            String description = ((EditText) requireView().findViewById(R.id.descEdit))
-                    .getText().toString().trim();
-
-            // Add description validation
-            if (description.isEmpty()) {
-                ((EditText) requireView().findViewById(R.id.descEdit)).setError("Please enter a description");
-                ((EditText) requireView().findViewById(R.id.descEdit)).requestFocus();
-                return;
-            }
-
-            // Add this method to validate date format
-            if (!isValidDateFormat(expirationDate)) {
-                expirationDateEdit.setError("Please use format: YYYY-MM-DD HH:mm");
-                expirationDateEdit.requestFocus();
-                return;
-            }
-
-            // If all validations pass, analyze the image and save data
-            analyzeImage(selectedImageFile, new ApiCallback() {
-                @Override
-                public void onSuccess(String result) {
-                    String dishName = extractDishName(result);
-                    
-                    // Upload image first, then save data
-                    if (selectedImageFile != null) {
-                        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
-                            .format(new Date());
-                        String imagePath = "listings/" + auth.getCurrentUser().getUid() + "/" + timestamp + ".jpg";
-                        StorageReference imageRef = storageRef.child(imagePath);
-                        
-                        UploadTask uploadTask = imageRef.putFile(Uri.fromFile(selectedImageFile));
-                        uploadTask.continueWithTask(task -> {
-                            if (!task.isSuccessful()) {
-                                throw task.getException();
-                            }
-                            return imageRef.getDownloadUrl();
-                        }).addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Uri downloadUri = task.getResult();
-                                // Create and save food item with image URL
-                                FoodItemExtended foodItem = new FoodItemExtended(
-                                    dishName,
-                                    isHalal,
-                                    isSpicy,
-                                    ingredientsList,
-                                    expirationDate,
-                                    location,
-                                    quantity,
-                                    true  // default to available
-                                );
-                                foodItem.setDescription(description);
-                                foodItem.setImageUrl(downloadUri.toString());
-                                
-                                // Save to both databases
-                                saveFoodData(foodItem);
-                                saveToExtendedDatabase(foodItem);
-                                
-                                // Update UI to show success
-                                requireActivity().runOnUiThread(() -> {
-                                    foodNameText.setText("Detected Food: " + dishName);
-                                    Toast.makeText(getContext(), "Food item saved successfully!", Toast.LENGTH_SHORT).show();
-                                });
-                            } else {
-                                requireActivity().runOnUiThread(() -> 
-                                    Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
-                                );
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    requireActivity().runOnUiThread(() -> 
-                        Toast.makeText(getContext(), "Error analyzing image: " + error, Toast.LENGTH_SHORT).show()
-                    );
-                }
-            });
         });
-        
+
         camButton.setOnClickListener(v -> {
-            if (checkAndRequestPermissions()) {
+            String[] permissions = {
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+            if (hasPermissions(permissions)) {
                 dispatchTakePictureIntent();
+            } else {
+                requestPermissions(permissions, CAMERA_REQUEST_CODE);
             }
         });
-    }
 
-    private void openFilePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        return view;
     }
 
     private boolean hasPermissions(String[] permissions) {
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext(), permission) 
+                    != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean checkAndRequestPermissions() {
-        if (hasPermissions(REQUIRED_PERMISSIONS)) {
-            return true;
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, CAMERA_REQUEST_CODE);
-            return false;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, 
+            @NonNull int[] grantResults) {
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            }
         }
     }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                Toast.makeText(getContext(), "Error creating image file", Toast.LENGTH_SHORT).show();
-            }
-
-            if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(requireContext(),
-                        "com.sp.harvesthub.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                
-                // Grant permissions to all apps that can handle the intent
-                List<ResolveInfo> resInfoList = requireActivity().getPackageManager()
-                        .queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                for (ResolveInfo resolveInfo : resInfoList) {
-                    String packageName = resolveInfo.activityInfo.packageName;
-                    requireActivity().grantUriPermission(packageName, photoURI,
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-                
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-            }
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            Log.e(TAG, "Error creating image file", ex);
+            return;
+        }
+        if (photoFile != null) {
+            photoURI = FileProvider.getUriForFile(requireContext(), 
+                "com.sp.harvesthub.fileprovider", photoFile);
+            currentPhotoPath = photoFile.getAbsolutePath();
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
         }
     }
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
+        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
-    private void analyzeImage(File imageFile, ApiCallback callback) {
+    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                Uri imageUri = result.getData().getData();
+                imageView.setImageURI(imageUri);
+                try {
+                    selectedImageFile = FileUtil.from(requireContext(), imageUri);
+                    Log.d(TAG, "Image selected: " + selectedImageFile.getAbsolutePath());
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to load image: " + e.getMessage(), e);
+                    foodNameText.setText("Failed to load image.");
+                    Toast.makeText(requireContext(), "Error loading image.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    );
+
+    private final ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                try {
+                    File file = new File(currentPhotoPath);
+                    if (file.exists()) {
+                        selectedImageFile = file;
+                        // Scale down the image to prevent OutOfMemoryError
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 4;
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath, options));
+                        Log.d(TAG, "Camera image loaded successfully");
+                    } else {
+                        Log.e(TAG, "Image file does not exist: " + currentPhotoPath);
+                        Toast.makeText(requireContext(), "Error loading captured image", 
+                            Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error processing camera result: " + e.getMessage(), e);
+                    Toast.makeText(requireContext(), "Error processing captured image", 
+                        Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    );
+
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        imagePickerLauncher.launch(intent);
+        Log.d(TAG, "Opened file picker.");
+    }
+
+    private void analyzeImage(File imageFile) {
         if (logMealService != null) {
             logMealService.analyzeImage(imageFile, new ApiCallback() {
                 @Override
@@ -384,12 +274,13 @@ public class LogMealFragment extends Fragment {
                     requireActivity().runOnUiThread(() -> {
                         foodNameText.setText("Detected Food: " + extractDishName(result));
                     });
-                    callback.onSuccess(result);
                 }
 
                 @Override
                 public void onFailure(String error) {
-                    callback.onFailure(error);
+                    requireActivity().runOnUiThread(() -> 
+                        Toast.makeText(getContext(), "Error analyzing image: " + error, Toast.LENGTH_SHORT).show()
+                    );
                 }
             });
         }
@@ -581,18 +472,6 @@ public class LogMealFragment extends Fragment {
             }
         } else {
             Log.e(TAG, "Camera result not OK. ResultCode: " + resultCode);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                dispatchTakePictureIntent();
-            } else {
-                Toast.makeText(getContext(), "Camera permission is required", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 

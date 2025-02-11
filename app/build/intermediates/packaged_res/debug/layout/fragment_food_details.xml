@@ -51,7 +51,7 @@
                         android:layout_height="32dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_heart_outline"
-                        android:tint="@color/primary_green" />
+                        android:padding="4dp" />
 
                     <TextView
                         android:id="@+id/likeCountText"
@@ -60,6 +60,7 @@
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/young_serif"
                         android:textSize="14sp"
+                        android:textColor="@color/black"
                         android:text="0" />
 
                 </LinearLayout>
