@@ -92,6 +92,7 @@ drawable ic_send
 drawable ic_server_placeholder
 drawable ic_settings
 drawable ic_social
+drawable image_5
 drawable location
 drawable logo2
 drawable logo3
@@ -193,6 +194,7 @@ id ingredientsText
 id leftSpace
 id likeButton
 id likeCountText
+id listingText
 id location
 id locationEdit
 id locationText
@@ -257,10 +259,13 @@ id signup_username
 id slogan_name
 id spicyTag
 id spicyText
+id startSharingButton
 id submit_event_button
 id submit_event_button_type2
 id switchHalal
 id switchSpicy
+id textView
+id textView2
 id textView3
 id textView4
 id themeSwitch
@@ -273,6 +278,7 @@ id uploadTimeText
 id userNameTxt
 id userProfileImage
 id usernameTxt
+id welcomeText
 layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat

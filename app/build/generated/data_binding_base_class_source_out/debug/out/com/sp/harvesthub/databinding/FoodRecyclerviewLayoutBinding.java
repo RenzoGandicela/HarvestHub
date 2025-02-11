@@ -4,10 +4,12 @@ package com.sp.harvesthub.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,9 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
   public final ImageButton filterButton;
 
   @NonNull
+  public final TextView listingText;
+
+  @NonNull
   public final RecyclerView recyclerView;
 
   @NonNull
@@ -34,14 +39,33 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
   @NonNull
   public final ImageView searchIcon;
 
+  @NonNull
+  public final Button startSharingButton;
+
+  @NonNull
+  public final TextView textView;
+
+  @NonNull
+  public final TextView textView2;
+
+  @NonNull
+  public final TextView welcomeText;
+
   private FoodRecyclerviewLayoutBinding(@NonNull FrameLayout rootView,
-      @NonNull ImageButton filterButton, @NonNull RecyclerView recyclerView,
-      @NonNull EditText searchEditText, @NonNull ImageView searchIcon) {
+      @NonNull ImageButton filterButton, @NonNull TextView listingText,
+      @NonNull RecyclerView recyclerView, @NonNull EditText searchEditText,
+      @NonNull ImageView searchIcon, @NonNull Button startSharingButton, @NonNull TextView textView,
+      @NonNull TextView textView2, @NonNull TextView welcomeText) {
     this.rootView = rootView;
     this.filterButton = filterButton;
+    this.listingText = listingText;
     this.recyclerView = recyclerView;
     this.searchEditText = searchEditText;
     this.searchIcon = searchIcon;
+    this.startSharingButton = startSharingButton;
+    this.textView = textView;
+    this.textView2 = textView2;
+    this.welcomeText = welcomeText;
   }
 
   @Override
@@ -77,6 +101,12 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.listingText;
+      TextView listingText = ViewBindings.findChildViewById(rootView, id);
+      if (listingText == null) {
+        break missingId;
+      }
+
       id = R.id.recyclerView;
       RecyclerView recyclerView = ViewBindings.findChildViewById(rootView, id);
       if (recyclerView == null) {
@@ -95,8 +125,33 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, filterButton, recyclerView,
-          searchEditText, searchIcon);
+      id = R.id.startSharingButton;
+      Button startSharingButton = ViewBindings.findChildViewById(rootView, id);
+      if (startSharingButton == null) {
+        break missingId;
+      }
+
+      id = R.id.textView;
+      TextView textView = ViewBindings.findChildViewById(rootView, id);
+      if (textView == null) {
+        break missingId;
+      }
+
+      id = R.id.textView2;
+      TextView textView2 = ViewBindings.findChildViewById(rootView, id);
+      if (textView2 == null) {
+        break missingId;
+      }
+
+      id = R.id.welcomeText;
+      TextView welcomeText = ViewBindings.findChildViewById(rootView, id);
+      if (welcomeText == null) {
+        break missingId;
+      }
+
+      return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, filterButton, listingText,
+          recyclerView, searchEditText, searchIcon, startSharingButton, textView, textView2,
+          welcomeText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

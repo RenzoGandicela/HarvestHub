@@ -18,12 +18,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,7 +84,32 @@ public class FoodFragment extends Fragment {
         // Setup filter button
         filterButton.setOnClickListener(v -> showFilterDialog());
 
+        // Set welcome text with username
+        TextView welcomeText = view.findViewById(R.id.welcomeText);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                    .getReference("Users")
+                    .child(auth.getCurrentUser().getUid());
+            
+            userRef.child("username").get().addOnSuccessListener(snapshot -> {
+                String username = snapshot.getValue(String.class);
+                if (username != null) {
+                    welcomeText.setText("Hello, @" + username);
+                }
+            });
+        }
+
         fetchListingsData();
+
+        Button startSharingButton = view.findViewById(R.id.startSharingButton);
+        startSharingButton.setOnClickListener(v -> {
+            // Navigate to LogMealFragment
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new LogMealFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
 
         return view;
     }

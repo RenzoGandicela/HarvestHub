@@ -3276,6 +3276,7 @@ drawable ic_send
 drawable ic_server_placeholder
 drawable ic_settings
 drawable ic_social
+drawable image_5
 drawable indeterminate_static
 drawable location
 drawable logo2
@@ -3718,6 +3719,7 @@ id line3
 id linear
 id listMode
 id list_item
+id listingText
 id locale
 id location
 id locationEdit
@@ -3972,6 +3974,7 @@ id src_over
 id standard
 id start
 id startHorizontal
+id startSharingButton
 id startToEnd
 id startVertical
 id staticLayout
@@ -4008,6 +4011,8 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTop
+id textView
+id textView2
 id textView3
 id textView4
 id text_input_end_icon
@@ -4063,6 +4068,7 @@ id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
+id welcomeText
 id west
 id wide
 id withText
