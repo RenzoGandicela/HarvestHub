@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.sp.harvesthub.R;
@@ -40,16 +41,48 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-        FoodItem food = foodList.get(position);
+        FoodItemExtended food = (FoodItemExtended) foodList.get(position);
         holder.foodName.setText(capitalizeDishName(food.getDishName()));
-        holder.halalTag.setVisibility(food.isHalal() ? View.VISIBLE : View.GONE);
-        holder.spicyTag.setVisibility(food.isSpicy() ? View.VISIBLE : View.GONE);
+        
+        // Handle tag visibility
+        if (food.isHalal() || food.isSpicy()) {
+            holder.halalTag.setVisibility(food.isHalal() ? View.VISIBLE : View.GONE);
+            holder.spicyTag.setVisibility(food.isSpicy() ? View.VISIBLE : View.GONE);
+        } else {
+            holder.halalTag.setVisibility(View.INVISIBLE);
+            holder.spicyTag.setVisibility(View.INVISIBLE);
+        }
+        
+        // Set location text
+        if (food.getLocation() != null && !food.getLocation().isEmpty()) {
+            holder.locationText.setText(food.getLocation());
+            holder.locationText.setVisibility(View.VISIBLE);
+        } else {
+            holder.locationText.setVisibility(View.GONE);
+        }
 
-        Glide.with(context)
-                .load(food.getImageURL())
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(holder.foodImage);
+        // Load image
+        String imageUrl = food.getImageUrl();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(holder.foodImage);
+        }
+
+        // Set click listener
+        holder.itemView.setOnClickListener(v -> {
+            if (context instanceof FragmentActivity) {
+                FragmentActivity activity = (FragmentActivity) context;
+                FoodDetailsFragment detailsFragment = FoodDetailsFragment.newInstance(food);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, detailsFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -57,10 +90,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         return foodList.size();
     }
 
-    public class FoodViewHolder extends RecyclerView.ViewHolder {
+    public static class FoodViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImage;
         TextView foodName;
         LinearLayout halalTag, spicyTag;
+        TextView locationText;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,12 +102,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodName = itemView.findViewById(R.id.foodName);
             halalTag = itemView.findViewById(R.id.halalTag);
             spicyTag = itemView.findViewById(R.id.spicyTag);
-            itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onItemClick(foodList.get(position));
-                }
-            });
+            locationText = itemView.findViewById(R.id.locationText);
         }
     }
 

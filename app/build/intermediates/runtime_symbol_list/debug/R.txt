@@ -3250,6 +3250,8 @@ int drawable ic_delete 0x7f0800c0
 int drawable ic_favorite 0x7f0800c1
 int drawable ic_hashtag 0x7f0800c2
 int drawable ic_heart 0x7f0800c3
+int drawable ic_heart_filled 0x7f08013b
+int drawable ic_heart_outline 0x7f08013c
 int drawable ic_home 0x7f0800c4
 int drawable ic_keyboard_black_24dp 0x7f0800c5
 int drawable ic_launcher_background 0x7f0800c6
@@ -3357,6 +3359,7 @@ int drawable order 0x7f08012b
 int drawable placeholder_image 0x7f08012c
 int drawable preference_list_divider_material 0x7f08012d
 int drawable profile 0x7f08012e
+int drawable rounded_tag_background 0x7f08013a
 int drawable settings 0x7f08012f
 int drawable share 0x7f080130
 int drawable social 0x7f080131
@@ -3551,6 +3554,8 @@ int id deltaRelative 0x7f0a00ae
 int id dependency_ordering 0x7f0a00af
 int id desc 0x7f0a00b0
 int id descEdit 0x7f0a02a5
+int id descriptionText 0x7f0a02a6
+int id descriptionTitle 0x7f0a02a7
 int id design_bottom_sheet 0x7f0a00b1
 int id design_menu_item_action_area 0x7f0a00b2
 int id design_menu_item_action_area_stub 0x7f0a00b3
@@ -3612,6 +3617,7 @@ int id expand_activities_button 0x7f0a00ea
 int id expanded_menu 0x7f0a00eb
 int id expirationDate 0x7f0a00ec
 int id expirationDateEdit 0x7f0a00ed
+int id expiryDateText 0x7f0a02a8
 int id fade 0x7f0a00ee
 int id featured_background 0x7f0a00ef
 int id featured_background_type2 0x7f0a00f0
@@ -3698,6 +3704,8 @@ int id leftSpace 0x7f0a0140
 int id leftToRight 0x7f0a0141
 int id legacy 0x7f0a0142
 int id light 0x7f0a0143
+int id likeButton 0x7f0a02af
+int id likeCountText 0x7f0a02b0
 int id line1 0x7f0a0144
 int id line3 0x7f0a0145
 int id linear 0x7f0a0146
@@ -3706,6 +3714,7 @@ int id list_item 0x7f0a0148
 int id locale 0x7f0a0149
 int id location 0x7f0a014a
 int id locationEdit 0x7f0a014b
+int id locationText 0x7f0a02a9
 int id logMeal 0x7f0a014c
 int id loginRedirectText 0x7f0a014d
 int id login_button 0x7f0a014e
@@ -3861,6 +3870,7 @@ int id progress_circular 0x7f0a01e3
 int id progress_horizontal 0x7f0a01e4
 int id quantity 0x7f0a01e5
 int id quantityEdit 0x7f0a01e6
+int id quantityText 0x7f0a02aa
 int id radio 0x7f0a01e7
 int id ratio 0x7f0a01e8
 int id rectangles 0x7f0a01e9
@@ -3906,6 +3916,7 @@ int id seekbar_value 0x7f0a0210
 int id select_dialog_listview 0x7f0a0211
 int id selected 0x7f0a0212
 int id selection_type 0x7f0a0213
+int id sellerIdText 0x7f0a02ab
 int id sendButton 0x7f0a0214
 int id senderName 0x7f0a0215
 int id senderNameTxt 0x7f0a0216
@@ -4022,15 +4033,16 @@ int id transition_scene_layoutid_cache 0x7f0a0284
 int id transition_transform 0x7f0a0285
 int id triangle 0x7f0a0286
 int id unchecked 0x7f0a0287
+int id undoButton 0x7f0a02ad
 int id uniform 0x7f0a0288
 int id unlabeled 0x7f0a0289
 int id up 0x7f0a028a
 int id uploadButton 0x7f0a028b
+int id uploadTimeText 0x7f0a02ac
 int id useLogo 0x7f0a028c
 int id userNameTxt 0x7f0a028d
 int id userProfileImage 0x7f0a028e
 int id usernameTxt 0x7f0a028f
-int id vendor 0x7f0a0290
 int id vertical 0x7f0a0291
 int id vertical_only 0x7f0a0292
 int id view_offset_helper 0x7f0a0293
@@ -4212,6 +4224,7 @@ int layout fragment_announcement 0x7f0d0044
 int layout fragment_bookmark 0x7f0d0045
 int layout fragment_calendar 0x7f0d0046
 int layout fragment_favourites 0x7f0d0047
+int layout fragment_food_details 0x7f0d00a2
 int layout fragment_map 0x7f0d0048
 int layout fragment_profile 0x7f0d0049
 int layout fragment_setting 0x7f0d004a

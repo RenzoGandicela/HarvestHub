@@ -44,38 +44,59 @@ public class FoodFragment extends Fragment {
     private void fetchListingsData() {
         DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                 .getReference("listings");
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("Users");
 
         listingsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodList.clear();
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
-                        try {
-                            String title = itemSnapshot.child("title").getValue(String.class);
-                            Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
-                            Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
-                            List<String> ingredients = new ArrayList<>();
-                            DataSnapshot ingredientsSnapshot = itemSnapshot.child("ingredients");
-                            if (ingredientsSnapshot.exists()) {
-                                for (DataSnapshot ingredient : ingredientsSnapshot.getChildren()) {
-                                    ingredients.add(ingredient.getValue(String.class));
+                    String userId = userSnapshot.getKey();
+                    
+                    // Fetch username for this user
+                    usersRef.child(userId).child("username").get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String username = task.getResult().getValue(String.class);
+                            
+                            // Now process the food items with the username
+                            for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
+                                try {
+                                    FoodItemExtended foodItem = new FoodItemExtended();
+                                    foodItem.setItemId(itemSnapshot.getKey());
+                                    
+                                    // Map all fields from database
+                                    foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
+                                    foodItem.setHalal(itemSnapshot.child("halal").getValue(Boolean.class));
+                                    foodItem.setSpicy(itemSnapshot.child("spicy").getValue(Boolean.class));
+                                    foodItem.setLocation(itemSnapshot.child("location").getValue(String.class));
+                                    foodItem.setExpirationDate(itemSnapshot.child("expiryDate").getValue(String.class));
+                                    foodItem.setQuantity(itemSnapshot.child("quantity").getValue(String.class));
+                                    foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
+                                    foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
+                                    foodItem.setSellerId(username != null ? username : userId); // Use username if available
+                                    foodItem.setCreatedAt(itemSnapshot.child("createdAt").getValue(String.class));
+                                    foodItem.setUpdatedAt(itemSnapshot.child("updatedAt").getValue(String.class));
+                                    
+                                    // Handle ingredients list
+                                    List<String> ingredients = new ArrayList<>();
+                                    DataSnapshot ingredientsSnapshot = itemSnapshot.child("ingredients");
+                                    if (ingredientsSnapshot.exists()) {
+                                        for (DataSnapshot ingredient : ingredientsSnapshot.getChildren()) {
+                                            ingredients.add(ingredient.getValue(String.class));
+                                        }
+                                    }
+                                    foodItem.setIngredients(ingredients);
+
+                                    foodList.add(foodItem);
+                                } catch (Exception e) {
+                                    Log.e(TAG, "Error parsing food item: " + e.getMessage());
                                 }
                             }
-                            String imageUrl = itemSnapshot.child("imageUrl").getValue(String.class);
-
-                            FoodItem food = new FoodItem(title, 
-                                                       halal != null && halal,
-                                                       spicy != null && spicy,
-                                                       ingredients);
-                            food.setImageURL(imageUrl);
-                            foodList.add(food);
-                        } catch (Exception e) {
-                            Log.e(TAG, "Error parsing food item: " + e.getMessage());
+                            foodAdapter.notifyDataSetChanged();
                         }
-                    }
+                    });
                 }
-                foodAdapter.notifyDataSetChanged();
             }
 
             @Override

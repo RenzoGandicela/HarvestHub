@@ -15,6 +15,7 @@ public class FoodItemExtended extends FoodItem {
     private String updatedAt;
     private String description;
     private String imageUrl;
+    private String itemId;
 
     public FoodItemExtended() {
         // Default constructor required for calls to DataSnapshot.getValue(FoodItemExtended.class)
@@ -110,5 +111,13 @@ public class FoodItemExtended extends FoodItem {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 }

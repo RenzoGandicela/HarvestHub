@@ -84,6 +84,10 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_login.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_food_details.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_food_details.xml"
+    },
+    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_calendar.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_calendar.xml"
     },
@@ -100,16 +104,16 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\item_message_sent.xml"
     },
     {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_food_details.xml",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_food_details.xml"
+    },
+    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\food_card.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\food_card.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_social.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_social.xml"
-    },
-    {
-        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/activity_logmeal.xml",
-        "source": "com.sp.harvesthub.app-main-7:/layout/activity_logmeal.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\dialog_forgot.xml",
@@ -124,12 +128,12 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\featured_card_design.xml"
     },
     {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_blink_viewer.xml",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_main.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_blink_viewer.xml",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_bookmark.xml",

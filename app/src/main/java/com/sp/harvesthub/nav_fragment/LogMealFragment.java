@@ -303,10 +303,8 @@ public class LogMealFragment extends Fragment {
         });
         
         camButton.setOnClickListener(v -> {
-            if (hasPermissions(REQUIRED_PERMISSIONS)) {
+            if (checkAndRequestPermissions()) {
                 dispatchTakePictureIntent();
-            } else {
-                ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, CAMERA_REQUEST_CODE);
             }
         });
     }
@@ -326,63 +324,54 @@ public class LogMealFragment extends Fragment {
         return true;
     }
 
+    private boolean checkAndRequestPermissions() {
+        if (hasPermissions(REQUIRED_PERMISSIONS)) {
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, CAMERA_REQUEST_CODE);
+            return false;
+        }
+    }
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        
-        // Ensure the camera app exists
-        if (requireActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-                
-                if (photoFile != null) {
-                    photoURI = FileProvider.getUriForFile(requireContext(),
-                            "com.sp.harvesthub.fileprovider",  // Make sure this matches your manifest
-                            photoFile);
-                    
-                    // Add permissions
-                    List<ResolveInfo> resInfoList = requireActivity().getPackageManager()
-                            .queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                    for (ResolveInfo resolveInfo : resInfoList) {
-                        String packageName = resolveInfo.activityInfo.packageName;
-                        requireActivity().grantUriPermission(packageName, photoURI,
-                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    }
-                    
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-                    Log.d(TAG, "Camera intent dispatched with URI: " + photoURI);
-                }
             } catch (IOException ex) {
-                Log.e(TAG, "Error creating image file: " + ex.getMessage(), ex);
                 Toast.makeText(getContext(), "Error creating image file", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(getContext(), "No camera available on this device", Toast.LENGTH_SHORT).show();
+
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(requireContext(),
+                        "com.sp.harvesthub.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                
+                // Grant permissions to all apps that can handle the intent
+                List<ResolveInfo> resInfoList = requireActivity().getPackageManager()
+                        .queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    requireActivity().grantUriPermission(packageName, photoURI,
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+                
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+            }
         }
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        
-        // Create the storage directory if it does not exist
-        if (!storageDir.exists()) {
-            if (!storageDir.mkdirs()) {
-                Log.e(TAG, "Failed to create directory");
-                throw new IOException("Failed to create directory");
-            }
-        }
-        
+        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",        /* suffix */
-                storageDir     /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }

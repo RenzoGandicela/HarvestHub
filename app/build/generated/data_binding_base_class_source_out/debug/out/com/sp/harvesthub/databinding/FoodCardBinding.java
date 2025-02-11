@@ -34,22 +34,22 @@ public final class FoodCardBinding implements ViewBinding {
   public final FoodCardTagsHalalBinding halalTag;
 
   @NonNull
-  public final FoodCardTagsSpicyBinding spicyTag;
+  public final TextView locationText;
 
   @NonNull
-  public final TextView vendor;
+  public final FoodCardTagsSpicyBinding spicyTag;
 
   private FoodCardBinding(@NonNull CardView rootView, @NonNull ImageView foodImage,
       @NonNull TextView foodName, @NonNull LinearLayout foodOverlay,
-      @NonNull FoodCardTagsHalalBinding halalTag, @NonNull FoodCardTagsSpicyBinding spicyTag,
-      @NonNull TextView vendor) {
+      @NonNull FoodCardTagsHalalBinding halalTag, @NonNull TextView locationText,
+      @NonNull FoodCardTagsSpicyBinding spicyTag) {
     this.rootView = rootView;
     this.foodImage = foodImage;
     this.foodName = foodName;
     this.foodOverlay = foodOverlay;
     this.halalTag = halalTag;
+    this.locationText = locationText;
     this.spicyTag = spicyTag;
-    this.vendor = vendor;
   }
 
   @Override
@@ -104,6 +104,12 @@ public final class FoodCardBinding implements ViewBinding {
       }
       FoodCardTagsHalalBinding binding_halalTag = FoodCardTagsHalalBinding.bind(halalTag);
 
+      id = R.id.locationText;
+      TextView locationText = ViewBindings.findChildViewById(rootView, id);
+      if (locationText == null) {
+        break missingId;
+      }
+
       id = R.id.spicyTag;
       View spicyTag = ViewBindings.findChildViewById(rootView, id);
       if (spicyTag == null) {
@@ -111,14 +117,8 @@ public final class FoodCardBinding implements ViewBinding {
       }
       FoodCardTagsSpicyBinding binding_spicyTag = FoodCardTagsSpicyBinding.bind(spicyTag);
 
-      id = R.id.vendor;
-      TextView vendor = ViewBindings.findChildViewById(rootView, id);
-      if (vendor == null) {
-        break missingId;
-      }
-
       return new FoodCardBinding((CardView) rootView, foodImage, foodName, foodOverlay,
-          binding_halalTag, binding_spicyTag, vendor);
+          binding_halalTag, locationText, binding_spicyTag);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

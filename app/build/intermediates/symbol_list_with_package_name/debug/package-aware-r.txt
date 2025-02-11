@@ -3251,6 +3251,8 @@ drawable ic_delete
 drawable ic_favorite
 drawable ic_hashtag
 drawable ic_heart
+drawable ic_heart_filled
+drawable ic_heart_outline
 drawable ic_home
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
@@ -3358,6 +3360,7 @@ drawable order
 drawable placeholder_image
 drawable preference_list_divider_material
 drawable profile
+drawable rounded_tag_background
 drawable settings
 drawable share
 drawable social
@@ -3552,6 +3555,8 @@ id deltaRelative
 id dependency_ordering
 id desc
 id descEdit
+id descriptionText
+id descriptionTitle
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -3613,6 +3618,7 @@ id expand_activities_button
 id expanded_menu
 id expirationDate
 id expirationDateEdit
+id expiryDateText
 id fade
 id featured_background
 id featured_background_type2
@@ -3699,6 +3705,8 @@ id leftSpace
 id leftToRight
 id legacy
 id light
+id likeButton
+id likeCountText
 id line1
 id line3
 id linear
@@ -3707,6 +3715,7 @@ id list_item
 id locale
 id location
 id locationEdit
+id locationText
 id logMeal
 id loginRedirectText
 id login_button
@@ -3862,6 +3871,7 @@ id progress_circular
 id progress_horizontal
 id quantity
 id quantityEdit
+id quantityText
 id radio
 id ratio
 id rectangles
@@ -3907,6 +3917,7 @@ id seekbar_value
 id select_dialog_listview
 id selected
 id selection_type
+id sellerIdText
 id sendButton
 id senderName
 id senderNameTxt
@@ -4023,15 +4034,16 @@ id transition_scene_layoutid_cache
 id transition_transform
 id triangle
 id unchecked
+id undoButton
 id uniform
 id unlabeled
 id up
 id uploadButton
+id uploadTimeText
 id useLogo
 id userNameTxt
 id userProfileImage
 id usernameTxt
-id vendor
 id vertical
 id vertical_only
 id view_offset_helper
@@ -4213,6 +4225,7 @@ layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
+layout fragment_food_details
 layout fragment_map
 layout fragment_profile
 layout fragment_setting

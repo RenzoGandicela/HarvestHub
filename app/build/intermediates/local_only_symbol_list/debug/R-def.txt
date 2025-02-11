@@ -76,6 +76,8 @@ drawable ic_delete
 drawable ic_favorite
 drawable ic_hashtag
 drawable ic_heart
+drawable ic_heart_filled
+drawable ic_heart_outline
 drawable ic_home
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -100,6 +102,7 @@ drawable message_sent_background
 drawable order
 drawable placeholder_image
 drawable profile
+drawable rounded_tag_background
 drawable settings
 drawable share
 drawable social
@@ -134,6 +137,8 @@ id chatImageView
 id deleteNote
 id desc
 id descEdit
+id descriptionText
+id descriptionTitle
 id dialogBox
 id dialogForgot
 id displayNote
@@ -156,6 +161,7 @@ id event_title
 id event_title_type2
 id expirationDate
 id expirationDateEdit
+id expiryDateText
 id featured_background
 id featured_background_type2
 id featured_description
@@ -179,8 +185,11 @@ id imageView
 id ingredientsEdit
 id ingredientsText
 id leftSpace
+id likeButton
+id likeCountText
 id location
 id locationEdit
+id locationText
 id logMeal
 id loginRedirectText
 id login_button
@@ -216,12 +225,14 @@ id profileRole
 id profileUsername
 id quantity
 id quantityEdit
+id quantityText
 id recyclerView
 id remindButton
 id rightSpace
 id role_spinner
 id saveDescriptionButton
 id saveNote
+id sellerIdText
 id sendButton
 id senderName
 id senderNameTxt
@@ -247,11 +258,12 @@ id themeSwitch
 id timestamp
 id timestampTxt
 id toolbar
+id undoButton
 id uploadButton
+id uploadTimeText
 id userNameTxt
 id userProfileImage
 id usernameTxt
-id vendor
 layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
@@ -277,6 +289,7 @@ layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
+layout fragment_food_details
 layout fragment_map
 layout fragment_profile
 layout fragment_setting
