@@ -201,7 +201,6 @@ id navFragment
 id nav_announcement
 id nav_bookmark
 id nav_calendar
-id nav_favorites
 id nav_home
 id nav_logout
 id nav_map

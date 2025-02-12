@@ -122,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else if (itemId == R.id.nav_map) {
                 replaceFragment(new MapFragment());
                 setTitle(getString(R.string.map));
-            } else if (itemId == R.id.nav_favorites) {
-                replaceFragment(new FavouritesFragment());
-                setTitle(getString(R.string.favorites));
+            } else if (itemId == R.id.nav_social) {
+                replaceFragment(new SocialFragment());
+                setTitle(getString(R.string.social));
             } else if (itemId == R.id.nav_profile) {
                 replaceFragment(new ProfileFragment());
                 setTitle(getString(R.string.profile));
@@ -218,11 +218,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_setting) {
             replaceFragment(new SettingFragment());
             setTitle(getString(R.string.setting));
-        } else if (id == R.id.nav_social) {
-            replaceFragment(new SocialFragment());
-            setTitle(getString(R.string.social));
         } else if (id == R.id.nav_share) {
-           shareApp();
+            shareApp();
         } else if (id == R.id.nav_logout) {
             auth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
@@ -255,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app: https://yourapp.com");
 
-        startActivity(Intent.createChooser(shareIntent, "Share via"));
-
+        startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
 }
