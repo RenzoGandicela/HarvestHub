@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -21,6 +22,9 @@ import java.lang.String;
 public final class FragmentProfileBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
+
+  @NonNull
+  public final ImageButton editUsernameButton;
 
   @NonNull
   public final EditText profileDescription;
@@ -40,11 +44,13 @@ public final class FragmentProfileBinding implements ViewBinding {
   @NonNull
   public final Button saveDescriptionButton;
 
-  private FragmentProfileBinding(@NonNull ScrollView rootView, @NonNull EditText profileDescription,
+  private FragmentProfileBinding(@NonNull ScrollView rootView,
+      @NonNull ImageButton editUsernameButton, @NonNull EditText profileDescription,
       @NonNull TextView profileEmail, @NonNull CircleImageView profileImage,
       @NonNull TextView profileRole, @NonNull TextView profileUsername,
       @NonNull Button saveDescriptionButton) {
     this.rootView = rootView;
+    this.editUsernameButton = editUsernameButton;
     this.profileDescription = profileDescription;
     this.profileEmail = profileEmail;
     this.profileImage = profileImage;
@@ -80,6 +86,12 @@ public final class FragmentProfileBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.editUsernameButton;
+      ImageButton editUsernameButton = ViewBindings.findChildViewById(rootView, id);
+      if (editUsernameButton == null) {
+        break missingId;
+      }
+
       id = R.id.profileDescription;
       EditText profileDescription = ViewBindings.findChildViewById(rootView, id);
       if (profileDescription == null) {
@@ -116,8 +128,9 @@ public final class FragmentProfileBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentProfileBinding((ScrollView) rootView, profileDescription, profileEmail,
-          profileImage, profileRole, profileUsername, saveDescriptionButton);
+      return new FragmentProfileBinding((ScrollView) rootView, editUsernameButton,
+          profileDescription, profileEmail, profileImage, profileRole, profileUsername,
+          saveDescriptionButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

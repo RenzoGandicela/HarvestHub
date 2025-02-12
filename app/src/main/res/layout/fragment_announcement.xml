@@ -38,11 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Title"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -50,11 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Description"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -62,11 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Details (Date and Time)"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -74,7 +65,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
@@ -102,19 +92,6 @@
 
             <Button
                 android:id="@+id/submitEventButton"
-=======
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/event_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Image URL"
-                android:layout_marginBottom="8dp"/>
-
-            <Button
-                android:id="@+id/submit_event_button"
->>>>>>> renzo
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit Event"/>
@@ -159,11 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Donation Drive Title"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -171,11 +145,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Description"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -183,11 +154,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Details (Date and Time)"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-=======
->>>>>>> renzo
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -195,7 +163,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location"
-<<<<<<< HEAD
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
@@ -223,19 +190,6 @@
 
             <Button
                 android:id="@+id/submitEventButton2"
-=======
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/event_image2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Image URL"
-                android:layout_marginBottom="8dp"/>
-
-            <Button
-                android:id="@+id/submit_event_button_type2"
->>>>>>> renzo
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit Donation Drive"/>

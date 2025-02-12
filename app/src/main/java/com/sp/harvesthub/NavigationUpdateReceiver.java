@@ -13,8 +13,4 @@ public class NavigationUpdateReceiver extends BroadcastReceiver {
             activity.updateNavigationToHome();
         }
     }
-<<<<<<< HEAD
 }
-=======
-} 
->>>>>>> renzo

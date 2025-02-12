@@ -1,17 +1,6 @@
 package com.sp.harvesthub.foodAPI;
 
 import android.net.Uri;
-<<<<<<< HEAD
-import android.util.Log;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
-import java.util.List;
-=======
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
@@ -20,7 +9,6 @@ import java.util.UUID;
 import android.util.Log;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.auth.FirebaseAuth;
->>>>>>> renzo
 
 public class FirebaseImageUploader {
     private static final String FOOD_IMAGES_PATH = "food_images/";

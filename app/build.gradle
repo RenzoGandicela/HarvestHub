@@ -44,30 +44,16 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
-    // Core Android dependencies
-=======
->>>>>>> renzo
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'com.google.android.gms:play-services-maps:19.0.0'
-<<<<<<< HEAD
-
-    // Testing dependencies
-=======
->>>>>>> renzo
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
-<<<<<<< HEAD
     // Firebase dependencies (latest platform version)
     implementation platform('com.google.firebase:firebase-bom:33.8.0')
-=======
-    // Firebase dependencies
-    implementation platform('com.google.firebase:firebase-bom:32.1.1')
->>>>>>> renzo
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-storage'
@@ -96,8 +82,4 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> renzo

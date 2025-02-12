@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
   public final TextView featuredDetails;
 
   @NonNull
-  public final TextView featuredImage;
+  public final ImageView featuredImage;
 
   @NonNull
   public final TextView featuredLocation;
@@ -43,7 +44,7 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
 
   private FeaturedCardDesignBinding(@NonNull CardView rootView, @NonNull CardView cardView,
       @NonNull TextView featuredDescription, @NonNull TextView featuredDetails,
-      @NonNull TextView featuredImage, @NonNull TextView featuredLocation,
+      @NonNull ImageView featuredImage, @NonNull TextView featuredLocation,
       @NonNull TextView featuredTitle, @NonNull Button remindButton) {
     this.rootView = rootView;
     this.cardView = cardView;
@@ -97,7 +98,7 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
       }
 
       id = R.id.featured_image;
-      TextView featuredImage = ViewBindings.findChildViewById(rootView, id);
+      ImageView featuredImage = ViewBindings.findChildViewById(rootView, id);
       if (featuredImage == null) {
         break missingId;
       }

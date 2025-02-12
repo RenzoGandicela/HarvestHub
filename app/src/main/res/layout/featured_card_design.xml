@@ -15,21 +15,12 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-<<<<<<< HEAD
         <ImageView
             android:id="@+id/featured_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:background="@color/primary_green"/>
-=======
-        <TextView
-            android:id="@+id/featured_image"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:gravity="center"
-            android:textSize="24sp"/>
->>>>>>> renzo
 
         <TextView
             android:id="@+id/featured_title"
@@ -62,13 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-<<<<<<< HEAD
             android:text="Set Reminder"
             android:backgroundTint="@color/primary_green"
             android:textColor="@color/white"/>
-=======
-            android:text="Set Reminder"/>
->>>>>>> renzo
 
     </LinearLayout>
 

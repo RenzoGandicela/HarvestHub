@@ -11,23 +11,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-<<<<<<< HEAD
-import com.sp.harvesthub.foodListings.FoodItemExtended;
-=======
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.foodListings.FoodItemExtended;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
->>>>>>> renzo
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-<<<<<<< HEAD
-=======
 import java.util.TimeZone;
->>>>>>> renzo
 
 public class LogMealExtendedActivity extends AppCompatActivity {
 

@@ -157,6 +157,19 @@
         
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
+    <style name="Theme.HarvestHub.FullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/primary_dark_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
     <style name="Theme.HarvestHub.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

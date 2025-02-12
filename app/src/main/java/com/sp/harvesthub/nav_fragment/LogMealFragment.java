@@ -4,10 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-<<<<<<< HEAD
-=======
-import android.content.pm.ResolveInfo;
->>>>>>> renzo
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,46 +11,25 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-<<<<<<< HEAD
-=======
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
->>>>>>> renzo
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-<<<<<<< HEAD
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-=======
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Switch;
->>>>>>> renzo
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-<<<<<<< HEAD
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-=======
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
->>>>>>> renzo
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,25 +38,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-<<<<<<< HEAD
-=======
-import com.google.firebase.storage.UploadTask;
->>>>>>> renzo
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.foodAPI.ApiCallback;
 import com.sp.harvesthub.foodAPI.FileUtil;
 import com.sp.harvesthub.foodAPI.LogMealService;
-<<<<<<< HEAD
 import com.sp.harvesthub.foodListings.FoodItem;
 import com.sp.harvesthub.foodListings.FoodItemExtended;
-=======
-import com.sp.harvesthub.foodAPI.LogMealExtendedActivity;
-import com.sp.harvesthub.foodListings.FoodActivity;
-import com.sp.harvesthub.foodListings.FoodItem;
-import com.sp.harvesthub.foodListings.FoodItemExtended;
-import com.sp.harvesthub.foodListings.FoodFragment;
-import com.bumptech.glide.Glide;
->>>>>>> renzo
 
 import java.io.File;
 import java.io.IOException;
@@ -89,15 +51,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-=======
-import java.util.List;
-import java.util.Locale;
-import java.util.HashMap;
->>>>>>> renzo
 import java.util.Map;
 
 public class LogMealFragment extends Fragment {

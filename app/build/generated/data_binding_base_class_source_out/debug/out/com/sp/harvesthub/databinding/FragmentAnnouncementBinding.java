@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import androidx.annotation.NonNull;
@@ -47,10 +48,10 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
   public final LinearLayout eventFormLayoutType2;
 
   @NonNull
-  public final EditText eventImage;
+  public final ImageView eventImagePreview;
 
   @NonNull
-  public final EditText eventImage2;
+  public final ImageView eventImagePreview2;
 
   @NonNull
   public final EditText eventLocation;
@@ -74,18 +75,25 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
   public final Button submitEventButton;
 
   @NonNull
-  public final Button submitEventButtonType2;
+  public final Button submitEventButton2;
+
+  @NonNull
+  public final Button uploadImageButton;
+
+  @NonNull
+  public final Button uploadImageButton2;
 
   private FragmentAnnouncementBinding(@NonNull ScrollView rootView, @NonNull Button addEventButton,
       @NonNull Button addEventButtonType2, @NonNull EditText eventDescription,
       @NonNull EditText eventDescriptionType2, @NonNull EditText eventDetails,
       @NonNull EditText eventDetails2, @NonNull LinearLayout eventFormLayout,
-      @NonNull LinearLayout eventFormLayoutType2, @NonNull EditText eventImage,
-      @NonNull EditText eventImage2, @NonNull EditText eventLocation,
+      @NonNull LinearLayout eventFormLayoutType2, @NonNull ImageView eventImagePreview,
+      @NonNull ImageView eventImagePreview2, @NonNull EditText eventLocation,
       @NonNull EditText eventLocationType2, @NonNull EditText eventTitle,
       @NonNull EditText eventTitleType2, @NonNull RecyclerView featuredRecycler,
       @NonNull RecyclerView featuredRecyclerType2, @NonNull Button submitEventButton,
-      @NonNull Button submitEventButtonType2) {
+      @NonNull Button submitEventButton2, @NonNull Button uploadImageButton,
+      @NonNull Button uploadImageButton2) {
     this.rootView = rootView;
     this.addEventButton = addEventButton;
     this.addEventButtonType2 = addEventButtonType2;
@@ -95,8 +103,8 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
     this.eventDetails2 = eventDetails2;
     this.eventFormLayout = eventFormLayout;
     this.eventFormLayoutType2 = eventFormLayoutType2;
-    this.eventImage = eventImage;
-    this.eventImage2 = eventImage2;
+    this.eventImagePreview = eventImagePreview;
+    this.eventImagePreview2 = eventImagePreview2;
     this.eventLocation = eventLocation;
     this.eventLocationType2 = eventLocationType2;
     this.eventTitle = eventTitle;
@@ -104,7 +112,9 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
     this.featuredRecycler = featuredRecycler;
     this.featuredRecyclerType2 = featuredRecyclerType2;
     this.submitEventButton = submitEventButton;
-    this.submitEventButtonType2 = submitEventButtonType2;
+    this.submitEventButton2 = submitEventButton2;
+    this.uploadImageButton = uploadImageButton;
+    this.uploadImageButton2 = uploadImageButton2;
   }
 
   @Override
@@ -182,15 +192,15 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.event_image;
-      EditText eventImage = ViewBindings.findChildViewById(rootView, id);
-      if (eventImage == null) {
+      id = R.id.eventImagePreview;
+      ImageView eventImagePreview = ViewBindings.findChildViewById(rootView, id);
+      if (eventImagePreview == null) {
         break missingId;
       }
 
-      id = R.id.event_image2;
-      EditText eventImage2 = ViewBindings.findChildViewById(rootView, id);
-      if (eventImage2 == null) {
+      id = R.id.eventImagePreview2;
+      ImageView eventImagePreview2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventImagePreview2 == null) {
         break missingId;
       }
 
@@ -230,23 +240,36 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.submit_event_button;
+      id = R.id.submitEventButton;
       Button submitEventButton = ViewBindings.findChildViewById(rootView, id);
       if (submitEventButton == null) {
         break missingId;
       }
 
-      id = R.id.submit_event_button_type2;
-      Button submitEventButtonType2 = ViewBindings.findChildViewById(rootView, id);
-      if (submitEventButtonType2 == null) {
+      id = R.id.submitEventButton2;
+      Button submitEventButton2 = ViewBindings.findChildViewById(rootView, id);
+      if (submitEventButton2 == null) {
+        break missingId;
+      }
+
+      id = R.id.uploadImageButton;
+      Button uploadImageButton = ViewBindings.findChildViewById(rootView, id);
+      if (uploadImageButton == null) {
+        break missingId;
+      }
+
+      id = R.id.uploadImageButton2;
+      Button uploadImageButton2 = ViewBindings.findChildViewById(rootView, id);
+      if (uploadImageButton2 == null) {
         break missingId;
       }
 
       return new FragmentAnnouncementBinding((ScrollView) rootView, addEventButton,
           addEventButtonType2, eventDescription, eventDescriptionType2, eventDetails, eventDetails2,
-          eventFormLayout, eventFormLayoutType2, eventImage, eventImage2, eventLocation,
-          eventLocationType2, eventTitle, eventTitleType2, featuredRecycler, featuredRecyclerType2,
-          submitEventButton, submitEventButtonType2);
+          eventFormLayout, eventFormLayoutType2, eventImagePreview, eventImagePreview2,
+          eventLocation, eventLocationType2, eventTitle, eventTitleType2, featuredRecycler,
+          featuredRecyclerType2, submitEventButton, submitEventButton2, uploadImageButton,
+          uploadImageButton2);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

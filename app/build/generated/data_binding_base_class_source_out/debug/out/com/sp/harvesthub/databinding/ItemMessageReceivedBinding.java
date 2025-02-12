@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.sp.harvesthub.R;
-import de.hdodenhof.circleimageview.CircleImageView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -25,27 +24,17 @@ public final class ItemMessageReceivedBinding implements ViewBinding {
   public final ImageView messageImage;
 
   @NonNull
-  public final TextView messageTxt;
+  public final TextView messageText;
 
   @NonNull
-  public final CircleImageView profileImage;
-
-  @NonNull
-  public final TextView senderNameTxt;
-
-  @NonNull
-  public final TextView timestampTxt;
+  public final TextView timestamp;
 
   private ItemMessageReceivedBinding(@NonNull LinearLayout rootView,
-      @NonNull ImageView messageImage, @NonNull TextView messageTxt,
-      @NonNull CircleImageView profileImage, @NonNull TextView senderNameTxt,
-      @NonNull TextView timestampTxt) {
+      @NonNull ImageView messageImage, @NonNull TextView messageText, @NonNull TextView timestamp) {
     this.rootView = rootView;
     this.messageImage = messageImage;
-    this.messageTxt = messageTxt;
-    this.profileImage = profileImage;
-    this.senderNameTxt = senderNameTxt;
-    this.timestampTxt = timestampTxt;
+    this.messageText = messageText;
+    this.timestamp = timestamp;
   }
 
   @Override
@@ -81,32 +70,20 @@ public final class ItemMessageReceivedBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.messageTxt;
-      TextView messageTxt = ViewBindings.findChildViewById(rootView, id);
-      if (messageTxt == null) {
+      id = R.id.messageText;
+      TextView messageText = ViewBindings.findChildViewById(rootView, id);
+      if (messageText == null) {
         break missingId;
       }
 
-      id = R.id.profileImage;
-      CircleImageView profileImage = ViewBindings.findChildViewById(rootView, id);
-      if (profileImage == null) {
+      id = R.id.timestamp;
+      TextView timestamp = ViewBindings.findChildViewById(rootView, id);
+      if (timestamp == null) {
         break missingId;
       }
 
-      id = R.id.senderNameTxt;
-      TextView senderNameTxt = ViewBindings.findChildViewById(rootView, id);
-      if (senderNameTxt == null) {
-        break missingId;
-      }
-
-      id = R.id.timestampTxt;
-      TextView timestampTxt = ViewBindings.findChildViewById(rootView, id);
-      if (timestampTxt == null) {
-        break missingId;
-      }
-
-      return new ItemMessageReceivedBinding((LinearLayout) rootView, messageImage, messageTxt,
-          profileImage, senderNameTxt, timestampTxt);
+      return new ItemMessageReceivedBinding((LinearLayout) rootView, messageImage, messageText,
+          timestamp);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

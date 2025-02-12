@@ -6,20 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-<<<<<<< HEAD
 import android.widget.ImageView;
-=======
->>>>>>> renzo
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<< HEAD
 import com.bumptech.glide.Glide;
-=======
->>>>>>> renzo
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.activities.DashboardActivity;
 import com.sp.harvesthub.models.FeaturedHelperClass;
@@ -34,14 +28,11 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
 
     public interface OnEventClickListener {
         void onRemindClick(FeaturedHelperClass event);
-<<<<<<< HEAD
         void onEventClick(FeaturedHelperClass event, int position);
     }
 
     public void setOnEventClickListener(OnEventClickListener listener) {
         this.listener = listener;
-=======
->>>>>>> renzo
     }
 
     public FeaturedAdapter(Context context, ArrayList<FeaturedHelperClass> featuredLocations) {
@@ -65,7 +56,6 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
         FeaturedHelperClass featuredHelperClass = featuredLocations.get(position);
         
-<<<<<<< HEAD
         // Load image using Glide
         Glide.with(context)
             .load(featuredHelperClass.getImage())
@@ -73,21 +63,16 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
             .error(R.color.primary_green)
             .into(holder.image);
             
-=======
->>>>>>> renzo
         holder.title.setText(featuredHelperClass.getTitle());
         holder.description.setText(featuredHelperClass.getDescription());
         holder.location.setText(featuredHelperClass.getLocation());
         holder.details.setText(featuredHelperClass.getDetails());
         
-<<<<<<< HEAD
         // Set text colors for better visibility
         holder.description.setTextColor(context.getResources().getColor(R.color.black));
         holder.location.setTextColor(context.getResources().getColor(R.color.gray));
         holder.details.setTextColor(context.getResources().getColor(R.color.black));
         
-=======
->>>>>>> renzo
         // Apply different styles based on event type
         if (featuredHelperClass.getEventType() == 1) {
             // Regular event styling
@@ -99,7 +84,6 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
             holder.cardView.setBackgroundResource(R.drawable.teal_round);
         }
 
-<<<<<<< HEAD
         // Set click listeners
         holder.cardView.setOnClickListener(v -> {
             if (listener != null) {
@@ -117,13 +101,6 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
             intent.putExtra("eventDescription", eventDescription);
             intent.putExtra("eventDetails", eventDetails);
             context.startActivity(intent);
-=======
-        // Update reminder functionality
-        holder.remindBtn.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onRemindClick(featuredHelperClass);
-            }
->>>>>>> renzo
         });
     }
 
@@ -133,11 +110,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     }
 
     public static class FeaturedViewHolder extends RecyclerView.ViewHolder {
-<<<<<<< HEAD
         ImageView image;
-=======
-        TextView image;
->>>>>>> renzo
         TextView title, description, location, details;
         Button remindBtn;
         CardView cardView;

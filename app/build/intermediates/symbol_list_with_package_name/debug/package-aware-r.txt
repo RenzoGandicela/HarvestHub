@@ -1579,6 +1579,7 @@ color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
 color dim_foreground_material_light
+color edit_icon_color
 color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
@@ -3179,6 +3180,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable add_circle
 drawable announcement
+drawable arrow
 drawable avd_hide_password
 drawable avd_show_password
 drawable background
@@ -3199,6 +3201,7 @@ drawable calendar
 drawable cart
 drawable channel_item_background
 drawable channel_list_border
+drawable chat_input_background
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -3236,11 +3239,13 @@ drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable home
 drawable ic_add_24
+drawable ic_add_friend
 drawable ic_announcement
 drawable ic_arrow_back_black_24
 drawable ic_arrow_down_24dp
 drawable ic_arrow_up
 drawable ic_attach
+drawable ic_back
 drawable ic_bookmark
 drawable ic_calendar
 drawable ic_call_answer
@@ -3249,6 +3254,7 @@ drawable ic_call_answer_video
 drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
+drawable ic_chat
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_delete
@@ -3271,11 +3277,15 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_other_sign_in
+drawable ic_passkey
+drawable ic_password
 drawable ic_person
 drawable ic_profile
 drawable ic_profile_placeholder
 drawable ic_search
 drawable ic_search_black_24
+drawable ic_search_small
 drawable ic_send
 drawable ic_server_placeholder
 drawable ic_settings
@@ -3367,7 +3377,10 @@ drawable order
 drawable placeholder_image
 drawable preference_list_divider_material
 drawable profile
+drawable received_message_background
 drawable rounded_tag_background
+drawable search_background
+drawable sent_message_background
 drawable settings
 drawable share
 drawable social
@@ -3443,6 +3456,7 @@ id action_bar_root
 id action_bar_spinner
 id action_bar_subtitle
 id action_bar_title
+id action_chat
 id action_clear_chat
 id action_container
 id action_context_bar
@@ -3457,6 +3471,7 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id addFriendButton
 id add_event_button
 id add_event_button_type2
 id adjust_height
@@ -3525,6 +3540,8 @@ id chains
 id channelNameTxt
 id channelsRecyclerView
 id chatImageView
+id chatListView
+id chatsRecyclerView
 id checkbox
 id checked
 id chronometer
@@ -3600,6 +3617,7 @@ id east
 id edge
 id editListing
 id editNote
+id editUsernameButton
 id edit_query
 id edit_text_id
 id elastic
@@ -3612,6 +3630,8 @@ id enterAlways
 id enterAlwaysCollapsed
 id escape
 id eventDetailsTxt
+id eventImagePreview
+id eventImagePreview2
 id event_description
 id event_description_type2
 id event_details
@@ -3714,6 +3734,7 @@ id item_touch_helper_previous_elevation
 id jumpToEnd
 id jumpToStart
 id labeled
+id lastMessageText
 id layout
 id left
 id leftSpace
@@ -3728,6 +3749,7 @@ id linear
 id listMode
 id list_item
 id listingText
+id liveCameraView
 id locale
 id location
 id locationEdit
@@ -3739,6 +3761,7 @@ id login_password
 id logoImage
 id ltr
 id m3_side_sheet
+id mainLayout
 id map
 id marquee
 id masked
@@ -3770,7 +3793,7 @@ id messageContainer
 id messageImage
 id messageInput
 id messageText
-id messageTxt
+id messagesCountText
 id messagesRecyclerView
 id middle
 id mini
@@ -3814,6 +3837,7 @@ id nav_favorites
 id nav_home
 id nav_logout
 id nav_map
+id nav_none
 id nav_profile
 id nav_setting
 id nav_share
@@ -3920,8 +3944,11 @@ id scrollIndicatorUp
 id scrollToTopButton
 id scrollView
 id scrollable
+id searchButton
 id searchEditText
 id searchIcon
+id searchInput
+id searchLayout
 id search_badge
 id search_bar
 id search_button
@@ -3940,7 +3967,6 @@ id selection_type
 id sellerIdText
 id sendButton
 id senderName
-id senderNameTxt
 id serverDescriptionTxt
 id serverIconImg
 id serverNameTxt
@@ -3992,6 +4018,8 @@ id statusText
 id stop
 id stretch
 id submenuarrow
+id submitEventButton
+id submitEventButton2
 id submit_area
 id submit_event_button
 id submit_event_button_type2
@@ -4038,9 +4066,10 @@ id textinput_suffix_text
 id themeSwitch
 id time
 id timestamp
-id timestampTxt
+id timestampText
 id title
 id titleDividerNoCustom
+id titleText
 id title_template
 id toggle
 id toolbar
@@ -4064,11 +4093,17 @@ id uniform
 id unlabeled
 id up
 id uploadButton
+id uploadImageButton
+id uploadImageButton2
 id uploadTimeText
 id useLogo
 id userNameTxt
 id userProfileImage
+id userSearchInput
+id usernameInput
+id usernameText
 id usernameTxt
+id usersRecyclerView
 id vertical
 id vertical_only
 id view_offset_helper
@@ -4211,8 +4246,10 @@ layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
 layout activity_dashboard
+layout activity_direct_chat
 layout activity_edit_food
 layout activity_food
+layout activity_location1
 layout activity_login
 layout activity_logmeal
 layout activity_main
@@ -4225,6 +4262,7 @@ layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout chat_bubble
 layout chat_image_item
+layout chat_message_item
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -4241,6 +4279,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_add_friend
+layout dialog_edit_username
 layout dialog_forgot
 layout expand_button
 layout featured_card_design
@@ -4254,6 +4294,7 @@ layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
 layout fragment_food_details
+layout fragment_home
 layout fragment_map
 layout fragment_profile
 layout fragment_setting
@@ -4263,9 +4304,11 @@ layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_blink
 layout item_channel
+layout item_direct_chat
 layout item_message_received
 layout item_message_sent
 layout item_server
+layout item_user
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -4346,8 +4389,10 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 menu bottom_nav_menu
 menu chat_menu
+menu drawer_menu
 menu menu
 menu nav_menu
+menu toolbar_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
@@ -4382,6 +4427,8 @@ string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string about
 string about_me
+string android_credentials_TYPE_PASSWORD_CREDENTIAL
+string androidx_credentials_TYPE_PUBLIC_KEY_CREDENTIAL
 string androidx_startup
 string announcement
 string app_name
@@ -5194,7 +5241,9 @@ style Theme_Design_Light_BottomSheetDialog
 style Theme_Design_Light_NoActionBar
 style Theme_Design_NoActionBar
 style Theme_HarvestHub
+style Theme_HarvestHub_FullScreen
 style Theme_HarvestHub_NoActionBar
+style Theme_Hidden
 style Theme_Material3_Dark
 style Theme_Material3_Dark_BottomSheetDialog
 style Theme_Material3_Dark_Dialog
@@ -5272,6 +5321,7 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
+style Theme_PlayCore_Transparent
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark

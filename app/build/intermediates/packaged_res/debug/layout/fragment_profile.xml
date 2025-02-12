@@ -19,6 +19,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:src="@drawable/default_profile"
+            android:clickable="true"
+            android:focusable="true"
             app:civ_border_color="@color/primary_green"
             app:civ_border_width="2dp" />
 
@@ -30,14 +32,32 @@
             android:textStyle="bold"
             android:textColor="@color/primary_green" />
 
-        <TextView
-            android:id="@+id/profileUsername"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/beige"
-            android:padding="12dp"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/profileUsername"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="4dp"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/editUsernameButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit username"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,8 +72,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@color/beige"
+            android:background="#F5F5F5"
             android:padding="12dp"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -69,8 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@color/beige"
+            android:background="#F5F5F5"
             android:padding="12dp"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -86,9 +108,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@color/beige"
+            android:background="#F5F5F5"
             android:gravity="top"
             android:hint="@string/hint_about_me"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
             android:minLines="3"
             android:maxLines="5"
             android:padding="12dp"

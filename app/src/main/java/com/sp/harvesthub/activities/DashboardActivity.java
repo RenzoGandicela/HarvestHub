@@ -79,7 +79,6 @@ public class DashboardActivity extends AppCompatActivity {
     private void handleIntentExtras() {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("eventDetails")) {
-<<<<<<< HEAD
             String eventTitle = intent.getStringExtra("eventTitle");
             String eventDescription = intent.getStringExtra("eventDescription");
             String eventDetails = intent.getStringExtra("eventDetails");
@@ -91,11 +90,6 @@ public class DashboardActivity extends AppCompatActivity {
             String preFilledText = "Title: " + eventTitle + "\n\nDescription: " + eventDescription + "\n\nDetails: " + eventDetails;
 
             editNote.setText(preFilledText);
-=======
-            String eventDetails = intent.getStringExtra("eventDetails");
-            eventDetailsTxt.setText(eventDetails);
-            editNote.setText(eventDetails); // Pre-fill the note with event details
->>>>>>> renzo
         }
     }
 

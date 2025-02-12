@@ -8,12 +8,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-<<<<<<< HEAD
-=======
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
->>>>>>> renzo
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,24 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-<<<<<<< HEAD
-
-import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
-=======
 import android.widget.Toast;
 import androidx.annotation.NonNull;
->>>>>>> renzo
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-<<<<<<< HEAD
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-=======
 import androidx.core.widget.NestedScrollView;
->>>>>>> renzo
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,10 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
-<<<<<<< HEAD
-=======
 import com.google.android.material.bottomnavigation.BottomNavigationView;
->>>>>>> renzo
 
 import java.util.ArrayList;
 import java.util.List;

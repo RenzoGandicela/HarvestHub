@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -14,38 +15,276 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.sp.harvesthub.R;
-import java.lang.NullPointerException;
 import java.lang.Override;
-import java.lang.String;
 
 public final class ActivityChatBinding implements ViewBinding {
   @NonNull
   private final LinearLayout rootView;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final ImageButton addFriendButton;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
   public final ImageButton attachButton;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final ImageButton backButton;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final RecyclerView chatsRecyclerView;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final LinearLayout mainLayout;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
   public final EditText messageInput;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final TextView messagesCountText;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
   public final RecyclerView messagesRecyclerView;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final ImageButton searchButton;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final EditText searchInput;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final LinearLayout searchLayout;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
   public final ImageButton sendButton;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
   public final Toolbar toolbar;
 
-  private ActivityChatBinding(@NonNull LinearLayout rootView, @NonNull ImageButton attachButton,
-      @NonNull EditText messageInput, @NonNull RecyclerView messagesRecyclerView,
-      @NonNull ImageButton sendButton, @NonNull Toolbar toolbar) {
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final EditText userSearchInput;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-night/</li>
+   * </ul>
+   */
+  @Nullable
+  public final RecyclerView usersRecyclerView;
+
+  private ActivityChatBinding(@NonNull LinearLayout rootView, @Nullable ImageButton addFriendButton,
+      @Nullable ImageButton attachButton, @Nullable ImageButton backButton,
+      @Nullable RecyclerView chatsRecyclerView, @Nullable LinearLayout mainLayout,
+      @Nullable EditText messageInput, @Nullable TextView messagesCountText,
+      @Nullable RecyclerView messagesRecyclerView, @Nullable ImageButton searchButton,
+      @Nullable EditText searchInput, @Nullable LinearLayout searchLayout,
+      @Nullable ImageButton sendButton, @Nullable Toolbar toolbar,
+      @Nullable EditText userSearchInput, @Nullable RecyclerView usersRecyclerView) {
     this.rootView = rootView;
+    this.addFriendButton = addFriendButton;
     this.attachButton = attachButton;
+    this.backButton = backButton;
+    this.chatsRecyclerView = chatsRecyclerView;
+    this.mainLayout = mainLayout;
     this.messageInput = messageInput;
+    this.messagesCountText = messagesCountText;
     this.messagesRecyclerView = messagesRecyclerView;
+    this.searchButton = searchButton;
+    this.searchInput = searchInput;
+    this.searchLayout = searchLayout;
     this.sendButton = sendButton;
     this.toolbar = toolbar;
+    this.userSearchInput = userSearchInput;
+    this.usersRecyclerView = usersRecyclerView;
   }
 
   @Override
@@ -71,44 +310,39 @@ public final class ActivityChatBinding implements ViewBinding {
 
   @NonNull
   public static ActivityChatBinding bind(@NonNull View rootView) {
-    // The body of this method is generated in a way you would not otherwise write.
-    // This is done to optimize the compiled bytecode for size and performance.
-    int id;
-    missingId: {
-      id = R.id.attachButton;
-      ImageButton attachButton = ViewBindings.findChildViewById(rootView, id);
-      if (attachButton == null) {
-        break missingId;
-      }
+    ImageButton addFriendButton = ViewBindings.findChildViewById(rootView, R.id.addFriendButton);
 
-      id = R.id.messageInput;
-      EditText messageInput = ViewBindings.findChildViewById(rootView, id);
-      if (messageInput == null) {
-        break missingId;
-      }
+    ImageButton attachButton = ViewBindings.findChildViewById(rootView, R.id.attachButton);
 
-      id = R.id.messagesRecyclerView;
-      RecyclerView messagesRecyclerView = ViewBindings.findChildViewById(rootView, id);
-      if (messagesRecyclerView == null) {
-        break missingId;
-      }
+    ImageButton backButton = ViewBindings.findChildViewById(rootView, R.id.backButton);
 
-      id = R.id.sendButton;
-      ImageButton sendButton = ViewBindings.findChildViewById(rootView, id);
-      if (sendButton == null) {
-        break missingId;
-      }
+    RecyclerView chatsRecyclerView = ViewBindings.findChildViewById(rootView, R.id.chatsRecyclerView);
 
-      id = R.id.toolbar;
-      Toolbar toolbar = ViewBindings.findChildViewById(rootView, id);
-      if (toolbar == null) {
-        break missingId;
-      }
+    LinearLayout mainLayout = ViewBindings.findChildViewById(rootView, R.id.mainLayout);
 
-      return new ActivityChatBinding((LinearLayout) rootView, attachButton, messageInput,
-          messagesRecyclerView, sendButton, toolbar);
-    }
-    String missingId = rootView.getResources().getResourceName(id);
-    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
+    EditText messageInput = ViewBindings.findChildViewById(rootView, R.id.messageInput);
+
+    TextView messagesCountText = ViewBindings.findChildViewById(rootView, R.id.messagesCountText);
+
+    RecyclerView messagesRecyclerView = ViewBindings.findChildViewById(rootView, R.id.messagesRecyclerView);
+
+    ImageButton searchButton = ViewBindings.findChildViewById(rootView, R.id.searchButton);
+
+    EditText searchInput = ViewBindings.findChildViewById(rootView, R.id.searchInput);
+
+    LinearLayout searchLayout = ViewBindings.findChildViewById(rootView, R.id.searchLayout);
+
+    ImageButton sendButton = ViewBindings.findChildViewById(rootView, R.id.sendButton);
+
+    Toolbar toolbar = ViewBindings.findChildViewById(rootView, R.id.toolbar);
+
+    EditText userSearchInput = ViewBindings.findChildViewById(rootView, R.id.userSearchInput);
+
+    RecyclerView usersRecyclerView = ViewBindings.findChildViewById(rootView, R.id.usersRecyclerView);
+
+    return new ActivityChatBinding((LinearLayout) rootView, addFriendButton, attachButton,
+        backButton, chatsRecyclerView, mainLayout, messageInput, messagesCountText,
+        messagesRecyclerView, searchButton, searchInput, searchLayout, sendButton, toolbar,
+        userSearchInput, usersRecyclerView);
   }
 }

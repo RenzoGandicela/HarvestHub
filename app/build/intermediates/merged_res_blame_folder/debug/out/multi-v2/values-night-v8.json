@@ -38,7 +38,26 @@
                     }
                 },
                 {
-                    "source": "C:\\MAD\\AndroidStudioProjects\\MADproject\\app\\src\\main\\res\\values-night\\colors.xml",
+                    "source": "C:\\MAD\\AndroidStudioProjects\\HarvestHub\\app\\src\\main\\res\\values-night\\themes.xml",
+                    "from": {
+                        "startLines": "33,28,24,38,2",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "1786,1566,1425,2008,55",
+                        "endLines": "36,31,26,40,22",
+                        "endColumns": "12,12,12,12,12",
+                        "endOffsets": "2002,1780,1560,2154,1419"
+                    },
+                    "to": {
+                        "startLines": "3,7,11,14,24",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "117,338,557,697,1480",
+                        "endLines": "6,10,13,16,44",
+                        "endColumns": "12,12,12,12,12",
+                        "endOffsets": "333,552,692,843,2844"
+                    }
+                },
+                {
+                    "source": "C:\\MAD\\AndroidStudioProjects\\HarvestHub\\app\\src\\main\\res\\values-night\\colors.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -52,25 +71,6 @@
                         "startOffsets": "55",
                         "endColumns": "61",
                         "endOffsets": "112"
-                    }
-                },
-                {
-                    "source": "C:\\MAD\\AndroidStudioProjects\\MADproject\\app\\src\\main\\res\\values-night\\themes.xml",
-                    "from": {
-                        "startLines": "33,28,24,38,2",
-                        "startColumns": "4,4,4,4,4",
-                        "startOffsets": "1819,1594,1449,2046,57",
-                        "endLines": "36,31,26,40,22",
-                        "endColumns": "12,12,12,12,12",
-                        "endOffsets": "2038,1811,1586,2194,1441"
-                    },
-                    "to": {
-                        "startLines": "3,7,11,14,24",
-                        "startColumns": "4,4,4,4,4",
-                        "startOffsets": "117,338,557,697,1480",
-                        "endLines": "6,10,13,16,44",
-                        "endColumns": "12,12,12,12,12",
-                        "endOffsets": "333,552,692,843,2844"
                     }
                 }
             ]
