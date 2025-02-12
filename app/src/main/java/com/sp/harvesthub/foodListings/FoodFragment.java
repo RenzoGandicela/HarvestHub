@@ -174,12 +174,37 @@ public class FoodFragment extends Fragment {
 
     private void filterFoodItems(String query) {
         List<FoodItem> filteredList = new ArrayList<>();
+        
         for (FoodItem item : allFoodItems) {
-            if (item.getDishName().toLowerCase().contains(query.toLowerCase()) ||
-                    item.getLocation().toLowerCase().contains(query.toLowerCase())) {
+            FoodItemExtended extendedItem = (FoodItemExtended) item;
+            boolean matches = true;
+
+            // Text search
+            if (!query.isEmpty()) {
+                String searchText = query.toLowerCase();
+                String title = extendedItem.getDishName().toLowerCase();
+                String location = extendedItem.getLocation() != null ? 
+                    extendedItem.getLocation().toLowerCase() : "";
+                
+                matches = title.contains(searchText) || location.contains(searchText);
+            }
+
+            // Filter conditions
+            if (isHalalChecked && !extendedItem.isHalal()) {
+                matches = false;
+            }
+            if (isSpicyChecked && !extendedItem.isSpicy()) {
+                matches = false;
+            }
+            if (isAvailableChecked && "claimed".equalsIgnoreCase(extendedItem.getStatus())) {
+                matches = false;
+            }
+
+            if (matches) {
                 filteredList.add(item);
             }
         }
+
         foodList.clear();
         foodList.addAll(filteredList);
         foodAdapter.notifyDataSetChanged();

@@ -23,6 +23,9 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
   private final RelativeLayout rootView;
 
   @NonNull
+  public final ImageButton bookmarkButton;
+
+  @NonNull
   public final TextView descriptionText;
 
   @NonNull
@@ -68,14 +71,16 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
   public final TextView uploadTimeText;
 
   private FragmentFoodDetailsBinding(@NonNull RelativeLayout rootView,
-      @NonNull TextView descriptionText, @NonNull TextView descriptionTitle,
-      @NonNull TextView expiryDateText, @NonNull ImageView foodImage, @NonNull TextView foodName,
+      @NonNull ImageButton bookmarkButton, @NonNull TextView descriptionText,
+      @NonNull TextView descriptionTitle, @NonNull TextView expiryDateText,
+      @NonNull ImageView foodImage, @NonNull TextView foodName,
       @NonNull FoodCardTagsHalalBinding halalTag, @NonNull TextView ingredientsListText,
       @NonNull ImageButton likeButton, @NonNull TextView likeCountText,
       @NonNull TextView locationText, @NonNull TextView quantityText,
       @NonNull TextView sellerIdText, @NonNull FoodCardTagsSpicyBinding spicyTag,
       @NonNull Button undoButton, @NonNull TextView uploadTimeText) {
     this.rootView = rootView;
+    this.bookmarkButton = bookmarkButton;
     this.descriptionText = descriptionText;
     this.descriptionTitle = descriptionTitle;
     this.expiryDateText = expiryDateText;
@@ -120,6 +125,12 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.bookmarkButton;
+      ImageButton bookmarkButton = ViewBindings.findChildViewById(rootView, id);
+      if (bookmarkButton == null) {
+        break missingId;
+      }
+
       id = R.id.descriptionText;
       TextView descriptionText = ViewBindings.findChildViewById(rootView, id);
       if (descriptionText == null) {
@@ -212,8 +223,8 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentFoodDetailsBinding((RelativeLayout) rootView, descriptionText,
-          descriptionTitle, expiryDateText, foodImage, foodName, binding_halalTag,
+      return new FragmentFoodDetailsBinding((RelativeLayout) rootView, bookmarkButton,
+          descriptionText, descriptionTitle, expiryDateText, foodImage, foodName, binding_halalTag,
           ingredientsListText, likeButton, likeCountText, locationText, quantityText, sellerIdText,
           binding_spicyTag, undoButton, uploadTimeText);
     }

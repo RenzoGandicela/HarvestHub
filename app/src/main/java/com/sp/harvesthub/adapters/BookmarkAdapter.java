@@ -1,4 +1,4 @@
-package com.sp.harvesthub.foodListings;
+package com.sp.harvesthub.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,48 +12,36 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.sp.harvesthub.R;
+import com.sp.harvesthub.foodListings.FoodItemExtended;
+import com.sp.harvesthub.nav_fragment.BookmarkDetailsFragment;
 import java.util.List;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
+public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder> {
     private Context context;
-    private List<FoodItem> foodList;
-    private OnItemClickListener listener;
+    private List<FoodItemExtended> bookmarkList;
 
-    public interface OnItemClickListener {
-        void onItemClick(FoodItem foodItem);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
-    public FoodAdapter(Context context, List<FoodItem> foodList) {
+    public BookmarkAdapter(Context context, List<FoodItemExtended> bookmarkList) {
         this.context = context;
-        this.foodList = foodList;
+        this.bookmarkList = bookmarkList;
     }
 
     @NonNull
     @Override
-    public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.food_card, parent, false);
-        return new FoodViewHolder(view);
+        return new BookmarkViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-        FoodItemExtended foodItem = (FoodItemExtended) foodList.get(position);
+    public void onBindViewHolder(@NonNull BookmarkViewHolder holder, int position) {
+        FoodItemExtended foodItem = bookmarkList.get(position);
         holder.foodName.setText(capitalizeDishName(foodItem.getDishName()));
         
         // Handle tag visibility
-        if (foodItem.isHalal() || foodItem.isSpicy()) {
-            holder.halalTag.setVisibility(foodItem.isHalal() ? View.VISIBLE : View.GONE);
-            holder.spicyTag.setVisibility(foodItem.isSpicy() ? View.VISIBLE : View.GONE);
-        } else {
-            holder.halalTag.setVisibility(View.INVISIBLE);
-            holder.spicyTag.setVisibility(View.INVISIBLE);
-        }
+        holder.halalTag.setVisibility(foodItem.isHalal() ? View.VISIBLE : View.GONE);
+        holder.spicyTag.setVisibility(foodItem.isSpicy() ? View.VISIBLE : View.GONE);
         
-        // Set location text with capitalization
+        // Set location
         if (foodItem.getLocation() != null && !foodItem.getLocation().isEmpty()) {
             String location = foodItem.getLocation();
             location = location.substring(0, 1).toUpperCase() + location.substring(1);
@@ -64,27 +52,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         }
 
         // Load image
-        String imageUrl = foodItem.getImageUrl();
-        if (imageUrl != null && !imageUrl.isEmpty()) {
+        if (foodItem.getImageUrl() != null && !foodItem.getImageUrl().isEmpty()) {
             Glide.with(context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
+                    .load(foodItem.getImageUrl())
                     .into(holder.foodImage);
         }
-
-        // Change overlay color based on status
-        LinearLayout overlay = holder.itemView.findViewById(R.id.foodOverlay);
-        boolean isClaimed = "claimed".equalsIgnoreCase(foodItem.getStatus());
-        int overlayColor = isClaimed ? 
-            R.color.claimed_overlay : R.color.available_overlay;
-        overlay.setBackgroundColor(context.getResources().getColor(overlayColor));
 
         // Set click listener
         holder.itemView.setOnClickListener(v -> {
             if (context instanceof FragmentActivity) {
                 FragmentActivity activity = (FragmentActivity) context;
-                FoodDetailsFragment detailsFragment = FoodDetailsFragment.newInstance(foodItem);
+                BookmarkDetailsFragment detailsFragment = BookmarkDetailsFragment.newInstance(foodItem);
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, detailsFragment)
@@ -96,16 +74,21 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public int getItemCount() {
-        return foodList.size();
+        return bookmarkList.size();
     }
 
-    public static class FoodViewHolder extends RecyclerView.ViewHolder {
+    public void updateItems(List<FoodItemExtended> newItems) {
+        this.bookmarkList = newItems;
+        notifyDataSetChanged();
+    }
+
+    static class BookmarkViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImage;
         TextView foodName;
         LinearLayout halalTag, spicyTag;
         TextView locationText;
 
-        public FoodViewHolder(@NonNull View itemView) {
+        BookmarkViewHolder(@NonNull View itemView) {
             super(itemView);
             foodImage = itemView.findViewById(R.id.foodImage);
             foodName = itemView.findViewById(R.id.foodName);
@@ -116,9 +99,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     private String capitalizeDishName(String dishName) {
-        if (dishName == null || dishName.isEmpty()) {
-            return "";
-        }
+        if (dishName == null || dishName.isEmpty()) return "";
         String[] words = dishName.toLowerCase().split("\\s+");
         StringBuilder capitalizedName = new StringBuilder();
         for (String word : words) {
@@ -130,4 +111,4 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         }
         return capitalizedName.toString().trim();
     }
-}
+} 

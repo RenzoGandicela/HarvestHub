@@ -33,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
 import android.content.Intent;
 import java.util.List;
+import com.sp.harvesthub.database.BookmarkDbHelper;
 
 public class FoodDetailsFragment extends Fragment {
     private static final String ARG_FOOD_ITEM = "food_item";
@@ -45,6 +46,9 @@ public class FoodDetailsFragment extends Fragment {
     private boolean isLiked = false;
     private Menu optionsMenu;
     private boolean isUserSeller = false;
+    private ImageButton bookmarkButton;
+    private BookmarkDbHelper bookmarkDbHelper;
+    private boolean isBookmarked = false;
 
     public static FoodDetailsFragment newInstance(FoodItemExtended foodItem) {
         FoodDetailsFragment fragment = new FoodDetailsFragment();
@@ -88,6 +92,9 @@ public class FoodDetailsFragment extends Fragment {
         listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                 .getReference("listings");
 
+        // Initialize database helper
+        bookmarkDbHelper = new BookmarkDbHelper(requireContext());
+        
         // Initialize views
         likeButton = view.findViewById(R.id.likeButton);
         likeCountText = view.findViewById(R.id.likeCountText);
@@ -100,6 +107,13 @@ public class FoodDetailsFragment extends Fragment {
         LinearLayout halalTag = view.findViewById(R.id.halalTag);
         LinearLayout spicyTag = view.findViewById(R.id.spicyTag);
         
+        // Initialize bookmark button with null check
+        bookmarkButton = view.findViewById(R.id.bookmarkButton);
+        if (bookmarkButton == null) {
+            Log.e(TAG, "Bookmark button not found in layout");
+            return view;
+        }
+
         if (foodItem != null) {
             ImageView foodImage = view.findViewById(R.id.foodImage);
             TextView foodName = view.findViewById(R.id.foodName);
@@ -246,6 +260,13 @@ public class FoodDetailsFragment extends Fragment {
                     Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
                 });
             }
+
+            // Check if item is bookmarked and set up bookmark functionality
+            if (bookmarkButton != null) {
+                isBookmarked = bookmarkDbHelper.isBookmarked(foodItem.getItemId());
+                updateBookmarkButton();
+                bookmarkButton.setOnClickListener(v -> handleBookmarkAction());
+            }
         }
 
         return view;
@@ -334,5 +355,25 @@ public class FoodDetailsFragment extends Fragment {
         Intent intent = new Intent(getActivity(), EditFoodActivity.class);
         intent.putExtra("foodItem", foodItem);
         startActivity(intent);
+    }
+
+    private void handleBookmarkAction() {
+        if (bookmarkButton == null) return;
+        
+        if (isBookmarked) {
+            bookmarkDbHelper.removeBookmark(foodItem.getItemId());
+            isBookmarked = false;
+        } else {
+            bookmarkDbHelper.addBookmark(foodItem);
+            isBookmarked = true;
+        }
+        updateBookmarkButton();
+    }
+
+    private void updateBookmarkButton() {
+        if (bookmarkButton != null) {
+            bookmarkButton.setImageResource(isBookmarked ? 
+                R.drawable.ic_bookmark_filled : R.drawable.ic_bookmark_outline);
+        }
     }
 } 

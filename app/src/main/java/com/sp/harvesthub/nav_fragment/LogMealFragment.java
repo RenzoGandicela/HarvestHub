@@ -478,6 +478,96 @@ public class LogMealFragment extends Fragment {
                 });
     }
 
+    private void saveListingData() {
+        // Get the food name without the "Detected Food: " prefix
+        String foodNameText = this.foodNameText.getText().toString();
+        String dishName = foodNameText.equals("Detected Food: -") ? 
+            "" : foodNameText.replace("Detected Food: ", "").trim();
+
+        // Validate required fields
+        if (dishName.isEmpty()) {
+            Toast.makeText(getContext(), "Please analyze an image first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String expiryDate = expirationDateEdit.getText().toString();
+        String location = locationEdit.getText().toString();
+        String quantity = quantityEdit.getText().toString();
+        EditText descEdit = requireView().findViewById(R.id.descEdit);
+        String description = descEdit.getText().toString();
+        EditText ingredientsEdit = requireView().findViewById(R.id.ingredientsEdit);
+        String ingredientsText = ingredientsEdit.getText().toString();
+
+        if (expiryDate.isEmpty() || location.isEmpty() || quantity.isEmpty()) {
+            Toast.makeText(getContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!isValidDateFormat(expiryDate)) {
+            Toast.makeText(getContext(), "Please use the format YYYY-MM-DD HH:mm", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create FoodItemExtended object
+        FoodItemExtended foodItem = new FoodItemExtended();
+        foodItem.setDishName(dishName);
+        foodItem.setExpirationDate(expiryDate);
+        foodItem.setLocation(location);
+        foodItem.setQuantity(quantity);
+        foodItem.setDescription(description);
+
+        // Handle ingredients
+        List<String> ingredients = new ArrayList<>();
+        if (!ingredientsText.isEmpty()) {
+            ingredients = Arrays.asList(ingredientsText.split(",\\s*"));
+        }
+        foodItem.setIngredients(ingredients);
+
+        // Get switch states
+        Switch spicySwitch = requireView().findViewById(R.id.switchSpicy);
+        Switch halalSwitch = requireView().findViewById(R.id.switchHalal);
+        foodItem.setSpicy(spicySwitch.isChecked());
+        foodItem.setHalal(halalSwitch.isChecked());
+
+        // If in edit mode, preserve the original item ID
+        if (isEditMode && editFoodItem != null) {
+            foodItem.setItemId(editFoodItem.getItemId());
+        }
+
+        // If there's an image, upload it first
+        if (selectedImageFile != null) {
+            Uri fileUri = Uri.fromFile(selectedImageFile);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            String imageName = foodItem.getDishName().replaceAll("\\s+", "_") + "_" + timeStamp + ".jpg";
+            StorageReference imageRef = storageRef.child("food_images/" + imageName);
+
+            imageRef.putFile(fileUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        foodItem.setImageUrl(uri.toString());
+                        saveToExtendedDatabase(foodItem);
+                        
+                        // Add this after successful save
+                        if (getActivity() != null) {
+                            getActivity().getSupportFragmentManager().popBackStack();
+                            clearForm();
+                        }
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to upload image: " + e.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                });
+        } else if (isEditMode && editFoodItem != null) {
+            // If no new image is selected in edit mode, keep the existing image URL
+            foodItem.setImageUrl(editFoodItem.getImageUrl());
+            saveToExtendedDatabase(foodItem);
+        } else {
+            // Save without image
+            saveToExtendedDatabase(foodItem);
+        }
+    }
+
     private void saveToExtendedDatabase(FoodItemExtended foodItem) {
         if (auth.getCurrentUser() == null) {
             Toast.makeText(getContext(), "Please sign in first", Toast.LENGTH_SHORT).show();
@@ -504,14 +594,16 @@ public class LogMealFragment extends Fragment {
         foodData.put("quantity", foodItem.getQuantity());
         foodData.put("halal", foodItem.isHalal());
         foodData.put("spicy", foodItem.isSpicy());
-        foodData.put("status", "available");
+        foodData.put("status", "available");  // Always set initial status as available
         
         if (isEditMode && editFoodItem != null) {
             // Update existing item
             listingsRef.child(editFoodItem.getItemId()).updateChildren(foodData)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Food listing updated successfully!", Toast.LENGTH_SHORT).show();
-                    requireActivity().getSupportFragmentManager().popBackStack();
+                    if (getActivity() != null) {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Failed to update food listing: " + e.getMessage(), 
@@ -527,7 +619,10 @@ public class LogMealFragment extends Fragment {
                 listingsRef.child(itemKey).setValue(foodData)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getContext(), "Food listing saved successfully!", Toast.LENGTH_SHORT).show();
-                        requireActivity().getSupportFragmentManager().popBackStack();
+                        if (getActivity() != null) {
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        }
+                        clearForm();
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(getContext(), "Failed to save food listing: " + e.getMessage(), 
@@ -599,90 +694,6 @@ public class LogMealFragment extends Fragment {
             return true;
         } catch (Exception e) {
             return false;
-        }
-    }
-
-    private void saveListingData() {
-        // Get the food name without the "Detected Food: " prefix
-        String foodNameText = this.foodNameText.getText().toString();
-        String dishName = foodNameText.equals("Detected Food: -") ? 
-            "" : foodNameText.replace("Detected Food: ", "").trim();
-
-        // Validate required fields
-        if (dishName.isEmpty()) {
-            Toast.makeText(getContext(), "Please analyze an image first", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String expiryDate = expirationDateEdit.getText().toString();
-        String location = locationEdit.getText().toString();
-        String quantity = quantityEdit.getText().toString();
-        EditText descEdit = requireView().findViewById(R.id.descEdit);
-        String description = descEdit.getText().toString();
-        EditText ingredientsEdit = requireView().findViewById(R.id.ingredientsEdit);
-        String ingredientsText = ingredientsEdit.getText().toString();
-
-        if (expiryDate.isEmpty() || location.isEmpty() || quantity.isEmpty()) {
-            Toast.makeText(getContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!isValidDateFormat(expiryDate)) {
-            Toast.makeText(getContext(), "Please use the format YYYY-MM-DD HH:mm", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Create FoodItemExtended object
-        FoodItemExtended foodItem = new FoodItemExtended();
-        foodItem.setDishName(dishName);
-        foodItem.setExpirationDate(expiryDate);
-        foodItem.setLocation(location);
-        foodItem.setQuantity(quantity);
-        foodItem.setDescription(description);
-
-        // Handle ingredients
-        List<String> ingredients = new ArrayList<>();
-        if (!ingredientsText.isEmpty()) {
-            ingredients = Arrays.asList(ingredientsText.split(",\\s*"));
-        }
-        foodItem.setIngredients(ingredients);
-
-        // Get switch states
-        Switch spicySwitch = requireView().findViewById(R.id.switchSpicy);
-        Switch halalSwitch = requireView().findViewById(R.id.switchHalal);
-        foodItem.setSpicy(spicySwitch.isChecked());
-        foodItem.setHalal(halalSwitch.isChecked());
-
-        // If in edit mode, preserve the original item ID
-        if (isEditMode && editFoodItem != null) {
-            foodItem.setItemId(editFoodItem.getItemId());
-        }
-
-        // If there's an image, upload it first
-        if (selectedImageFile != null) {
-            Uri fileUri = Uri.fromFile(selectedImageFile);
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-            String imageName = foodItem.getDishName().replaceAll("\\s+", "_") + "_" + timeStamp + ".jpg";
-            StorageReference imageRef = storageRef.child("food_images/" + imageName);
-
-            imageRef.putFile(fileUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        foodItem.setImageUrl(uri.toString());
-                        saveToExtendedDatabase(foodItem);
-                    });
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Failed to upload image: " + e.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
-                });
-        } else if (isEditMode && editFoodItem != null) {
-            // If no new image is selected in edit mode, keep the existing image URL
-            foodItem.setImageUrl(editFoodItem.getImageUrl());
-            saveToExtendedDatabase(foodItem);
-        } else {
-            // Save without image
-            saveToExtendedDatabase(foodItem);
         }
     }
 
