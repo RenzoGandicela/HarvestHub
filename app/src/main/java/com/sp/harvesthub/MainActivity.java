@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new SocialFragment());
             setTitle(getString(R.string.social));
         } else if (id == R.id.nav_share) {
-            Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
+           shareApp();
         } else if (id == R.id.nav_logout) {
             auth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
@@ -242,5 +242,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void shareApp() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app: https://yourapp.com");
+
+        startActivity(Intent.createChooser(shareIntent, "Share via"));
+
     }
 }

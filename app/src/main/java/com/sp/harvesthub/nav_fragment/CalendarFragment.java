@@ -3,6 +3,8 @@ package com.sp.harvesthub.nav_fragment;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.CalendarContract;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.TimeZone;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.Manifest;
+//import com.sp.harvesthub.Manifest;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.models.CalendarNote;
 
@@ -47,6 +64,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestCalendarPermission();
 
         // Initialize Firebase reference
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -62,6 +80,49 @@ public class CalendarFragment extends Fragment {
             return;
         }
     }
+
+
+    private void addEventToLocalCalendar(String title, String description, String location, int year, int month, int day) {
+        ContentResolver contentResolver = requireContext().getContentResolver();
+
+        // Set event start and end time
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(year, month, day, 10, 0); // Default start time 10:00 AM
+
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(year, month, day, 11, 0); // Default end time 11:00 AM
+
+        String[] projection = {"_id", "calendar_displayName"};
+        Cursor calCursor = requireActivity().getContentResolver()
+                .query(CalendarContract.Calendars.CONTENT_URI, projection, CalendarContract.Calendars.VISIBLE + " = 1 AND "  + CalendarContract.Calendars.IS_PRIMARY + "=1", null, CalendarContract.Calendars._ID + " ASC");
+        if (calCursor.getCount() <= 0){
+            calCursor = requireActivity().getContentResolver()
+                    .query(CalendarContract.Calendars.CONTENT_URI, projection, CalendarContract.Calendars.VISIBLE + " = 1", null, CalendarContract.Calendars._ID + " ASC");
+        }
+
+        calCursor.moveToFirst();
+        long calID = calCursor.getLong(0);
+        calCursor.close();
+
+        ContentValues eventValues = new ContentValues();
+        eventValues.put(CalendarContract.Events.CALENDAR_ID, calID); // Default calendar
+        eventValues.put(CalendarContract.Events.TITLE, title);
+        eventValues.put(CalendarContract.Events.DESCRIPTION, description);
+        eventValues.put(CalendarContract.Events.EVENT_LOCATION, location);
+        eventValues.put(CalendarContract.Events.DTSTART, startTime.getTimeInMillis());
+        eventValues.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
+        eventValues.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+
+        // Insert event
+        Uri eventUri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, eventValues);
+        if (eventUri != null) {
+            Toast.makeText(requireContext(), "Event added to local calendar!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(requireContext(), "Failed to add event", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -162,12 +223,58 @@ public class CalendarFragment extends Fragment {
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(requireContext(), "Note saved successfully!", Toast.LENGTH_SHORT).show();
                     loadNoteForDate(dateKey);
+                    addNoteToCalendar(dateKey, note.getNote()); // Add note to local calendar
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error saving note: " + e.getMessage());
                     Toast.makeText(requireContext(), "Failed to save note: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+
+    private void addNoteToCalendar(String dateKey, String noteText) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(sdf.parse(dateKey));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        long startMillis = cal.getTimeInMillis();
+        long endMillis = startMillis + (60 * 60 * 1000); // 1-hour event
+
+        ContentResolver cr = requireContext().getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, startMillis);
+        values.put(CalendarContract.Events.DTEND, endMillis);
+        values.put(CalendarContract.Events.TITLE, noteText);
+        values.put(CalendarContract.Events.DESCRIPTION, noteText);
+        values.put(CalendarContract.Events.CALENDAR_ID, 1); // Default calendar ID
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            if (uri != null) {
+                Toast.makeText(requireContext(), "Note added to calendar!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Failed to add note to calendar", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            requestCalendarPermission();
+        }
+    }
+
+
+    private void requestCalendarPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, 101);
+        }
+    }
+
+
+
 
     private void loadNoteForDate(String dateKey) {
         if (calendarRef != null) {

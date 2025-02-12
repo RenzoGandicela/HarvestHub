@@ -56,7 +56,13 @@ public class DirectChatActivity extends AppCompatActivity {
         otherUsername = getIntent().getStringExtra("otherUsername");
         
         // Create conversation ID by combining user IDs
-        conversationId = currentUserId + "-" + otherUserId;
+        conversationId = getIntent().getStringExtra("conversationId");
+        if (conversationId == null) {
+            // Generate a unique conversation ID using Firebase push
+            conversationId = FirebaseDatabase.getInstance()
+                .getReference("directMessages")
+                .push().getKey();
+        }
 
         if (otherUserId == null) {
             Toast.makeText(this, "Error: Missing user information", Toast.LENGTH_SHORT).show();
@@ -65,24 +71,25 @@ public class DirectChatActivity extends AppCompatActivity {
         }
 
         // Check if conversation exists, if not create it
-        FirebaseDatabase.getInstance()
+        DatabaseReference conversationRef = FirebaseDatabase.getInstance()
             .getReference("directMessages")
-            .child(conversationId)
-            .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!snapshot.exists()) {
-                        createConversation();
-                    }
-                }
+            .child(conversationId);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(DirectChatActivity.this, 
-                        "Error checking conversation: " + error.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
+        conversationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    createConversation();
                 }
-            });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DirectChatActivity.this, 
+                    "Error checking conversation: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -133,7 +140,7 @@ public class DirectChatActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        messagesRef = FirebaseDatabase.getInstance()
+        DatabaseReference messagesRef = FirebaseDatabase.getInstance()
             .getReference("directMessages")
             .child(conversationId)
             .child("messages");
@@ -143,12 +150,19 @@ public class DirectChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messagesList.clear();
                 for (DataSnapshot messageSnap : snapshot.getChildren()) {
-                    DirectMessage message = messageSnap.getValue(DirectMessage.class);
-                    if (message != null) {
-                        // Ensure the message has an ID
-                        if (message.getMessageId() == null || message.getMessageId().isEmpty()) {
-                            message.setMessageId(messageSnap.getKey());
-                        }
+                    String content = messageSnap.child("content").getValue(String.class);
+                    String senderId = messageSnap.child("senderId").getValue(String.class);
+                    Long timestamp = messageSnap.child("timestamp").getValue(Long.class);
+                    String imageUrl = messageSnap.child("imageUrl").getValue(String.class);
+
+                    if (senderId != null && timestamp != null) {
+                        DirectMessage message = new DirectMessage(
+                            messageSnap.getKey(),
+                            content,
+                            imageUrl,
+                            senderId,
+                            timestamp
+                        );
                         messagesList.add(message);
                     }
                 }
@@ -168,87 +182,104 @@ public class DirectChatActivity extends AppCompatActivity {
     }
 
     private void createConversation() {
+        DatabaseReference conversationRef = FirebaseDatabase.getInstance()
+            .getReference("directMessages")
+            .child(conversationId);
+
         long timestamp = System.currentTimeMillis();
 
-        // Create conversation data with exact same structure as website
+        // Create conversation data
         Map<String, Object> conversationData = new HashMap<>();
-        conversationData.put("createdAt", timestamp);
+        conversationData.put("conversationId", conversationId);
+        conversationData.put("lastMessage", "Say hi to your new friend!");
+        conversationData.put("lastMessageTimestamp", timestamp);
+        conversationData.put("online", false);
+        conversationData.put("otherUserId", otherUserId);
         
-        // Create initial message
-        Map<String, Object> initialMessage = new HashMap<>();
-        initialMessage.put("content", "Say hi to your new friend!");
-        initialMessage.put("senderId", currentUserId);
-        initialMessage.put("timestamp", timestamp);
+        // Get other user's profile picture
+        DatabaseReference otherUserRef = FirebaseDatabase.getInstance()
+            .getReference("Users")
+            .child(otherUserId);
+            
+        otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String otherUserProfilePic = snapshot.child("profilePicture").getValue(String.class);
+                if (otherUserProfilePic == null) {
+                    otherUserProfilePic = "/default-avatar.jpg";
+                }
+                
+                conversationData.put("otherUserProfilePic", otherUserProfilePic);
+                conversationData.put("otherUsername", otherUsername);
 
-        // Set last message data
-        conversationData.put("lastMessage", initialMessage);
-        conversationData.put("lastUpdated", timestamp);
+                // Create the conversation
+                conversationRef.setValue(conversationData)
+                    .addOnSuccessListener(aVoid -> {
+                        // Conversation created successfully
+                    })
+                    .addOnFailureListener(e -> 
+                        Toast.makeText(DirectChatActivity.this, 
+                            "Failed to create conversation: " + e.getMessage(), 
+                            Toast.LENGTH_SHORT).show());
+            }
 
-        // Create participants data
-        Map<String, Object> participants = new HashMap<>();
-        
-        // Current user data
-        Map<String, Object> currentUserData = new HashMap<>();
-        currentUserData.put("id", currentUserId);
-        currentUserData.put("username", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        currentUserData.put("profilePicture", "/default-avatar.jpg");
-        participants.put(currentUserId, currentUserData);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DirectChatActivity.this, 
+                    "Error getting user data: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        // Other user data
-        Map<String, Object> otherUserData = new HashMap<>();
-        otherUserData.put("id", otherUserId);
-        otherUserData.put("username", otherUsername);
-        otherUserData.put("profilePicture", "/default-avatar.jpg");
-        participants.put(otherUserId, otherUserData);
+    private void sendMessage(String content, String imageUrl) {
+        if ((content == null || content.trim().isEmpty()) && imageUrl == null) {
+            return;
+        }
 
-        conversationData.put("participants", participants);
-
-        // Create the conversation in Firebase
-        FirebaseDatabase.getInstance()
+        DatabaseReference conversationRef = FirebaseDatabase.getInstance()
             .getReference("directMessages")
-            .child(conversationId)
-            .setValue(conversationData);
+            .child(conversationId);
+
+        long timestamp = System.currentTimeMillis();
+
+        // Create message data
+        Map<String, Object> messageData = new HashMap<>();
+        messageData.put("content", content != null ? content.trim() : "");
+        messageData.put("senderId", currentUserId);
+        messageData.put("timestamp", timestamp);
+        if (imageUrl != null) {
+            messageData.put("imageUrl", imageUrl);
+        }
+
+        // Get a new push ID for the message
+        String messageId = conversationRef.child("messages").push().getKey();
+        if (messageId == null) return;
+
+        // Create updates map for atomic update
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("/messages/" + messageId, messageData);
+        updates.put("/lastMessage", content != null ? content : "");
+        updates.put("/lastMessageTimestamp", timestamp);
+
+        // Perform atomic update
+        conversationRef.updateChildren(updates)
+            .addOnSuccessListener(aVoid -> {
+                if (content != null) {
+                    messageInput.setText("");
+                }
+                messagesRecyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+            })
+            .addOnFailureListener(e -> 
+                Toast.makeText(DirectChatActivity.this, 
+                    "Failed to send message: " + e.getMessage(), 
+                    Toast.LENGTH_SHORT).show());
     }
 
     private void sendMessage() {
         String text = messageInput.getText().toString().trim();
         if (text.isEmpty()) return;
-
-        // Clear input
-        messageInput.setText("");
-
-        long timestamp = System.currentTimeMillis();
-
-        // Create message with exact same structure as website
-        Map<String, Object> messageData = new HashMap<>();
-        messageData.put("content", text);
-        messageData.put("senderId", currentUserId);
-        messageData.put("timestamp", timestamp);
-
-        // Get message ID using timestamp
-        String messageId = "-" + timestamp;
-
-        // Create updates map
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("/messages/" + messageId, messageData);
-        updates.put("/lastMessage/content", text);
-        updates.put("/lastMessage/senderId", currentUserId);
-        updates.put("/lastMessage/timestamp", timestamp);
-        updates.put("/lastUpdated", timestamp);
-
-        // Update everything at the conversation level
-        FirebaseDatabase.getInstance()
-            .getReference("directMessages")
-            .child(conversationId)
-            .updateChildren(updates)
-            .addOnSuccessListener(aVoid -> {
-                // Message sent successfully
-            })
-            .addOnFailureListener(e -> {
-                Toast.makeText(DirectChatActivity.this, 
-                    "Failed to send message: " + e.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
-            });
+        sendMessage(text, null);
     }
 
     private void selectImage() {
@@ -277,46 +308,7 @@ public class DirectChatActivity extends AppCompatActivity {
             @Override
             public void onComplete(List<String> imageUrls) {
                 if (!imageUrls.isEmpty()) {
-                    String imageUrl = imageUrls.get(0);
-                    
-                    // Create message data
-                    DatabaseReference messagesRef = FirebaseDatabase.getInstance()
-                        .getReference("directMessages")
-                        .child(conversationId)
-                        .child("messages");
-
-                    String messageId = messagesRef.push().getKey();
-                    if (messageId == null) return;
-
-                    // Create message with exact same structure as website
-                    Map<String, Object> messageData = new HashMap<>();
-                    messageData.put("content", "");
-                    messageData.put("imageUrl", imageUrl);
-                    messageData.put("senderId", currentUserId);
-                    messageData.put("timestamp", System.currentTimeMillis());
-
-                    // Update both messages and lastMessage atomically
-                    Map<String, Object> updates = new HashMap<>();
-                    updates.put("/messages/" + messageId, messageData);
-                    updates.put("/lastMessage/content", "");
-                    updates.put("/lastMessage/imageUrl", imageUrl);
-                    updates.put("/lastMessage/senderId", currentUserId);
-                    updates.put("/lastMessage/timestamp", System.currentTimeMillis());
-                    updates.put("/lastUpdated", System.currentTimeMillis());
-
-                    // Update everything at the conversation level
-                    FirebaseDatabase.getInstance()
-                        .getReference("directMessages")
-                        .child(conversationId)
-                        .updateChildren(updates)
-                        .addOnSuccessListener(aVoid -> {
-                            runOnUiThread(() -> Toast.makeText(DirectChatActivity.this, 
-                                "Image sent successfully!", Toast.LENGTH_SHORT).show());
-                        })
-                        .addOnFailureListener(e -> {
-                            runOnUiThread(() -> Toast.makeText(DirectChatActivity.this, 
-                                "Failed to send image: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                        });
+                    sendMessage("", imageUrls.get(0));
                 }
             }
 

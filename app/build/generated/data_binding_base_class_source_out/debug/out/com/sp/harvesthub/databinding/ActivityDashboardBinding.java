@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +20,7 @@ import java.lang.String;
 
 public final class ActivityDashboardBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final CalendarView calendarView;
@@ -35,26 +35,22 @@ public final class ActivityDashboardBinding implements ViewBinding {
   public final EditText editNote;
 
   @NonNull
-  public final TextView eventDetailsTxt;
-
-  @NonNull
   public final Button saveNote;
 
-  private ActivityDashboardBinding(@NonNull LinearLayout rootView,
-      @NonNull CalendarView calendarView, @NonNull Button deleteNote, @NonNull TextView displayNote,
-      @NonNull EditText editNote, @NonNull TextView eventDetailsTxt, @NonNull Button saveNote) {
+  private ActivityDashboardBinding(@NonNull ScrollView rootView, @NonNull CalendarView calendarView,
+      @NonNull Button deleteNote, @NonNull TextView displayNote, @NonNull EditText editNote,
+      @NonNull Button saveNote) {
     this.rootView = rootView;
     this.calendarView = calendarView;
     this.deleteNote = deleteNote;
     this.displayNote = displayNote;
     this.editNote = editNote;
-    this.eventDetailsTxt = eventDetailsTxt;
     this.saveNote = saveNote;
   }
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -103,20 +99,14 @@ public final class ActivityDashboardBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.eventDetailsTxt;
-      TextView eventDetailsTxt = ViewBindings.findChildViewById(rootView, id);
-      if (eventDetailsTxt == null) {
-        break missingId;
-      }
-
       id = R.id.saveNote;
       Button saveNote = ViewBindings.findChildViewById(rootView, id);
       if (saveNote == null) {
         break missingId;
       }
 
-      return new ActivityDashboardBinding((LinearLayout) rootView, calendarView, deleteNote,
-          displayNote, editNote, eventDetailsTxt, saveNote);
+      return new ActivityDashboardBinding((ScrollView) rootView, calendarView, deleteNote,
+          displayNote, editNote, saveNote);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

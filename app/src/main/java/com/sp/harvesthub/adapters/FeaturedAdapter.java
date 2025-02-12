@@ -1,4 +1,3 @@
-
 package com.sp.harvesthub.adapters;
 
 import android.content.Context;
@@ -18,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.activities.DashboardActivity;
 import com.sp.harvesthub.models.FeaturedHelperClass;
+import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
+import com.sp.harvesthub.nav_fragment.CalendarFragment;
 
 import java.util.ArrayList;
 

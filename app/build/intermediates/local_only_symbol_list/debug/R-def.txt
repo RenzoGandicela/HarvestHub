@@ -151,7 +151,6 @@ id editNote
 id editUsernameButton
 id emailBox
 id emailTxt
-id eventDetailsTxt
 id eventImagePreview
 id eventImagePreview2
 id event_date

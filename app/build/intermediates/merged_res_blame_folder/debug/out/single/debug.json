@@ -28,20 +28,20 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\item_message_received.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_hashtag.xml.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_hashtag.xml"
-    },
-    {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_home.png.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\home.png"
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_chat_input_background.xml.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\chat_input_background.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_settings.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_settings.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_chat_input_background.xml.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\chat_input_background.xml"
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_home.png.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\home.png"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_hashtag.xml.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_hashtag.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_dialog_forgot.xml.flat",
@@ -52,16 +52,16 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\bg_message_sent.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_fragment_home.xml.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_home.xml"
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout-night_activity_chat.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout-night\\activity_chat.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_fragment_home.xml.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_home.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_fragment_profile.xml.flat",
@@ -72,12 +72,12 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\baseline_lock_reset_24.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_profile_placeholder.xml.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_profile_placeholder.xml"
-    },
-    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_received_message_background.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\received_message_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_profile_placeholder.xml.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_profile_placeholder.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_story_ring.xml.flat",
@@ -188,12 +188,12 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_home.xml"
     },
     {
-        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_profile.png.flat",
-        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\profile.png"
-    },
-    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_activity_channel_chat.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_channel_chat.xml"
+    },
+    {
+        "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_profile.png.flat",
+        "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\profile.png"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\mipmap-xhdpi_ic_launcher.webp.flat",
@@ -268,8 +268,8 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_location1.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/menu_chat_menu.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/menu/chat_menu.xml"
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_announcement.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_announcement.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_chat_bubble.xml.flat",
@@ -456,10 +456,6 @@
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\channel_item_background.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_channel_chat.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/layout/activity_channel_chat.xml"
-    },
-    {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_logout.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\logout.xml"
     },
@@ -550,6 +546,10 @@
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\menu_drawer_menu.xml.flat",
         "source": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\menu\\drawer_menu.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_activity_dashboard.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/activity_dashboard.xml"
     },
     {
         "merged": "C:\\Users\\cripp\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_default_profile.xml.flat",

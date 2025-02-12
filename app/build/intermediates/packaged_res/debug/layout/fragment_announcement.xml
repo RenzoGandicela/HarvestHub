@@ -89,7 +89,7 @@
                 android:id="@+id/event_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="  /  /  "
+                android:hint="YYYY-MM-DD"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
@@ -204,7 +204,7 @@
                 android:id="@+id/event_date_type2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="  /  /  "
+                android:hint="YYYY-MM-DD"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
