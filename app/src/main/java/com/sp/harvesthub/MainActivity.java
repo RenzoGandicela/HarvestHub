@@ -16,14 +16,14 @@ import androidx.fragment.app.Fragment;
 import android.view.Menu;
 
 import com.bumptech.glide.Glide;
-import com.sp.harvesthub.activities.ChatActivity;
 import com.sp.harvesthub.activities.LoginActivity;
+import com.sp.harvesthub.activities.ChatActivity;
 import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
 import com.sp.harvesthub.nav_fragment.BookmarkFragment;
 import com.sp.harvesthub.nav_fragment.CalendarFragment;
 import com.sp.harvesthub.nav_fragment.SettingFragment;
 import com.sp.harvesthub.nav_fragment.SocialFragment;
-import com.sp.harvesthub.nav_fragment.HomeFragment;
+import com.sp.harvesthub.nav_fragment.LogMealFragment;
 import com.sp.harvesthub.nav_fragment.MapFragment;
 import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;

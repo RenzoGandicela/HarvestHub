@@ -1,5 +1,10 @@
 package com.sp.harvesthub.foodListings;
 
+<<<<<<< HEAD
+=======
+import com.sp.harvesthub.foodListings.FoodItem;
+
+>>>>>>> renzo
 import java.io.Serializable;
 import java.util.List;
 

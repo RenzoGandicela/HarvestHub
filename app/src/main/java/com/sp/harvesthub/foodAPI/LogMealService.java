@@ -1,10 +1,17 @@
 package com.sp.harvesthub.foodAPI;
 
 import android.util.Log;
+<<<<<<< HEAD
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+=======
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import okhttp3.*;
+>>>>>>> renzo
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +22,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+<<<<<<< HEAD
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -22,6 +30,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+=======
+>>>>>>> renzo
 public class LogMealService {
     private static final String API_URL = "https://api.logmeal.com/v2/image/recognition/complete";
     private static final String API_KEY = "fa69de69adc7ff42e6f386fcb33e880f3b6f3c39"; // Replace with actual API key

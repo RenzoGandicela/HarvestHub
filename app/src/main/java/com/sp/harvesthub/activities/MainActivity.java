@@ -22,7 +22,11 @@ import com.sp.harvesthub.nav_fragment.BookmarkFragment;
 import com.sp.harvesthub.nav_fragment.CalendarFragment;
 import com.sp.harvesthub.nav_fragment.SettingFragment;
 import com.sp.harvesthub.nav_fragment.SocialFragment;
+<<<<<<< HEAD
 import com.sp.harvesthub.nav_fragment.HomeFragment;
+=======
+import com.sp.harvesthub.nav_fragment.LogMealFragment;
+>>>>>>> renzo
 import com.sp.harvesthub.nav_fragment.MapFragment;
 import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;
@@ -103,7 +107,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
+<<<<<<< HEAD
                 replaceFragment(new HomeFragment());
+=======
+                replaceFragment(new LogMealFragment());
+>>>>>>> renzo
                 setTitle(getString(R.string.home));
             } else if (itemId == R.id.nav_map) {
                 replaceFragment(new MapFragment());
@@ -135,7 +143,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+<<<<<<< HEAD
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+=======
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new LogMealFragment())
+                .commit();
+>>>>>>> renzo
         } else if (id == R.id.nav_announcement) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_bookmark) {

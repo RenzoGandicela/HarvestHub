@@ -1,20 +1,29 @@
 package com.sp.harvesthub.nav_fragment;
 
+<<<<<<< HEAD
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
+=======
+>>>>>>> renzo
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.ImageButton;
+=======
+>>>>>>> renzo
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+<<<<<<< HEAD
 import com.bumptech.glide.Glide;
+=======
+>>>>>>> renzo
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+<<<<<<< HEAD
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sp.harvesthub.R;
@@ -41,6 +51,17 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser currentUser;
     private Uri imageUri;
     private ValueEventListener profileListener;
+=======
+import com.sp.harvesthub.R;
+
+public class ProfileFragment extends Fragment {
+    
+    private TextView usernameText, emailText, roleText;
+    private EditText descriptionEdit;
+    private Button saveButton;
+    private DatabaseReference userRef;
+    private FirebaseUser currentUser;
+>>>>>>> renzo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +71,10 @@ public class ProfileFragment extends Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+<<<<<<< HEAD
             storageRef = FirebaseStorage.getInstance().getReference("profile_images").child(currentUser.getUid());
+=======
+>>>>>>> renzo
         }
         
         // Initialize views
@@ -59,19 +83,28 @@ public class ProfileFragment extends Fragment {
         // Load user data
         loadUserProfile();
         
+<<<<<<< HEAD
         // Set up click listeners
         setupClickListeners();
+=======
+        // Set up save button
+        saveButton.setOnClickListener(v -> saveDescription());
+>>>>>>> renzo
         
         return view;
     }
 
     private void initializeViews(View view) {
+<<<<<<< HEAD
         profileImage = view.findViewById(R.id.profileImage);
+=======
+>>>>>>> renzo
         usernameText = view.findViewById(R.id.profileUsername);
         emailText = view.findViewById(R.id.profileEmail);
         roleText = view.findViewById(R.id.profileRole);
         descriptionEdit = view.findViewById(R.id.profileDescription);
         saveButton = view.findViewById(R.id.saveDescriptionButton);
+<<<<<<< HEAD
         editUsernameButton = view.findViewById(R.id.editUsernameButton);
     }
 
@@ -132,20 +165,32 @@ public class ProfileFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
                 }
             });
+=======
+>>>>>>> renzo
     }
 
     private void loadUserProfile() {
         if (currentUser == null) return;
 
+<<<<<<< HEAD
         profileListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists() && isAdded() && getContext() != null) {
+=======
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+>>>>>>> renzo
                     String username = snapshot.child("username").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
                     String role = snapshot.child("role").getValue(String.class);
                     String description = snapshot.child("description").getValue(String.class);
+<<<<<<< HEAD
                     String profileImageUrl = snapshot.child("profilePicture").getValue(String.class);
+=======
+>>>>>>> renzo
 
                     usernameText.setText(username);
                     emailText.setText(email);
@@ -153,6 +198,7 @@ public class ProfileFragment extends Fragment {
                     if (description != null) {
                         descriptionEdit.setText(description);
                     }
+<<<<<<< HEAD
                     
                     if (profileImageUrl != null && !profileImageUrl.isEmpty() && isAdded()) {
                         try {
@@ -165,11 +211,14 @@ public class ProfileFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+=======
+>>>>>>> renzo
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+<<<<<<< HEAD
                 if (isAdded() && getContext() != null) {
                     Toast.makeText(getContext(), "Error loading profile: " + error.getMessage(), 
                         Toast.LENGTH_SHORT).show();
@@ -243,6 +292,12 @@ public class ProfileFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
                 }
             });
+=======
+                Toast.makeText(getContext(), "Error loading profile: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
+>>>>>>> renzo
     }
 
     private void saveDescription() {
@@ -251,6 +306,7 @@ public class ProfileFragment extends Fragment {
         if (currentUser == null) return;
 
         userRef.child("description").setValue(description)
+<<<<<<< HEAD
             .addOnSuccessListener(aVoid -> {
                 if (isAdded() && getContext() != null) {
                     Toast.makeText(getContext(), 
@@ -265,3 +321,11 @@ public class ProfileFragment extends Fragment {
             });
     }
 }
+=======
+            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), 
+                "Description updated successfully", Toast.LENGTH_SHORT).show())
+            .addOnFailureListener(e -> Toast.makeText(getContext(), 
+                "Failed to update description: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+} 
+>>>>>>> renzo

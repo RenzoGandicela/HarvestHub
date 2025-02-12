@@ -5,9 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -34,6 +37,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBx9hPyev6cP5-8ZHPokIagPP2OM2ZelJI" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <!-- Splash Screen - Main Launcher -->
         <activity
@@ -107,6 +113,37 @@
             android:theme="@style/Theme.HarvestHub.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity
+            android:name=".foodAPI.LogMealActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+
+        <activity android:name=".foodAPI.LogMealExtendedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+            
+        <activity
+            android:name=".foodListings.FoodActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"/>
+
+        <activity
+            android:name=".foodListings.EditFoodActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sp.harvesthub.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <receiver
+            android:name=".NavigationUpdateReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

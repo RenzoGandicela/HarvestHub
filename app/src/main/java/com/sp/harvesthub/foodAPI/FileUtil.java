@@ -2,7 +2,10 @@ package com.sp.harvesthub.foodAPI;
 
 import android.content.Context;
 import android.net.Uri;
+<<<<<<< HEAD
 
+=======
+>>>>>>> renzo
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

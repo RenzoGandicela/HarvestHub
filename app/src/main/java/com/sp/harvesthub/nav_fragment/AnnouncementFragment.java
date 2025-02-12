@@ -1,17 +1,24 @@
 package com.sp.harvesthub.nav_fragment;
 
+<<<<<<< HEAD
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+=======
+import android.os.Bundle;
+>>>>>>> renzo
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.ImageView;
+=======
+>>>>>>> renzo
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -20,15 +27,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+<<<<<<< HEAD
 import com.bumptech.glide.Glide;
+=======
+>>>>>>> renzo
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+<<<<<<< HEAD
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+=======
+>>>>>>> renzo
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.adapters.FeaturedAdapter;
 import com.sp.harvesthub.models.Announcement;
@@ -37,6 +50,7 @@ import com.sp.harvesthub.utils.AnnouncementManager;
 import com.sp.harvesthub.utils.FirebaseHelper;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.UUID;
 
 public class AnnouncementFragment extends Fragment implements FeaturedAdapter.OnEventClickListener {
@@ -56,6 +70,19 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
     private Uri imageUri1, imageUri2;
     private String currentEditingEventId;
     private int currentUploadType = 0;
+=======
+
+public class AnnouncementFragment extends Fragment implements FeaturedAdapter.OnEventClickListener {
+    private static final String TAG = "AnnouncementFragment";
+    private RecyclerView featuredRecycler, featuredRecyclerType2;
+    private FeaturedAdapter featuredAdapter, donationAdapter;
+    private Button addEventButton, submitEventButton, addEventButtonType2, submitEventButtonType2;
+    private LinearLayout eventFormLayout, eventFormLayoutType2;
+    private EditText eventTitle, eventDescription, eventDetails, eventLocation, eventImage;
+    private EditText eventTitleType2, eventDescriptionType2, eventDetails2, eventLocationType2, eventImage2;
+    private ArrayList<FeaturedHelperClass> eventList, donationList;
+    private DatabaseReference eventsRef, donationRef;
+>>>>>>> renzo
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +91,10 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         donationList = new ArrayList<>();
         eventsRef = FirebaseDatabase.getInstance().getReference("Announcements");
         donationRef = FirebaseDatabase.getInstance().getReference("DonationDrives");
+<<<<<<< HEAD
         storageRef = FirebaseStorage.getInstance().getReference("event_images");
+=======
+>>>>>>> renzo
     }
 
     @Override
@@ -86,12 +116,17 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         // Initialize Buttons and Forms
         addEventButton = view.findViewById(R.id.add_event_button);
         addEventButtonType2 = view.findViewById(R.id.add_event_button_type2);
+<<<<<<< HEAD
         submitEventButton = view.findViewById(R.id.submitEventButton);
         submitEventButtonType2 = view.findViewById(R.id.submitEventButton2);
         uploadImageButton = view.findViewById(R.id.uploadImageButton);
         uploadImageButton2 = view.findViewById(R.id.uploadImageButton2);
         eventImagePreview = view.findViewById(R.id.eventImagePreview);
         eventImagePreview2 = view.findViewById(R.id.eventImagePreview2);
+=======
+        submitEventButton = view.findViewById(R.id.submit_event_button);
+        submitEventButtonType2 = view.findViewById(R.id.submit_event_button_type2);
+>>>>>>> renzo
         eventFormLayout = view.findViewById(R.id.event_form_layout);
         eventFormLayoutType2 = view.findViewById(R.id.event_form_layout_type2);
 
@@ -100,12 +135,20 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         eventDescription = view.findViewById(R.id.event_description);
         eventDetails = view.findViewById(R.id.event_details);
         eventLocation = view.findViewById(R.id.event_location);
+<<<<<<< HEAD
+=======
+        eventImage = view.findViewById(R.id.event_image);
+>>>>>>> renzo
 
         // Initialize EditTexts for donation events
         eventTitleType2 = view.findViewById(R.id.event_title_type2);
         eventDescriptionType2 = view.findViewById(R.id.event_description_type2);
         eventDetails2 = view.findViewById(R.id.event_details2);
         eventLocationType2 = view.findViewById(R.id.event_location_type2);
+<<<<<<< HEAD
+=======
+        eventImage2 = view.findViewById(R.id.event_image2);
+>>>>>>> renzo
 
         // Initially hide forms
         eventFormLayout.setVisibility(View.GONE);
@@ -131,6 +174,7 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         addEventButtonType2.setOnClickListener(v -> toggleEventForm(true, 2));
         submitEventButton.setOnClickListener(v -> submitEvent(1));
         submitEventButtonType2.setOnClickListener(v -> submitEvent(2));
+<<<<<<< HEAD
         
         uploadImageButton.setOnClickListener(v -> {
             currentUploadType = 1;
@@ -167,6 +211,8 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
                 Glide.with(this).load(imageUri2).into(eventImagePreview2);
             }
         }
+=======
+>>>>>>> renzo
     }
 
     private void toggleEventForm(boolean show, int type) {
@@ -180,17 +226,37 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
     }
 
     private void submitEvent(int type) {
+<<<<<<< HEAD
         String title = type == 1 ? eventTitle.getText().toString() : eventTitleType2.getText().toString();
         String description = type == 1 ? eventDescription.getText().toString() : eventDescriptionType2.getText().toString();
         String details = type == 1 ? eventDetails.getText().toString() : eventDetails2.getText().toString();
         String location = type == 1 ? eventLocation.getText().toString() : eventLocationType2.getText().toString();
         Uri imageUri = type == 1 ? imageUri1 : imageUri2;
+=======
+        String title, description, details, location, image;
+        DatabaseReference ref = (type == 1) ? eventsRef : donationRef;
+        
+        if (type == 1) {
+            title = eventTitle.getText().toString().trim();
+            description = eventDescription.getText().toString().trim();
+            details = eventDetails.getText().toString().trim();
+            location = eventLocation.getText().toString().trim();
+            image = eventImage.getText().toString().trim();
+        } else {
+            title = eventTitleType2.getText().toString().trim();
+            description = eventDescriptionType2.getText().toString().trim();
+            details = eventDetails2.getText().toString().trim();
+            location = eventLocationType2.getText().toString().trim();
+            image = eventImage2.getText().toString().trim();
+        }
+>>>>>>> renzo
 
         if (title.isEmpty() || description.isEmpty() || details.isEmpty() || location.isEmpty()) {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+<<<<<<< HEAD
         if (imageUri == null) {
             Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
             return;
@@ -275,6 +341,21 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
                 Toast.makeText(getContext(), "Error loading event: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+=======
+        FeaturedHelperClass event = new FeaturedHelperClass(image, title, description, location, details, type);
+        String eventId = ref.push().getKey();
+        
+        if (eventId != null) {
+            ref.child(eventId).setValue(event)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Event added successfully!", Toast.LENGTH_SHORT).show();
+                    toggleEventForm(false, type);
+                    clearForm();
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), 
+                    "Failed to add event: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
+>>>>>>> renzo
     }
 
     private void loadEvents() {
@@ -354,9 +435,15 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         // Regular event
         eventList.add(new FeaturedHelperClass(
             "food_sharing", 
+<<<<<<< HEAD
                 "Food Sharing Event @Dover",
                 "Join us for a vibrant food-sharing event at Dover Community Hub!",
                 "\uD83D\uDCCD Dover Community Hub",
+=======
+            "Food Sharing Event @Dover",
+            "Join us for a vibrant food-sharing event at Dover Community Hub!",
+            "\uD83D\uDCCD Dover Community Hub",
+>>>>>>> renzo
             "\uD83D\uDCC5 Date: 10/10/2025\n⏰ Time: 6:00 PM - 9:00 PM",
             1  // Type 1 event
         ));
@@ -366,7 +453,11 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
             "donation_drive", 
             "Food Donation Drive",
             "Help us collect food items for families in need",
+<<<<<<< HEAD
                 "\uD83D\uDCCD Tampines Hub",
+=======
+            "\uD83D\uDCCD Tampines Hub",
+>>>>>>> renzo
             "\uD83D\uDCC5 Date: 15/10/2025\n⏰ Time: 9:00 AM - 12:00 PM",
             2  // Type 2 event
         ));
@@ -403,15 +494,23 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         eventDescription.setText("");
         eventDetails.setText("");
         eventLocation.setText("");
+<<<<<<< HEAD
+=======
+        eventImage.setText("");
+>>>>>>> renzo
         eventTitleType2.setText("");
         eventDescriptionType2.setText("");
         eventDetails2.setText("");
         eventLocationType2.setText("");
+<<<<<<< HEAD
         eventImagePreview.setVisibility(View.GONE);
         eventImagePreview2.setVisibility(View.GONE);
         imageUri1 = null;
         imageUri2 = null;
         currentEditingEventId = null;
+=======
+        eventImage2.setText("");
+>>>>>>> renzo
     }
 
     @Override

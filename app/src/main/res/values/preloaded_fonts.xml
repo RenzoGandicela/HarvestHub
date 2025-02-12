@@ -5,6 +5,10 @@
         <item>@font/aoboshi_one</item>
         <item>@font/carter_one</item>
         <item>@font/caveat_brush</item>
+<<<<<<< HEAD
+=======
+        <item>@font/young_serif</item>
+>>>>>>> renzo
 
     </array>
 </resources>
