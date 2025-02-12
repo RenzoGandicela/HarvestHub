@@ -1,0 +1,84 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDF4E3">
+
+    <!-- Fridge Livestream -->
+
+    <!-- Fridge Title -->
+
+    <WebView
+        android:id="@+id/liveCameraView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/fridgeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/liveCameraView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Punggol Fridge"
+        android:textColor="#4A4A4A"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Chat Button -->
+
+    <!-- ListView for Food Items -->
+    <ListView
+        android:id="@+id/foodListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fridgeTitle"
+        android:layout_above="@id/chatSection"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Chat Section -->
+    <LinearLayout
+        android:id="@+id/chatSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+
+        <!-- Chat ListView -->
+        <ListView
+            android:id="@+id/chatListView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:background="#FFFFFF" />
+
+        <!-- Message Input Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/messageInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter message"
+                android:background="@android:color/white"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
