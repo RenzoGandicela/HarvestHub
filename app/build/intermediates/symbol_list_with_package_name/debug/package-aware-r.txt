@@ -3363,6 +3363,7 @@ drawable mtrl_switch_track
 drawable mtrl_switch_track_decoration
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
+drawable nearest
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -3858,6 +3859,7 @@ id navigation_bar_item_labels_group
 id navigation_bar_item_large_label_view
 id navigation_bar_item_small_label_view
 id navigation_header_container
+id near
 id never
 id neverCompleteToEnd
 id neverCompleteToStart
@@ -4062,6 +4064,7 @@ id textView
 id textView2
 id textView3
 id textView4
+id textView5
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon

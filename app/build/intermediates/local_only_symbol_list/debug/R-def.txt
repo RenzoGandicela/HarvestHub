@@ -116,6 +116,7 @@ drawable menuback
 drawable message_input_background
 drawable message_received_background
 drawable message_sent_background
+drawable nearest
 drawable order
 drawable placeholder_image
 drawable profile
@@ -261,6 +262,7 @@ id nav_setting
 id nav_share
 id nav_social
 id nav_view
+id near
 id notificationSwitch
 id profileDescription
 id profileEmail
@@ -313,6 +315,7 @@ id textView
 id textView2
 id textView3
 id textView4
+id textView5
 id themeSwitch
 id timestamp
 id timestampText
