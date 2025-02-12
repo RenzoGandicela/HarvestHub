@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-111:12
-INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-111:12
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-114:12
+INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-114:12
+INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-114:12
+INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:2:1-114:12
 MERGED from [androidx.databinding:viewbinding:8.1.4] C:\Users\renzo\.gradle\caches\transforms-3\522bbf924eb5a38653b66f6b59676778\transformed\viewbinding-8.1.4\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\renzo\.gradle\caches\transforms-3\4a80d9bbb9c4befe7b1fff932a5aaba6\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.0] C:\Users\renzo\.gradle\caches\transforms-3\728a04180404c81e9df5fa523ddf33fd\transformed\constraintlayout-2.2.0\AndroidManifest.xml:2:1-9:12
@@ -25,6 +25,7 @@ MERGED from [de.hdodenhof:circleimageview:3.1.0] C:\Users\renzo\.gradle\caches\t
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\058e2a5271b22cde0735ccd3874eecd2\transformed\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\5ee1298589c22a40513b0d299e730f9c\transformed\recyclerview-1.2.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\renzo\.gradle\caches\transforms-3\6af25da85c00d1c94eb67d5136318cda\transformed\play-services-measurement-api-21.3.0\AndroidManifest.xml:17:1-37:12
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\renzo\.gradle\caches\transforms-3\59387179029767188e8596635d65b3b5\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-installations:17.1.3] C:\Users\renzo\.gradle\caches\transforms-3\f5ecee520b2f07c42815fd6a67a1a9c8\transformed\firebase-installations-17.1.3\AndroidManifest.xml:2:1-23:12
@@ -172,8 +173,8 @@ ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.
 	android:name
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:11:19-57
 application
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:13:5-109:19
-INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:13:5-109:19
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:13:5-112:19
+INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:13:5-112:19
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\renzo\.gradle\caches\transforms-3\4a80d9bbb9c4befe7b1fff932a5aaba6\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\renzo\.gradle\caches\transforms-3\4a80d9bbb9c4befe7b1fff932a5aaba6\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.0] C:\Users\renzo\.gradle\caches\transforms-3\728a04180404c81e9df5fa523ddf33fd\transformed\constraintlayout-2.2.0\AndroidManifest.xml:7:5-20
@@ -340,46 +341,48 @@ ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:84:13-64
 	android:name
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:82:13-54
-activity#com.sp.harvesthub.foodAPI.LogMealActivity
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:86:9-89:66
-	android:exported
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:88:13-37
-	android:theme
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:89:13-64
-	android:name
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:87:13-52
 activity#com.sp.harvesthub.foodAPI.LogMealExtendedActivity
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:91:9-93:66
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:86:9-88:66
+	android:exported
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:87:13-37
+	android:theme
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:88:13-64
+	android:name
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:86:19-66
+activity#com.sp.harvesthub.foodListings.FoodActivity
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:90:9-93:66
 	android:exported
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:92:13-37
 	android:theme
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:93:13-64
 	android:name
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:91:19-66
-activity#com.sp.harvesthub.foodListings.FoodActivity
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:95:9-98:66
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:91:13-54
+activity#com.sp.harvesthub.foodListings.EditFoodActivity
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:95:9-101:20
+	android:screenOrientation
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:98:13-49
+	android:windowSoftInputMode
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:99:13-55
 	android:exported
 		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:97:13-37
-	android:theme
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:98:13-64
 	android:name
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:96:13-54
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:96:13-58
 provider#androidx.core.content.FileProvider
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:100:9-108:20
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:103:9-111:20
 	android:grantUriPermissions
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:104:13-47
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:107:13-47
 	android:authorities
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:102:13-65
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:105:13-65
 	android:exported
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:103:13-37
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:106:13-37
 	android:name
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:101:13-62
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:104:13-62
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:105:13-107:54
+ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:108:13-110:54
 	android:resource
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:107:17-51
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:110:17-51
 	android:name
-		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:106:17-67
+		ADDED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml:109:17-67
 uses-sdk
 INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\MAD\AndroidStudioProjects\MADproject\app\src\main\AndroidManifest.xml
@@ -426,6 +429,8 @@ MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\ca
 MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\5ee1298589c22a40513b0d299e730f9c\transformed\recyclerview-1.2.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
 MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\renzo\.gradle\caches\transforms-3\6af25da85c00d1c94eb67d5136318cda\transformed\play-services-measurement-api-21.3.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\renzo\.gradle\caches\transforms-3\6af25da85c00d1c94eb67d5136318cda\transformed\play-services-measurement-api-21.3.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\renzo\.gradle\caches\transforms-3\59387179029767188e8596635d65b3b5\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:5:5-44

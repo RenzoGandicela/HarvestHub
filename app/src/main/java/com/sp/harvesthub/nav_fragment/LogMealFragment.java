@@ -151,6 +151,82 @@ public class LogMealFragment extends Fragment {
             }
         });
 
+        // Add save button click listener
+        Button saveButton = view.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(v -> {
+            if (auth.getCurrentUser() == null) {
+                Toast.makeText(requireContext(), "Please sign in first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Validate required fields
+            String dishName = foodNameText.getText().toString().replace("Detected Food: ", "").trim();
+            String expiryDate = expirationDateEdit.getText().toString().trim();
+            String location = locationEdit.getText().toString().trim();
+            String quantityStr = quantityEdit.getText().toString().trim();
+
+            if (dishName.isEmpty() || dishName.equals("-")) {
+                Toast.makeText(requireContext(), "Please analyze an image first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (expiryDate.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter expiry date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!isValidDateFormat(expiryDate)) {
+                Toast.makeText(requireContext(), "Please use format: YYYY-MM-DD HH:mm", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (location.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter location", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (quantityStr.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter quantity", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Get switch states - use existing switches from the view
+            EditText descEdit = view.findViewById(R.id.descEdit);
+
+            // Create FoodItemExtended object
+            FoodItemExtended foodItem = new FoodItemExtended();
+            foodItem.setDishName(dishName);
+            foodItem.setDescription(descEdit.getText().toString().trim());
+            foodItem.setExpirationDate(expiryDate);
+            foodItem.setLocation(location);
+            foodItem.setQuantity(quantityStr); // Changed to pass String directly
+            foodItem.setSpicy(spicySwitch.isChecked()); // Use existing switch reference
+            foodItem.setHalal(halalSwitch.isChecked()); // Use existing switch reference
+            foodItem.setStatus("available"); // Changed from setAvailable to setStatus
+
+            // Upload image first, then save listing
+            if (selectedImageFile != null) {
+                Uri fileUri = Uri.fromFile(selectedImageFile);
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                String imageName = "food_images/" + System.currentTimeMillis() + ".jpg";
+                StorageReference imageRef = storageRef.child(imageName);
+
+                imageRef.putFile(fileUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            foodItem.setImageUrl(uri.toString());
+                            saveToExtendedDatabase(foodItem);
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(requireContext(), "Failed to upload image: " + e.getMessage(), 
+                            Toast.LENGTH_SHORT).show();
+                    });
+            } else {
+                Toast.makeText(requireContext(), "Please select or capture an image", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -387,30 +463,28 @@ public class LogMealFragment extends Fragment {
                 .child(userId)
                 .child("items");
 
-        // Format the date to match website format
-        String formattedDate = expirationDateEdit.getText().toString().replace(" ", "T");
-
-        // Create a map with all the required fields
-        Map<String, Object> foodData = new HashMap<>();
-        foodData.put("title", foodItem.getDishName());
-        foodData.put("description", foodItem.getDescription());
-        foodData.put("imageUrl", foodItem.getImageUrl());
-        foodData.put("ingredients", foodItem.getIngredients());
-        foodData.put("expiryDate", formattedDate);
-        foodData.put("location", foodItem.getLocation());
-        foodData.put("quantity", foodItem.getQuantity());
-        foodData.put("halal", foodItem.isHalal());
-        foodData.put("spicy", foodItem.isSpicy());
-        foodData.put("status", "available");
-        foodData.put("createdAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date()));
-        foodData.put("updatedAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date()));
-
         // Generate a new unique key for this item
         String itemKey = listingsRef.push().getKey();
         if (itemKey != null) {
+            // Create a map with all the required fields
+            Map<String, Object> foodData = new HashMap<>();
+            foodData.put("title", foodItem.getDishName());
+            foodData.put("description", foodItem.getDescription());
+            foodData.put("imageUrl", foodItem.getImageUrl());
+            foodData.put("ingredients", foodItem.getIngredients());
+            foodData.put("expiryDate", foodItem.getExpirationDate());
+            foodData.put("location", foodItem.getLocation());
+            foodData.put("quantity", foodItem.getQuantity());
+            foodData.put("halal", foodItem.isHalal());
+            foodData.put("spicy", foodItem.isSpicy());
+            foodData.put("status", "available");
+            foodData.put("createdAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(new Date()));
+            foodData.put("updatedAt", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(new Date()));
+
             listingsRef.child(itemKey).setValue(foodData)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Food listing saved successfully!", Toast.LENGTH_SHORT).show();
+                    clearForm();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Failed to save food listing: " + e.getMessage(), 

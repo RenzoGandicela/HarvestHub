@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class LogMealService {
     private static final String API_URL = "https://api.logmeal.com/v2/image/recognition/complete";
-    private static final String API_KEY = "fa69de69adc7ff42e6f386fcb33e880f3b6f3c39"; // Replace with actual API key
+    private static final String API_KEY = "fa69de69adc7ff42e6f386fcb33e880f3b6f3c39";
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -69,7 +69,7 @@ public class LogMealService {
             String foodName = foodItem.get("name").getAsString();
             double probability = foodItem.get("prob").getAsDouble() * 100;
 
-            // ✅ Store detected dishes
+            // Store detected dishes
             if (i == 0) {
                 detectedDishes.add(foodName + " (" + String.format("%.2f", probability) + "% probability)");
             } else {
@@ -77,12 +77,12 @@ public class LogMealService {
             }
         }
 
-        // ✅ Format detected food
+        // Format detected food
         for (int i = 0; i < detectedDishes.size(); i++) {
             formattedResult.append((i + 1)).append(". ").append(detectedDishes.get(i)).append("\n");
         }
 
-        // ✅ Format other possible foods
+        // Format other possible foods
         if (!otherPossibleFoods.isEmpty()) {
             formattedResult.append("\nOther Possible Food:\n");
             for (int i = 0; i < otherPossibleFoods.size(); i++) {

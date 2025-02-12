@@ -88,10 +88,6 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_login.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/fragment_food_details.xml",
-        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_food_details.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_calendar.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_calendar.xml"
     },
@@ -132,16 +128,24 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\featured_card_design.xml"
     },
     {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_blink_viewer.xml",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_main.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_main.xml"
     },
     {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_blink_viewer.xml",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
+    },
+    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\fragment_bookmark.xml",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_bookmark.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_edit_food.xml",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_edit_food.xml"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-mergeDebugResources-4:/layout/food_recyclerview_layout.xml",
+        "source": "com.sp.harvesthub.app-main-7:/layout/food_recyclerview_layout.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-mergeDebugResources-4:\\layout\\activity_announcements.xml",

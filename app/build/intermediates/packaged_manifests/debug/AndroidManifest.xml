@@ -113,10 +113,6 @@
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar" />
         <activity
-            android:name="com.sp.harvesthub.foodAPI.LogMealActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HarvestHub.NoActionBar" />
-        <activity
             android:name="com.sp.harvesthub.foodAPI.LogMealExtendedActivity"
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar" />
@@ -124,6 +120,14 @@
             android:name="com.sp.harvesthub.foodListings.FoodActivity"
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar" />
+        <activity
+            android:name="com.sp.harvesthub.foodListings.EditFoodActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+
+            <!-- You can add intent filters here if needed -->
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

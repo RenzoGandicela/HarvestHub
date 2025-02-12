@@ -1,8 +1,10 @@
 package com.sp.harvesthub.foodListings;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,11 +23,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.core.widget.NestedScrollView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +45,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,23 +65,41 @@ public class FoodFragment extends Fragment {
     private FloatingActionButton scrollToTopButton;
     private BottomNavigationView bottomNavigationView;
 
+    /* from here is near me function */
+    private static final String API_KEY = "AIzaSyDe9keBYn2vZTd88FoC_1S8lWuw4JOaTY0"; // Replace with your Google API Key
+    private static final String GEOLOCATION_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY;
+
+    private ImageButton nearButton;
+    private final List<LatLng> fridgeLocations = new ArrayList<>();
+    /* here is the end of near me function */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_recyclerview_layout, container, false);
-        
+
         // Initialize views
         searchEditText = view.findViewById(R.id.searchEditText);
         filterButton = view.findViewById(R.id.filterButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-        
+        nearButton = view.findViewById(R.id.near);
+
         // Setup RecyclerView
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
+        //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         allFoodItems = new ArrayList<>(); // Initialize allFoodItems
         foodList = new ArrayList<>();
         foodAdapter = new FoodAdapter(requireContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+        // Add fridge locations
+        fridgeLocations.add(new LatLng(1.4022, 103.9111)); // Punggol
+        fridgeLocations.add(new LatLng(1.3375, 103.9188)); // Bedok block 702
+        fridgeLocations.add(new LatLng(1.4418, 103.8012)); // Woodlands
+        fridgeLocations.add(new LatLng(1.3900, 103.7551)); // Teck Whye
+        // Nearest Me Button Click
+        nearButton.setOnClickListener(v -> getCurrentLocation());
 
         // Setup search functionality
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -97,7 +125,7 @@ public class FoodFragment extends Fragment {
             DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                     .getReference("Users")
                     .child(auth.getCurrentUser().getUid());
-            
+
             userRef.child("username").get().addOnSuccessListener(snapshot -> {
                 String username = snapshot.getValue(String.class);
                 if (username != null) {
@@ -112,14 +140,14 @@ public class FoodFragment extends Fragment {
         bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
 
         // Set up scroll listener
-        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) 
-            (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                if (scrollY > 500) {
-                    scrollToTopButton.show();
-                } else {
-                    scrollToTopButton.hide();
-                }
-        });
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
+                (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY > 500) {
+                        scrollToTopButton.show();
+                    } else {
+                        scrollToTopButton.hide();
+                    }
+                });
 
         // Set up scroll to top button
         scrollToTopButton.setOnClickListener(v -> {
@@ -134,7 +162,7 @@ public class FoodFragment extends Fragment {
             transaction.replace(R.id.fragment_container, new LogMealFragment());
             transaction.addToBackStack(null);
             transaction.commit();
-            
+
             // Select the nav_add item in bottom navigation
             bottomNavigationView.setSelectedItemId(R.id.nav_add);
         });
@@ -148,7 +176,7 @@ public class FoodFragment extends Fragment {
         List<FoodItem> filteredList = new ArrayList<>();
         for (FoodItem item : allFoodItems) {
             if (item.getDishName().toLowerCase().contains(query.toLowerCase()) ||
-                item.getLocation().toLowerCase().contains(query.toLowerCase())) {
+                    item.getLocation().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -177,7 +205,7 @@ public class FoodFragment extends Fragment {
             isHalalChecked = halalFilter.isChecked();
             isSpicyChecked = spicyFilter.isChecked();
             isAvailableChecked = availableFilter.isChecked();
-            
+
             applyFilters(isHalalChecked, isSpicyChecked, isAvailableChecked);
         };
 
@@ -194,7 +222,7 @@ public class FoodFragment extends Fragment {
         for (FoodItem item : allFoodItems) {
             FoodItemExtended extendedItem = (FoodItemExtended) item;
             boolean matches = true;
-            
+
             if (halal && !extendedItem.isHalal()) {
                 matches = false;
             }
@@ -204,12 +232,12 @@ public class FoodFragment extends Fragment {
             if (available && !"available".equals(extendedItem.getStatus())) {
                 matches = false;
             }
-            
+
             if (matches) {
                 filteredList.add(item);
             }
         }
-        
+
         foodList.clear();
         foodList.addAll(filteredList);
         foodAdapter.notifyDataSetChanged();
@@ -228,28 +256,28 @@ public class FoodFragment extends Fragment {
                 foodList.clear();
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey();
-                    
+
                     // Fetch username for this user
                     usersRef.child(userId).child("username").get().addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String username = task.getResult().getValue(String.class);
-                            
+
                             // Now process the food items with the username
                             for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
                                 try {
                                     FoodItemExtended foodItem = new FoodItemExtended();
                                     foodItem.setItemId(itemSnapshot.getKey());
-                                    
+
                                     // Store both the username for display and original sellerId for database operations
                                     foodItem.setOriginalSellerId(userId); // Store original seller ID
                                     foodItem.setSellerId(username != null ? username : userId); // Use username for display
-                                    
+
                                     // Safely get boolean values with default false
                                     Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
                                     Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
                                     foodItem.setHalal(halal != null ? halal : false);
                                     foodItem.setSpicy(spicy != null ? spicy : false);
-                                    
+
                                     // Map other fields
                                     foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
                                     foodItem.setLocation(itemSnapshot.child("location").getValue(String.class));
@@ -259,7 +287,7 @@ public class FoodFragment extends Fragment {
                                     foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
                                     foodItem.setCreatedAt(itemSnapshot.child("createdAt").getValue(String.class));
                                     foodItem.setUpdatedAt(itemSnapshot.child("updatedAt").getValue(String.class));
-                                    
+
                                     // Get likes count
                                     DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
                                     if (likedBySnapshot.exists()) {
@@ -294,30 +322,80 @@ public class FoodFragment extends Fragment {
             }
         });
     }
+    private void getCurrentLocation() {
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, GEOLOCATION_URL, null,
+                response -> {
+                    try {
+                        JSONObject location = response.getJSONObject("location");
+                        double userLat = location.getDouble("lat");
+                        double userLng = location.getDouble("lng");
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+                        // Find the nearest fridge location name
+                        String nearestFridgeName = findNearestFridgeName(userLat, userLng);
+
+                        if (nearestFridgeName != null) {
+                            // Show a Toast message with the nearest fridge location name
+                            Toast.makeText(requireContext(), "Nearest fridge is at " + nearestFridgeName, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(requireContext(), "No fridge locations available", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(requireContext(), "Error getting location", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(requireContext(), "Failed to get location", Toast.LENGTH_SHORT).show()
+        );
+        queue.add(jsonObjectRequest);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.food) {
-            // Replace current fragment with FoodFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new FoodFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
-        } else if (item.getItemId() == R.id.logMeal) {
-            // Replace current fragment with LogMealFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new LogMealFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
+
+    private String findNearestFridgeName(double userLat, double userLng) {
+        double minDistance = Double.MAX_VALUE;
+        String nearestFridgeName = null;
+
+        // List of fridge locations with their names
+        List<FridgeLocation> fridgeLocations = new ArrayList<>();
+        fridgeLocations.add(new FridgeLocation("Punggol", 1.4022, 103.9111));
+        fridgeLocations.add(new FridgeLocation("Bedok", 1.3375, 103.9188));
+        fridgeLocations.add(new FridgeLocation("Woodlands", 1.4418, 103.8012));
+        fridgeLocations.add(new FridgeLocation("Teck Whye", 1.3900, 103.7551));
+
+        for (FridgeLocation fridge : fridgeLocations) {
+            double distance = haversine(userLat, userLng, fridge.latitude, fridge.longitude);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestFridgeName = fridge.name; // Store the nearest fridge name
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return nearestFridgeName;
     }
-} 
+
+    // Helper class to store fridge name and coordinates
+    private static class FridgeLocation {
+        String name;
+        double latitude;
+        double longitude;
+
+        FridgeLocation(String name, double latitude, double longitude) {
+            this.name = name;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+
+    private double haversine(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; // Earth radius in km
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Distance in km
+    }
+
+
+}

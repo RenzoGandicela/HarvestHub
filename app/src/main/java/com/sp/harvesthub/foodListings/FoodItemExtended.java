@@ -2,9 +2,10 @@ package com.sp.harvesthub.foodListings;
 
 import com.sp.harvesthub.foodListings.FoodItem;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FoodItemExtended extends FoodItem {
+public class FoodItemExtended extends FoodItem implements Serializable {
     private String expirationDate;
     private String location;
     private String quantity;
@@ -49,12 +50,19 @@ public class FoodItemExtended extends FoodItem {
         this.location = location;
     }
 
-    public String getQuantity() {
-        return quantity;
+    @Override
+    public void setQuantity(String quantity) {
+        if (quantity == null || quantity.isEmpty()) {
+            super.setQuantity("0");
+        } else {
+            super.setQuantity(quantity);
+        }
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    @Override
+    public String getQuantity() {
+        String quantity = super.getQuantity();
+        return quantity != null ? quantity : "0";
     }
 
     public boolean isAvailable() {
