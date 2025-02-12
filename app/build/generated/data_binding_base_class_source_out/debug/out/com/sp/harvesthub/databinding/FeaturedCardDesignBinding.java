@@ -25,17 +25,10 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
   public final CardView cardView;
 
   @NonNull
-<<<<<<< HEAD
-  public final TextView featuredDescription;
-
-  @NonNull
-  public final TextView featuredDetails;
-=======
   public final TextView featuredDate;
 
   @NonNull
   public final TextView featuredDescription;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
   @NonNull
   public final ImageView featuredImage;
@@ -44,29 +37,15 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
   public final TextView featuredLocation;
 
   @NonNull
-<<<<<<< HEAD
-=======
   public final TextView featuredTime;
 
   @NonNull
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
   public final TextView featuredTitle;
 
   @NonNull
   public final Button remindButton;
 
   private FeaturedCardDesignBinding(@NonNull CardView rootView, @NonNull CardView cardView,
-<<<<<<< HEAD
-      @NonNull TextView featuredDescription, @NonNull TextView featuredDetails,
-      @NonNull ImageView featuredImage, @NonNull TextView featuredLocation,
-      @NonNull TextView featuredTitle, @NonNull Button remindButton) {
-    this.rootView = rootView;
-    this.cardView = cardView;
-    this.featuredDescription = featuredDescription;
-    this.featuredDetails = featuredDetails;
-    this.featuredImage = featuredImage;
-    this.featuredLocation = featuredLocation;
-=======
       @NonNull TextView featuredDate, @NonNull TextView featuredDescription,
       @NonNull ImageView featuredImage, @NonNull TextView featuredLocation,
       @NonNull TextView featuredTime, @NonNull TextView featuredTitle,
@@ -78,7 +57,6 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
     this.featuredImage = featuredImage;
     this.featuredLocation = featuredLocation;
     this.featuredTime = featuredTime;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.featuredTitle = featuredTitle;
     this.remindButton = remindButton;
   }
@@ -112,17 +90,6 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
     missingId: {
       CardView cardView = (CardView) rootView;
 
-<<<<<<< HEAD
-      id = R.id.featured_description;
-      TextView featuredDescription = ViewBindings.findChildViewById(rootView, id);
-      if (featuredDescription == null) {
-        break missingId;
-      }
-
-      id = R.id.featured_details;
-      TextView featuredDetails = ViewBindings.findChildViewById(rootView, id);
-      if (featuredDetails == null) {
-=======
       id = R.id.featured_date;
       TextView featuredDate = ViewBindings.findChildViewById(rootView, id);
       if (featuredDate == null) {
@@ -132,7 +99,6 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
       id = R.id.featured_description;
       TextView featuredDescription = ViewBindings.findChildViewById(rootView, id);
       if (featuredDescription == null) {
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         break missingId;
       }
 
@@ -148,15 +114,12 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
         break missingId;
       }
 
-<<<<<<< HEAD
-=======
       id = R.id.featured_time;
       TextView featuredTime = ViewBindings.findChildViewById(rootView, id);
       if (featuredTime == null) {
         break missingId;
       }
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.featured_title;
       TextView featuredTitle = ViewBindings.findChildViewById(rootView, id);
       if (featuredTitle == null) {
@@ -169,14 +132,9 @@ public final class FeaturedCardDesignBinding implements ViewBinding {
         break missingId;
       }
 
-<<<<<<< HEAD
-      return new FeaturedCardDesignBinding((CardView) rootView, cardView, featuredDescription,
-          featuredDetails, featuredImage, featuredLocation, featuredTitle, remindButton);
-=======
       return new FeaturedCardDesignBinding((CardView) rootView, cardView, featuredDate,
           featuredDescription, featuredImage, featuredLocation, featuredTime, featuredTitle,
           remindButton);
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

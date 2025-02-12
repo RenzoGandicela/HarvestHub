@@ -4,7 +4,6 @@
             "outputFile": "com.sp.harvesthub.app-mergeDebugResources-3:/values-be/values-be.xml",
             "map": [
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\edb2f61c10070ebb3ce4c1d464c25a0a\\transformed\\core-1.13.0\\res\\values-be\\values-be.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
@@ -23,26 +22,6 @@
                 },
                 {
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\2684ef9eb3e5e98db377bc1ad37e219a\\transformed\\play-services-base-18.5.0\\res\\values-be\\values.xml",
-=======
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\2a946a6c492712f7b88f834b1a1c1209\\transformed\\browser-1.4.0\\res\\values-be\\values-be.xml",
-                    "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,164,272,384",
-                        "endColumns": "108,107,111,106",
-                        "endOffsets": "159,267,379,486"
-                    },
-                    "to": {
-                        "startLines": "71,76,77,78",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "7165,7607,7715,7827",
-                        "endColumns": "108,107,111,106",
-                        "endOffsets": "7269,7710,7822,7929"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\2684ef9eb3e5e98db377bc1ad37e219a\\transformed\\play-services-base-18.5.0\\res\\values-be\\values.xml",
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -59,7 +38,6 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\4d139dee730623cdef6c3ed010fcea90\\transformed\\credentials-1.2.0-rc01\\res\\values-be\\values-be.xml",
                     "from": {
                         "startLines": "2,3",
@@ -95,9 +73,6 @@
                 },
                 {
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\4a80d9bbb9c4befe7b1fff932a5aaba6\\transformed\\material-1.12.0\\res\\values-be\\values-be.xml",
-=======
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\4a80d9bbb9c4befe7b1fff932a5aaba6\\transformed\\material-1.12.0\\res\\values-be\\values-be.xml",
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "2,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -116,7 +91,6 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\2a946a6c492712f7b88f834b1a1c1209\\transformed\\browser-1.4.0\\res\\values-be\\values-be.xml",
                     "from": {
                         "startLines": "2,3,4,5",
@@ -135,9 +109,6 @@
                 },
                 {
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\34dbe79765c51b609221a9a0191fe9c5\\transformed\\appcompat-1.7.0\\res\\values-be\\values-be.xml",
-=======
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\34dbe79765c51b609221a9a0191fe9c5\\transformed\\appcompat-1.7.0\\res\\values-be\\values-be.xml",
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -154,11 +125,7 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\203a958cf1101f4668e84f244eed77cd\\transformed\\play-services-basement-18.5.0\\res\\values-be\\values.xml",
-=======
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\203a958cf1101f4668e84f244eed77cd\\transformed\\play-services-basement-18.5.0\\res\\values-be\\values.xml",
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -173,60 +140,6 @@
                         "endColumns": "145",
                         "endOffsets": "6004"
                     }
-<<<<<<< HEAD
-=======
-                },
-                {
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\4d139dee730623cdef6c3ed010fcea90\\transformed\\credentials-1.2.0-rc01\\res\\values-be\\values-be.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,165",
-                        "endColumns": "109,118",
-                        "endOffsets": "160,279"
-                    },
-                    "to": {
-                        "startLines": "35,36",
-                        "startColumns": "4,4",
-                        "startOffsets": "3162,3272",
-                        "endColumns": "109,118",
-                        "endOffsets": "3267,3386"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\edb2f61c10070ebb3ce4c1d464c25a0a\\transformed\\core-1.13.0\\res\\values-be\\values-be.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,355,456,562,665,786",
-                        "endColumns": "97,101,99,100,105,102,120,100",
-                        "endOffsets": "148,250,350,451,557,660,781,882"
-                    },
-                    "to": {
-                        "startLines": "42,43,44,45,46,47,48,146",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3816,3914,4016,4116,4217,4323,4426,13418",
-                        "endColumns": "97,101,99,100,105,102,120,100",
-                        "endOffsets": "3909,4011,4111,4212,4318,4421,4542,13514"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\3b2aafa1f13388a824331aab23d8dbb4\\transformed\\preference-1.2.1\\res\\values-be\\values-be.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "105,179,274,353,495,664,746",
-                        "endColumns": "73,94,78,141,168,81,77",
-                        "endOffsets": "174,269,348,490,659,741,819"
-                    },
-                    "to": {
-                        "startLines": "70,74,139,141,147,148,149",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "7091,7419,12795,12954,13519,13688,13770",
-                        "endColumns": "73,94,78,141,168,81,77",
-                        "endOffsets": "7160,7509,12869,13091,13683,13765,13843"
-                    }
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 }
             ]
         }

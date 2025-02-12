@@ -1,14 +1,11 @@
 package com.sp.harvesthub.nav_fragment;
 
-<<<<<<< HEAD
-=======
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-<<<<<<< HEAD
-import androidx.fragment.app.Fragment;
-=======
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -39,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,11 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-<<<<<<< HEAD
-=======
 import android.Manifest;
 //import com.sp.harvesthub.Manifest;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.models.CalendarNote;
 
@@ -74,10 +64,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-=======
         requestCalendarPermission();
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         // Initialize Firebase reference
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -86,19 +73,14 @@ public class CalendarFragment extends Fragment {
                     .getReference("Users")
                     .child(user.getUid())
                     .child("calendar");
-<<<<<<< HEAD
-=======
 
             listenForNewNotes();
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         } else {
             Toast.makeText(requireContext(), "Please login to use calendar features", Toast.LENGTH_LONG).show();
             return;
         }
     }
 
-<<<<<<< HEAD
-=======
 
     private void addEventToLocalCalendar(String title, String description, String location, int year, int month, int day) {
         ContentResolver contentResolver = requireContext().getContentResolver();
@@ -142,7 +124,6 @@ public class CalendarFragment extends Fragment {
 
 
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
@@ -242,10 +223,7 @@ public class CalendarFragment extends Fragment {
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(requireContext(), "Note saved successfully!", Toast.LENGTH_SHORT).show();
                     loadNoteForDate(dateKey);
-<<<<<<< HEAD
-=======
                     addNoteToCalendar(dateKey, note.getNote()); // Add note to local calendar
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error saving note: " + e.getMessage());
@@ -253,8 +231,6 @@ public class CalendarFragment extends Fragment {
                 });
     }
 
-<<<<<<< HEAD
-=======
 
     private void addNoteToCalendar(String dateKey, String noteText) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -300,7 +276,6 @@ public class CalendarFragment extends Fragment {
 
 
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     private void loadNoteForDate(String dateKey) {
         if (calendarRef != null) {
             calendarRef.child(dateKey).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -347,8 +322,6 @@ public class CalendarFragment extends Fragment {
         }
     }
 
-<<<<<<< HEAD
-=======
     private void listenForNewNotes() {
         if (calendarRef != null) {
             calendarRef.addValueEventListener(new ValueEventListener() {
@@ -393,7 +366,6 @@ public class CalendarFragment extends Fragment {
         notificationManager.notify(1, builder.build());
     } */
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     @Override
     public void onResume() {
         super.onResume();

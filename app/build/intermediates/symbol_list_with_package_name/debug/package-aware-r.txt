@@ -706,10 +706,7 @@ attr imagePanX
 attr imagePanY
 attr imageRotate
 attr imageZoom
-<<<<<<< HEAD
 attr implementationMode
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 attr indeterminateAnimationType
 attr indeterminateProgressStyle
 attr indicatorColor
@@ -1106,10 +1103,7 @@ attr round
 attr roundPercent
 attr saturation
 attr scaleFromTextSize
-<<<<<<< HEAD
 attr scaleType
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 attr scopeUris
 attr scrimAnimationDuration
 attr scrimBackground
@@ -1493,10 +1487,7 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
-<<<<<<< HEAD
 color available_overlay
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 color backgroundColor
 color background_floating_material_dark
 color background_floating_material_light
@@ -1523,10 +1514,7 @@ color cardview_dark_background
 color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
-<<<<<<< HEAD
 color claimed_overlay
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 color common_google_signin_btn_text_dark
 color common_google_signin_btn_text_dark_default
 color common_google_signin_btn_text_dark_disabled
@@ -3190,19 +3178,13 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
-<<<<<<< HEAD
 drawable add_circle
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable announcement
 drawable arrow
 drawable avd_hide_password
 drawable avd_show_password
 drawable background
-<<<<<<< HEAD
-=======
 drawable baseline_food_bank_24
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable baseline_lock_reset_24
 drawable bg_message_input
 drawable bg_message_received
@@ -3249,12 +3231,9 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable edit_text_background
-<<<<<<< HEAD
 drawable ellipse_11
 drawable ellipse_2
 drawable error_image
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable food_sharing
 drawable form_background
 drawable googleg_disabled_color_18
@@ -3265,10 +3244,7 @@ drawable ic_add_friend
 drawable ic_announcement
 drawable ic_arrow_back_black_24
 drawable ic_arrow_down_24dp
-<<<<<<< HEAD
 drawable ic_arrow_up
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable ic_attach
 drawable ic_back
 drawable ic_bookmark
@@ -3285,16 +3261,11 @@ drawable ic_clock_black_24dp
 drawable ic_delete
 drawable ic_edit
 drawable ic_favorite
-<<<<<<< HEAD
 drawable ic_filter
 drawable ic_hashtag
 drawable ic_heart
 drawable ic_heart_filled
 drawable ic_heart_outline
-=======
-drawable ic_hashtag
-drawable ic_heart
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable ic_home
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
@@ -3320,10 +3291,7 @@ drawable ic_send
 drawable ic_server_placeholder
 drawable ic_settings
 drawable ic_social
-<<<<<<< HEAD
 drawable image_5
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable indeterminate_static
 drawable location
 drawable logo2
@@ -3407,17 +3375,11 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable order
-<<<<<<< HEAD
 drawable placeholder_image
 drawable preference_list_divider_material
 drawable profile
 drawable received_message_background
 drawable rounded_tag_background
-=======
-drawable preference_list_divider_material
-drawable profile
-drawable received_message_background
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable search_background
 drawable sent_message_background
 drawable settings
@@ -3431,18 +3393,12 @@ drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable wave
 drawable white_box
-<<<<<<< HEAD
-=======
 drawable white_box2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 font agbalumo
 font aoboshi_one
 font carter_one
 font caveat_brush
-<<<<<<< HEAD
 font young_serif
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3517,10 +3473,6 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
-<<<<<<< HEAD
-id addFriendButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id add_event_button
 id add_event_button_type2
 id adjust_height
@@ -3530,10 +3482,7 @@ id aligned
 id all
 id allStates
 id always
-<<<<<<< HEAD
 id analyzeButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id androidx_window_activity_scope
 id animateToEnd
 id animateToStart
@@ -3547,10 +3496,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
-<<<<<<< HEAD
 id available
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id axisRelative
 id backButton
 id barrier
@@ -3580,10 +3526,7 @@ id buttonPanel
 id cache_measures
 id calendarView
 id callMeasure
-<<<<<<< HEAD
 id camButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id cancel_button
 id cardView
 id carryVelocity
@@ -3610,10 +3553,7 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
-<<<<<<< HEAD
 id compatible
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id compress
 id confirm_button
 id constraint
@@ -3636,21 +3576,15 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
-<<<<<<< HEAD
 id deleteButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id deleteNote
 id deltaRelative
 id dependency_ordering
 id desc
-<<<<<<< HEAD
 id descEdit
 id description
 id descriptionText
 id descriptionTitle
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -3682,10 +3616,7 @@ id easeInOut
 id easeOut
 id east
 id edge
-<<<<<<< HEAD
 id editListing
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id editNote
 id editUsernameButton
 id edit_query
@@ -3699,16 +3630,10 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
-<<<<<<< HEAD
-id eventDetailsTxt
-id eventImagePreview
-id eventImagePreview2
-=======
 id eventImagePreview
 id eventImagePreview2
 id event_date
 id event_date_type2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id event_description
 id event_description_type2
 id event_details
@@ -3719,37 +3644,26 @@ id event_image
 id event_image2
 id event_location
 id event_location_type2
-<<<<<<< HEAD
-=======
 id event_time
 id event_time_type2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id event_title
 id event_title_type2
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
-<<<<<<< HEAD
 id expirationDate
 id expirationDateEdit
 id expiryDateText
 id fade
 id featured_background
 id featured_background_type2
-id featured_description
-id featured_details
-=======
-id fade
-id featured_background
-id featured_background_type2
 id featured_date
 id featured_description
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id featured_image
 id featured_location
 id featured_recycler
 id featured_recycler_type2
-<<<<<<< HEAD
+id featured_time
 id featured_title
 id fill
 id fillCenter
@@ -3762,14 +3676,6 @@ id filterAvailable
 id filterButton
 id filterHalal
 id filterSpicy
-=======
-id featured_time
-id featured_title
-id fill
-id fill_horizontal
-id fill_vertical
-id filled
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id fitCenter
 id fitEnd
 id fitStart
@@ -3779,13 +3685,10 @@ id fixed
 id flip
 id floating
 id follow_system
-<<<<<<< HEAD
 id foodImage
 id foodName
 id foodNameText
 id foodOverlay
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id forever
 id forgetpassword_button
 id forgotTitle
@@ -3802,11 +3705,8 @@ id graph_wrap
 id group_divider
 id grouping
 id groups
-<<<<<<< HEAD
 id halalTag
 id halalText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id header_title
 id hide_ime_id
 id hideable
@@ -3829,12 +3729,9 @@ id immediateStop
 id included
 id indeterminate
 id info
-<<<<<<< HEAD
 id ingredientsEdit
 id ingredientsListText
 id ingredientsText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id invisible
 id inward
 id italic
@@ -3849,27 +3746,19 @@ id leftSpace
 id leftToRight
 id legacy
 id light
-<<<<<<< HEAD
 id likeButton
 id likeCountText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id line1
 id line3
 id linear
 id listMode
 id list_item
-<<<<<<< HEAD
 id listingText
 id liveCameraView
 id locale
 id location
 id locationEdit
 id locationText
-=======
-id liveCameraView
-id locale
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id loginRedirectText
 id login_button
 id login_email
@@ -3909,10 +3798,6 @@ id messageContainer
 id messageImage
 id messageInput
 id messageText
-<<<<<<< HEAD
-id messagesCountText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id messagesRecyclerView
 id middle
 id mini
@@ -3948,17 +3833,10 @@ id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
 id navFragment
-<<<<<<< HEAD
 id nav_add
 id nav_announcement
 id nav_bookmark
 id nav_calendar
-id nav_favorites
-=======
-id nav_announcement
-id nav_bookmark
-id nav_calendar
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id nav_home
 id nav_logout
 id nav_map
@@ -4018,10 +3896,7 @@ id path
 id pathRelative
 id peekHeight
 id percent
-<<<<<<< HEAD
 id performance
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id pin
 id position
 id postLayout
@@ -4037,7 +3912,6 @@ id profileRole
 id profileUsername
 id progress_circular
 id progress_horizontal
-<<<<<<< HEAD
 id quantity
 id quantityEdit
 id quantityText
@@ -4045,11 +3919,6 @@ id radio
 id ratio
 id rectangles
 id recyclerView
-=======
-id radio
-id ratio
-id rectangles
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id recycler_view
 id remindButton
 id report_drawn
@@ -4064,10 +3933,7 @@ id rounded
 id row_index_key
 id rtl
 id satellite
-<<<<<<< HEAD
 id saveButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id saveDescriptionButton
 id saveNote
 id save_non_transition_alpha
@@ -4078,18 +3944,12 @@ id screen
 id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
-<<<<<<< HEAD
 id scrollToTopButton
 id scrollView
 id scrollable
 id searchButton
 id searchEditText
 id searchIcon
-=======
-id scrollView
-id scrollable
-id searchButton
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id searchInput
 id searchLayout
 id search_badge
@@ -4107,10 +3967,7 @@ id seekbar_value
 id select_dialog_listview
 id selected
 id selection_type
-<<<<<<< HEAD
 id sellerIdText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id sendButton
 id senderName
 id serverDescriptionTxt
@@ -4140,11 +3997,8 @@ id snapMargins
 id south
 id spacer
 id special_effects_controller_view_tag
-<<<<<<< HEAD
 id spicyTag
 id spicyText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id spinner
 id spline
 id split_action_bar
@@ -4158,18 +4012,12 @@ id src_over
 id standard
 id start
 id startHorizontal
-<<<<<<< HEAD
 id startSharingButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id startToEnd
 id startVertical
 id staticLayout
 id staticPostLayout
-<<<<<<< HEAD
 id statusText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id stop
 id stretch
 id submenuarrow
@@ -4179,12 +4027,9 @@ id submit_area
 id submit_event_button
 id submit_event_button_type2
 id supportScrollUp
-<<<<<<< HEAD
 id switchHalal
 id switchSpicy
 id switchStatus
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id switchWidget
 id tabMode
 id tag_accessibility_actions
@@ -4208,10 +4053,7 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTop
-<<<<<<< HEAD
 id textView
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id textView2
 id textView3
 id textView4
@@ -4249,7 +4091,6 @@ id transition_scene_layoutid_cache
 id transition_transform
 id triangle
 id unchecked
-<<<<<<< HEAD
 id undoButton
 id uniform
 id unlabeled
@@ -4258,13 +4099,6 @@ id uploadButton
 id uploadImageButton
 id uploadImageButton2
 id uploadTimeText
-=======
-id uniform
-id unlabeled
-id up
-id uploadImageButton
-id uploadImageButton2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id useLogo
 id userNameTxt
 id userProfileImage
@@ -4283,10 +4117,7 @@ id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
-<<<<<<< HEAD
 id welcomeText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id west
 id wide
 id withText
@@ -4416,7 +4247,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_announcements
 layout activity_blink_viewer
-<<<<<<< HEAD
+layout activity_channel_chat
 layout activity_chat
 layout activity_dashboard
 layout activity_direct_chat
@@ -4425,14 +4256,6 @@ layout activity_food
 layout activity_location1
 layout activity_login
 layout activity_logmeal
-=======
-layout activity_channel_chat
-layout activity_chat
-layout activity_dashboard
-layout activity_direct_chat
-layout activity_location1
-layout activity_login
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout activity_main
 layout activity_seller_dashboard
 layout activity_server
@@ -4465,22 +4288,16 @@ layout dialog_edit_username
 layout dialog_forgot
 layout expand_button
 layout featured_card_design
-<<<<<<< HEAD
 layout filter_dialog_layout
 layout food_card
 layout food_card_tags_halal
 layout food_card_tags_spicy
 layout food_recyclerview_layout
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
-<<<<<<< HEAD
 layout fragment_food_details
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout fragment_home
 layout fragment_map
 layout fragment_profile
@@ -4577,10 +4394,7 @@ layout support_simple_spinner_dropdown_item
 menu bottom_nav_menu
 menu chat_menu
 menu drawer_menu
-<<<<<<< HEAD
 menu menu
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 menu nav_menu
 menu toolbar_menu
 mipmap ic_launcher
@@ -4588,10 +4402,7 @@ mipmap ic_launcher_round
 plurals mtrl_badge_content_description
 raw firebase_common_keep
 raw happyintro
-<<<<<<< HEAD
-=======
 raw newaudio
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -6145,10 +5956,7 @@ styleable PreferenceFragmentCompat android_layout android_divider android_divide
 styleable PreferenceGroup android_orderingFromXml initialExpandedChildrenCount orderingFromXml
 styleable PreferenceImageView android_maxWidth android_maxHeight maxHeight maxWidth
 styleable PreferenceTheme checkBoxPreferenceStyle dialogPreferenceStyle dropdownPreferenceStyle editTextPreferenceStyle preferenceCategoryStyle preferenceCategoryTitleTextAppearance preferenceCategoryTitleTextColor preferenceFragmentCompatStyle preferenceFragmentListStyle preferenceFragmentStyle preferenceInformationStyle preferenceScreenStyle preferenceStyle preferenceTheme seekBarPreferenceStyle switchPreferenceCompatStyle switchPreferenceStyle
-<<<<<<< HEAD
 styleable PreviewView implementationMode scaleType
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 styleable PropertySet android_visibility android_alpha layout_constraintTag motionProgress visibilityMode
 styleable RadialViewGroup materialCircleRadius
 styleable RangeSlider minSeparation values
@@ -6198,8 +6006,5 @@ styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration
 styleable include constraintSet
 xml backup_rules
 xml data_extraction_rules
-<<<<<<< HEAD
 xml file_paths
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 xml image_share_filepaths

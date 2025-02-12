@@ -24,28 +24,19 @@ public final class ActivitySplashBinding implements ViewBinding {
   public final ImageView imageView;
 
   @NonNull
-<<<<<<< HEAD
-=======
   public final TextView textView2;
 
   @NonNull
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
   public final TextView textView3;
 
   @NonNull
   public final TextView textView4;
 
   private ActivitySplashBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView imageView,
-<<<<<<< HEAD
-      @NonNull TextView textView3, @NonNull TextView textView4) {
-    this.rootView = rootView;
-    this.imageView = imageView;
-=======
       @NonNull TextView textView2, @NonNull TextView textView3, @NonNull TextView textView4) {
     this.rootView = rootView;
     this.imageView = imageView;
     this.textView2 = textView2;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.textView3 = textView3;
     this.textView4 = textView4;
   }
@@ -83,15 +74,12 @@ public final class ActivitySplashBinding implements ViewBinding {
         break missingId;
       }
 
-<<<<<<< HEAD
-=======
       id = R.id.textView2;
       TextView textView2 = ViewBindings.findChildViewById(rootView, id);
       if (textView2 == null) {
         break missingId;
       }
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.textView3;
       TextView textView3 = ViewBindings.findChildViewById(rootView, id);
       if (textView3 == null) {
@@ -104,11 +92,7 @@ public final class ActivitySplashBinding implements ViewBinding {
         break missingId;
       }
 
-<<<<<<< HEAD
-      return new ActivitySplashBinding((ConstraintLayout) rootView, imageView, textView3,
-=======
       return new ActivitySplashBinding((ConstraintLayout) rootView, imageView, textView2, textView3,
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
           textView4);
     }
     String missingId = rootView.getResources().getResourceName(id);

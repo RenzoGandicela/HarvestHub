@@ -4,11 +4,7 @@
             "outputFile": "com.sp.harvesthub.app-mergeDebugResources-3:/values-sw360dp-v13/values-sw360dp-v13.xml",
             "map": [
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\3b2aafa1f13388a824331aab23d8dbb4\\transformed\\preference-1.2.1\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
-=======
-                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\3b2aafa1f13388a824331aab23d8dbb4\\transformed\\preference-1.2.1\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

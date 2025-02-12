@@ -13,17 +13,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:text="Featured Events"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/add_event_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Event"/>
-=======
             android:fontFamily="@font/aoboshi_one"
             android:text="Community Cooking"
             android:textColor="#258129"
@@ -46,7 +35,6 @@
             android:clipToPadding="false"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"/>
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <!-- Type 1 Event Form -->
         <LinearLayout
@@ -58,45 +46,6 @@
             android:padding="8dp"
             android:background="@drawable/form_background">
 
-<<<<<<< HEAD
-            <EditText
-                android:id="@+id/event_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Event Title"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/event_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Description"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/event_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Event Details (Date and Time)"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/event_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Location"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"
-                android:layout_marginBottom="8dp"/>
-
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,8 +67,6 @@
                     android:visibility="gone"/>
             </LinearLayout>
 
-<<<<<<< HEAD
-=======
             <EditText
                 android:id="@+id/event_title"
                 android:layout_width="match_parent"
@@ -165,18 +112,10 @@
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             <Button
                 android:id="@+id/submitEventButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="Submit Event"/>
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/featured_recycler"
-=======
                 android:text="Submit Cooking Event"/>
         </LinearLayout>
 
@@ -204,7 +143,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/featured_recycler_type2"
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -212,24 +150,6 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"/>
 
-<<<<<<< HEAD
-        <!-- Type 2 Events Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Donation Drives"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
-
-        <Button
-            android:id="@+id/add_event_button_type2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Donation Drive"/>
-
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         <!-- Type 2 Event Form -->
         <LinearLayout
             android:id="@+id/event_form_layout_type2"
@@ -240,8 +160,6 @@
             android:padding="8dp"
             android:background="@drawable/form_background">
 
-<<<<<<< HEAD
-=======
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,7 +182,6 @@
                     android:visibility="gone"/>
             </LinearLayout>
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             <EditText
                 android:id="@+id/event_title_type2"
                 android:layout_width="match_parent"
@@ -284,12 +201,6 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
-<<<<<<< HEAD
-                android:id="@+id/event_details2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Event Details (Date and Time)"
-=======
                 android:id="@+id/event_date_type2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -303,7 +214,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Time"
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
@@ -317,53 +227,15 @@
                 android:textColorHint="@color/gray"
                 android:layout_marginBottom="8dp"/>
 
-<<<<<<< HEAD
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <Button
-                    android:id="@+id/uploadImageButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Image"
-                    android:layout_marginEnd="8dp"/>
-
-                <ImageView
-                    android:id="@+id/eventImagePreview2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"/>
-            </LinearLayout>
-
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             <Button
                 android:id="@+id/submitEventButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="Submit Donation Drive"/>
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/featured_recycler_type2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"/>
-=======
                 android:backgroundTint="@color/secondary_dark_orange"
                 android:text="Submit Donation Drive"/>
         </LinearLayout>
 
 
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
     </LinearLayout>
 </ScrollView>

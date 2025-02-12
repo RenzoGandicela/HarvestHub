@@ -9,18 +9,12 @@ array preloaded_fonts
 array roles_array
 attr beigeBackground
 attr chatTextColor
-<<<<<<< HEAD
 color available_overlay
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 color backgroundColor
 color background_green
 color beige
 color black
-<<<<<<< HEAD
 color claimed_overlay
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 color dark_background
 color dark_beige
 color dark_on_background
@@ -55,17 +49,11 @@ color social_background
 color teal_200
 color teal_700
 color white
-<<<<<<< HEAD
 drawable add_circle
 drawable announcement
 drawable arrow
 drawable background
-=======
-drawable announcement
-drawable arrow
-drawable background
 drawable baseline_food_bank_24
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable baseline_lock_reset_24
 drawable bg_message_input
 drawable bg_message_received
@@ -80,22 +68,16 @@ drawable community_garden
 drawable default_profile
 drawable default_profile_background
 drawable edit_text_background
-<<<<<<< HEAD
 drawable ellipse_11
 drawable ellipse_2
 drawable error_image
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable food_sharing
 drawable form_background
 drawable home
 drawable ic_add_24
 drawable ic_add_friend
 drawable ic_announcement
-<<<<<<< HEAD
 drawable ic_arrow_up
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable ic_attach
 drawable ic_back
 drawable ic_bookmark
@@ -104,16 +86,11 @@ drawable ic_chat
 drawable ic_delete
 drawable ic_edit
 drawable ic_favorite
-<<<<<<< HEAD
 drawable ic_filter
 drawable ic_hashtag
 drawable ic_heart
 drawable ic_heart_filled
 drawable ic_heart_outline
-=======
-drawable ic_hashtag
-drawable ic_heart
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable ic_home
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -127,10 +104,7 @@ drawable ic_send
 drawable ic_server_placeholder
 drawable ic_settings
 drawable ic_social
-<<<<<<< HEAD
 drawable image_5
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable location
 drawable logo2
 drawable logo3
@@ -141,15 +115,10 @@ drawable message_input_background
 drawable message_received_background
 drawable message_sent_background
 drawable order
-<<<<<<< HEAD
 drawable placeholder_image
 drawable profile
 drawable received_message_background
 drawable rounded_tag_background
-=======
-drawable profile
-drawable received_message_background
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 drawable search_background
 drawable sent_message_background
 drawable settings
@@ -160,31 +129,19 @@ drawable tab_border
 drawable teal_round
 drawable wave
 drawable white_box
-<<<<<<< HEAD
-=======
 drawable white_box2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 font agbalumo
 font aoboshi_one
 font carter_one
 font caveat_brush
-<<<<<<< HEAD
 font young_serif
 id action_chat
 id action_clear_chat
-id addFriendButton
 id add_event_button
 id add_event_button_type2
 id analyzeButton
 id attachButton
 id available
-=======
-id action_chat
-id action_clear_chat
-id add_event_button
-id add_event_button_type2
-id attachButton
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id backButton
 id blinkFullImageView
 id blinkImage
@@ -193,17 +150,13 @@ id bottomNavigationView
 id btnCancel
 id btnReset
 id calendarView
-<<<<<<< HEAD
 id camButton
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id cardView
 id channelNameTxt
 id channelsRecyclerView
 id chatImageView
 id chatListView
 id chatsRecyclerView
-<<<<<<< HEAD
 id deleteButton
 id deleteNote
 id desc
@@ -211,32 +164,19 @@ id descEdit
 id description
 id descriptionText
 id descriptionTitle
-=======
-id deleteNote
-id desc
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id dialogBox
 id dialogForgot
 id displayNote
 id drawer_layout
-<<<<<<< HEAD
 id editListing
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id editNote
 id editUsernameButton
 id emailBox
 id emailTxt
-<<<<<<< HEAD
-id eventDetailsTxt
-id eventImagePreview
-id eventImagePreview2
-=======
 id eventImagePreview
 id eventImagePreview2
 id event_date
 id event_date_type2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id event_description
 id event_description_type2
 id event_details
@@ -247,7 +187,8 @@ id event_image
 id event_image2
 id event_location
 id event_location_type2
-<<<<<<< HEAD
+id event_time
+id event_time_type2
 id event_title
 id event_title_type2
 id expirationDate
@@ -255,23 +196,13 @@ id expirationDateEdit
 id expiryDateText
 id featured_background
 id featured_background_type2
-id featured_description
-id featured_details
-=======
-id event_time
-id event_time_type2
-id event_title
-id event_title_type2
-id featured_background
-id featured_background_type2
 id featured_date
 id featured_description
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id featured_image
 id featured_location
 id featured_recycler
 id featured_recycler_type2
-<<<<<<< HEAD
+id featured_time
 id featured_title
 id filterAvailable
 id filterButton
@@ -299,17 +230,6 @@ id liveCameraView
 id location
 id locationEdit
 id locationText
-=======
-id featured_time
-id featured_title
-id forgetpassword_button
-id forgotTitle
-id fragment_container
-id imageView
-id lastMessageText
-id leftSpace
-id liveCameraView
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id loginRedirectText
 id login_button
 id login_email
@@ -321,22 +241,12 @@ id messageContainer
 id messageImage
 id messageInput
 id messageText
-<<<<<<< HEAD
-id messagesCountText
 id messagesRecyclerView
 id navFragment
 id nav_add
 id nav_announcement
 id nav_bookmark
 id nav_calendar
-id nav_favorites
-=======
-id messagesRecyclerView
-id navFragment
-id nav_announcement
-id nav_bookmark
-id nav_calendar
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id nav_home
 id nav_logout
 id nav_map
@@ -353,7 +263,6 @@ id profileImage
 id profileImg
 id profileRole
 id profileUsername
-<<<<<<< HEAD
 id quantity
 id quantityEdit
 id quantityText
@@ -372,16 +281,6 @@ id searchIcon
 id searchInput
 id searchLayout
 id sellerIdText
-=======
-id remindButton
-id rightSpace
-id role_spinner
-id saveDescriptionButton
-id saveNote
-id searchButton
-id searchInput
-id searchLayout
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id sendButton
 id senderName
 id serverDescriptionTxt
@@ -394,24 +293,18 @@ id signup_email
 id signup_password
 id signup_username
 id slogan_name
-<<<<<<< HEAD
 id spicyTag
 id spicyText
 id startSharingButton
 id statusText
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id submitEventButton
 id submitEventButton2
 id submit_event_button
 id submit_event_button_type2
-<<<<<<< HEAD
 id switchHalal
 id switchSpicy
 id switchStatus
 id textView
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id textView2
 id textView3
 id textView4
@@ -420,16 +313,11 @@ id timestamp
 id timestampText
 id titleText
 id toolbar
-<<<<<<< HEAD
 id undoButton
 id uploadButton
 id uploadImageButton
 id uploadImageButton2
 id uploadTimeText
-=======
-id uploadImageButton
-id uploadImageButton2
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 id userNameTxt
 id userProfileImage
 id userSearchInput
@@ -437,10 +325,10 @@ id usernameInput
 id usernameText
 id usernameTxt
 id usersRecyclerView
-<<<<<<< HEAD
 id welcomeText
 layout activity_announcements
 layout activity_blink_viewer
+layout activity_channel_chat
 layout activity_chat
 layout activity_dashboard
 layout activity_direct_chat
@@ -449,16 +337,6 @@ layout activity_food
 layout activity_location1
 layout activity_login
 layout activity_logmeal
-=======
-layout activity_announcements
-layout activity_blink_viewer
-layout activity_channel_chat
-layout activity_chat
-layout activity_dashboard
-layout activity_direct_chat
-layout activity_location1
-layout activity_login
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout activity_main
 layout activity_seller_dashboard
 layout activity_server
@@ -472,22 +350,16 @@ layout dialog_add_friend
 layout dialog_edit_username
 layout dialog_forgot
 layout featured_card_design
-<<<<<<< HEAD
 layout filter_dialog_layout
 layout food_card
 layout food_card_tags_halal
 layout food_card_tags_spicy
 layout food_recyclerview_layout
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout fragment_announcement
 layout fragment_bookmark
 layout fragment_calendar
 layout fragment_favourites
-<<<<<<< HEAD
 layout fragment_food_details
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 layout fragment_home
 layout fragment_map
 layout fragment_profile
@@ -504,19 +376,13 @@ layout nav_header
 menu bottom_nav_menu
 menu chat_menu
 menu drawer_menu
-<<<<<<< HEAD
 menu menu
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 menu nav_menu
 menu toolbar_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw happyintro
-<<<<<<< HEAD
-=======
 raw newaudio
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 string about
 string about_me
 string announcement
@@ -584,7 +450,4 @@ style Theme.HarvestHub.FullScreen
 style Theme.HarvestHub.NoActionBar
 xml backup_rules
 xml data_extraction_rules
-<<<<<<< HEAD
 xml file_paths
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb

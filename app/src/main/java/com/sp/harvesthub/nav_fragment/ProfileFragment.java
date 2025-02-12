@@ -264,8 +264,4 @@ public class ProfileFragment extends Fragment {
                 }
             });
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb

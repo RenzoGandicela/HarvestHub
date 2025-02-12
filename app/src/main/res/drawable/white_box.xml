@@ -6,11 +6,7 @@
         android:radius="20dp" />
 
     <stroke
-<<<<<<< HEAD
-        android:color="@color/teal_700"
-=======
         android:color="@color/secondary_green"
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         android:width="2dp" />
 
     <solid

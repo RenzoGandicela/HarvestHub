@@ -7,11 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-<<<<<<< HEAD
-import android.widget.LinearLayout;
-=======
 import android.widget.ScrollView;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,11 +20,7 @@ import java.lang.String;
 
 public final class ActivityDashboardBinding implements ViewBinding {
   @NonNull
-<<<<<<< HEAD
-  private final LinearLayout rootView;
-=======
   private final ScrollView rootView;
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
   @NonNull
   public final CalendarView calendarView;
@@ -43,41 +35,22 @@ public final class ActivityDashboardBinding implements ViewBinding {
   public final EditText editNote;
 
   @NonNull
-<<<<<<< HEAD
-  public final TextView eventDetailsTxt;
-
-  @NonNull
-  public final Button saveNote;
-
-  private ActivityDashboardBinding(@NonNull LinearLayout rootView,
-      @NonNull CalendarView calendarView, @NonNull Button deleteNote, @NonNull TextView displayNote,
-      @NonNull EditText editNote, @NonNull TextView eventDetailsTxt, @NonNull Button saveNote) {
-=======
   public final Button saveNote;
 
   private ActivityDashboardBinding(@NonNull ScrollView rootView, @NonNull CalendarView calendarView,
       @NonNull Button deleteNote, @NonNull TextView displayNote, @NonNull EditText editNote,
       @NonNull Button saveNote) {
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.rootView = rootView;
     this.calendarView = calendarView;
     this.deleteNote = deleteNote;
     this.displayNote = displayNote;
     this.editNote = editNote;
-<<<<<<< HEAD
-    this.eventDetailsTxt = eventDetailsTxt;
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.saveNote = saveNote;
   }
 
   @Override
   @NonNull
-<<<<<<< HEAD
-  public LinearLayout getRoot() {
-=======
   public ScrollView getRoot() {
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     return rootView;
   }
 
@@ -126,28 +99,14 @@ public final class ActivityDashboardBinding implements ViewBinding {
         break missingId;
       }
 
-<<<<<<< HEAD
-      id = R.id.eventDetailsTxt;
-      TextView eventDetailsTxt = ViewBindings.findChildViewById(rootView, id);
-      if (eventDetailsTxt == null) {
-        break missingId;
-      }
-
-=======
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.saveNote;
       Button saveNote = ViewBindings.findChildViewById(rootView, id);
       if (saveNote == null) {
         break missingId;
       }
 
-<<<<<<< HEAD
-      return new ActivityDashboardBinding((LinearLayout) rootView, calendarView, deleteNote,
-          displayNote, editNote, eventDetailsTxt, saveNote);
-=======
       return new ActivityDashboardBinding((ScrollView) rootView, calendarView, deleteNote,
           displayNote, editNote, saveNote);
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

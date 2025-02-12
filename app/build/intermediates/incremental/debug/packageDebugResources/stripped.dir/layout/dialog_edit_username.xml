@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter new username"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:inputType="text"
+        android:maxLines="1" />
+
+</LinearLayout> 

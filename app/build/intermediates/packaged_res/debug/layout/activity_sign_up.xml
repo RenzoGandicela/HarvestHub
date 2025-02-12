@@ -11,32 +11,19 @@
 
     <ImageView
         android:id="@+id/logoImage"
-<<<<<<< HEAD
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:transitionName="logo_image"
-        android:src="@drawable/logo3" />
-=======
         android:layout_width="162dp"
         android:layout_height="120dp"
         android:src="@drawable/baseline_food_bank_24"
         android:transitionName="logo_image" />
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/carter_one"
         android:text="Welcome to HarvestHub!"
-<<<<<<< HEAD
-        android:transitionName="logo_text"
-        android:textColor="#1C601E"
-        android:textSize="40sp" />
-=======
         android:textColor="@color/primary_green"
         android:textSize="32sp"
         android:transitionName="logo_text" />
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
     <TextView
         android:id="@+id/slogan_name"
@@ -53,57 +40,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
-<<<<<<< HEAD
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username"
-            android:textColorHint="@color/gray"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signup_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:background="#FFFFFF" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textColorHint="@color/gray"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signup_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:background="#FFFFFF"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:textColorHint="@color/gray"
-            app:passwordToggleEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signup_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:background="#FFFFFF"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-=======
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,42 +111,27 @@
 
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <!-- Role Selection Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-<<<<<<< HEAD
-            android:text="Select Role:"
-            android:textSize="16sp"
-            android:textColor="@color/black" />
-=======
             android:fontFamily="@font/aoboshi_one"
             android:text="Select Role:"
             android:textColor="@color/black"
             android:textSize="16sp" />
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <Spinner
             android:id="@+id/role_spinner"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
-<<<<<<< HEAD
-            android:background="@color/gray"
-            android:popupBackground="@color/gray"
-            android:textColor="@color/white"
-            android:spinnerMode="dropdown"
-            android:entries="@array/roles_array"/>
-=======
             android:background="@color/background_green"
             android:entries="@array/roles_array"
             android:popupBackground="@color/gray"
             android:spinnerMode="dropdown"
             android:textColor="@color/white" />
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <Button
             android:id="@+id/signup_button"
@@ -228,11 +149,7 @@
             android:layout_gravity="right"
             android:background="#00000000"
             android:elevation="0dp"
-<<<<<<< HEAD
-            android:text="Have an account? Sign in!"
-=======
             android:text="Have an account? Log in!"
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             android:textColor="#000000"
             android:fontFamily="@font/aoboshi_one"
             android:id="@+id/loginRedirectText"/>

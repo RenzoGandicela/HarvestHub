@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_clear_chat"
-<<<<<<< HEAD
-        android:title="Clear Chat"
-        android:icon="@drawable/ic_delete"
-=======
         android:icon="@drawable/ic_delete"
         android:title="Delete All Messages"
->>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         app:showAsAction="always"/>
 </menu> 
