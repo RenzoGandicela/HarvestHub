@@ -19,7 +19,7 @@
             android:title="@string/announcement" />
         <item
             android:id="@+id/nav_bookmark"
-            android:icon="@drawable/ic_bookmark"
+            android:icon="@drawable/ic_bookmark_filled"
             android:title="@string/bookmark" />
         <item
             android:id="@+id/nav_calendar"

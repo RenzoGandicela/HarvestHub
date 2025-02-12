@@ -1,14 +1,18 @@
 package com.sp.harvesthub.nav_fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.sp.harvesthub.R;
+import com.sp.harvesthub.database.BookmarkDbHelper;
+import com.sp.harvesthub.foodListings.FoodItemExtended;
+import com.sp.harvesthub.adapters.BookmarkAdapter;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +29,11 @@ public class BookmarkFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView recyclerView;
+    private BookmarkAdapter adapter;
+    private BookmarkDbHelper bookmarkDbHelper;
+    private TextView emptyView;
 
     public BookmarkFragment() {
         // Required empty public constructor
@@ -58,9 +67,42 @@ public class BookmarkFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
+
+        bookmarkDbHelper = new BookmarkDbHelper(requireContext());
+        emptyView = view.findViewById(R.id.emptyView);
+        
+        recyclerView = view.findViewById(R.id.bookmarkRecyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        loadBookmarks();
+
+        return view;
+    }
+
+    private void loadBookmarks() {
+        List<FoodItemExtended> bookmarkedItems = bookmarkDbHelper.getAllBookmarks();
+        
+        if (bookmarkedItems.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            
+            if (adapter == null) {
+                adapter = new BookmarkAdapter(requireContext(), bookmarkedItems);
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.updateItems(bookmarkedItems);
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadBookmarks(); // Refresh bookmarks when fragment becomes visible
     }
 }

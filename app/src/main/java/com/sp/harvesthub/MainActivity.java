@@ -14,6 +14,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.view.Menu;
+import android.util.Log;
+import android.widget.Button;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.sp.harvesthub.activities.LoginActivity;
@@ -49,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView userNameTxt, emailTxt;
     private CircleImageView profileImg;
     private FirebaseAuth auth;
-    private DatabaseReference userRef;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
@@ -69,12 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
-        
         auth = FirebaseAuth.getInstance();
-        
+
         setContentView(R.layout.activity_main);
 
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
@@ -93,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Set up navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, drawer_layout, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer_layout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -130,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else if (itemId == R.id.nav_add) {
                 replaceFragment(new LogMealFragment());
                 setTitle("Add Food");
-                return true;
             } else if (itemId == R.id.nav_favorites) {
                 replaceFragment(new FavouritesFragment());
                 setTitle(getString(R.string.favorites));
@@ -144,6 +144,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Set default selected item
         updateNavigationToHome();
+    }
+
+    private void loadUserData() {
+        if (auth.getCurrentUser() != null) {
+            String userId = auth.getCurrentUser().getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(userId);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String username = snapshot.child("username").getValue(String.class);
+                        String email = snapshot.child("email").getValue(String.class);
+                        String profilePicture = snapshot.child("profilePicture").getValue(String.class);
+
+                        // Update UI
+                        if (username != null) userNameTxt.setText(username);
+                        if (email != null) emailTxt.setText(email);
+                        
+                        // Load profile picture
+                        if (profilePicture != null && !profilePicture.isEmpty()) {
+                            Glide.with(MainActivity.this)
+                                    .load(profilePicture)
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.default_profile)
+                                    .into(profileImg);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(MainActivity.this, "Error loading user data: " + error.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -171,43 +210,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-    }
-
-    private void loadUserData() {
-        if (auth.getCurrentUser() != null) {
-            String userId = auth.getCurrentUser().getUid();
-            userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-
-            userRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        String username = snapshot.child("username").getValue(String.class);
-                        String email = snapshot.child("email").getValue(String.class);
-                        String profilePicture = snapshot.child("profilePicture").getValue(String.class);
-
-                        // Update UI
-                        if (username != null) userNameTxt.setText(username);
-                        if (email != null) emailTxt.setText(email);
-                        
-                        // Load profile picture
-                        if (profilePicture != null && !profilePicture.isEmpty()) {
-                            Glide.with(MainActivity.this)
-                                .load(profilePicture)
-                                .placeholder(R.drawable.default_profile)
-                                .error(R.drawable.default_profile)
-                                .into(profileImg);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(MainActivity.this, "Error loading user data: " + error.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
     }
 
     @Override

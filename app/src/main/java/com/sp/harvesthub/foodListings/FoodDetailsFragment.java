@@ -33,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
 import android.content.Intent;
 import java.util.List;
+import com.sp.harvesthub.database.BookmarkDbHelper;
 
 public class FoodDetailsFragment extends Fragment {
     private static final String ARG_FOOD_ITEM = "food_item";
@@ -45,6 +46,9 @@ public class FoodDetailsFragment extends Fragment {
     private boolean isLiked = false;
     private Menu optionsMenu;
     private boolean isUserSeller = false;
+    private ImageButton bookmarkButton;
+    private BookmarkDbHelper bookmarkDbHelper;
+    private boolean isBookmarked = false;
 
     public static FoodDetailsFragment newInstance(FoodItemExtended foodItem) {
         FoodDetailsFragment fragment = new FoodDetailsFragment();
@@ -67,13 +71,13 @@ public class FoodDetailsFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
         this.optionsMenu = menu;
-        
+
         // Hide menu item by default
         MenuItem editItem = menu.findItem(R.id.editListing);
         if (editItem != null) {
             editItem.setVisible(false);
         }
-        
+
         // Check user role immediately
         checkUserRole();
         super.onCreateOptionsMenu(menu, inflater);
@@ -82,7 +86,7 @@ public class FoodDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_food_details, container, false);
-        
+
         // Initialize Firebase
         auth = FirebaseAuth.getInstance();
         listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
@@ -91,7 +95,7 @@ public class FoodDetailsFragment extends Fragment {
         // Initialize views
         likeButton = view.findViewById(R.id.likeButton);
         likeCountText = view.findViewById(R.id.likeCountText);
-        
+
         Button undoButton = view.findViewById(R.id.undoButton);
         undoButton.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
@@ -99,7 +103,13 @@ public class FoodDetailsFragment extends Fragment {
 
         LinearLayout halalTag = view.findViewById(R.id.halalTag);
         LinearLayout spicyTag = view.findViewById(R.id.spicyTag);
+
+        // Initialize database helper
+        bookmarkDbHelper = new BookmarkDbHelper(requireContext());
         
+        // Initialize bookmark button
+        bookmarkButton = view.findViewById(R.id.bookmarkButton);
+
         if (foodItem != null) {
             ImageView foodImage = view.findViewById(R.id.foodImage);
             TextView foodName = view.findViewById(R.id.foodName);
@@ -117,7 +127,7 @@ public class FoodDetailsFragment extends Fragment {
 
             // Set texts with capitalized dish name
             foodName.setText(capitalizeDishName(foodItem.getDishName()));
-            
+
             // Update quantity/status display
             if ("claimed".equalsIgnoreCase(foodItem.getStatus())) {
                 quantityText.setText("Unavailable");
@@ -150,7 +160,7 @@ public class FoodDetailsFragment extends Fragment {
                     SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
                     // Create the desired output format
                     SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-                    
+
                     Date date = inputFormat.parse(expiryDate);
                     String formattedDate = outputFormat.format(date);
                     expiryDateText.setText("Expiry Date: " + formattedDate);
@@ -161,7 +171,7 @@ public class FoodDetailsFragment extends Fragment {
             }
 
             descriptionText.setText(foodItem.getDescription());
-            
+
             // Format and set upload time
             if (foodItem.getCreatedAt() != null) {
                 uploadTimeText.setText("Uploaded " + getTimeAgo(foodItem.getCreatedAt()));
@@ -187,15 +197,15 @@ public class FoodDetailsFragment extends Fragment {
 
             // Initialize likes count from likedBy node
             DatabaseReference itemRef = listingsRef
-                .child(foodItem.getOriginalSellerId())
-                .child("items")
-                .child(foodItem.getItemId());
+                    .child(foodItem.getOriginalSellerId())
+                    .child("items")
+                    .child(foodItem.getItemId());
 
             itemRef.child("likedBy").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (!isAdded()) return;
-                    
+
                     if (snapshot.exists()) {
                         long likeCount = snapshot.getChildrenCount();
                         likeCountText.setText(String.valueOf(likeCount));
@@ -223,22 +233,7 @@ public class FoodDetailsFragment extends Fragment {
 
                 likeButton.setOnClickListener(v -> {
                     if (!isAdded()) return;
-
-                    if (isLiked) {
-                        // Unlike
-                        likedByRef.removeValue().addOnSuccessListener(aVoid -> {
-                            if (!isAdded()) return;
-                            isLiked = false;
-                            updateLikeButton();
-                        });
-                    } else {
-                        // Like
-                        likedByRef.setValue(true).addOnSuccessListener(aVoid -> {
-                            if (!isAdded()) return;
-                            isLiked = true;
-                            updateLikeButton();
-                        });
-                    }
+                    handleLikeAction(likedByRef, itemRef);
                 });
             } else {
                 // User not logged in
@@ -246,6 +241,13 @@ public class FoodDetailsFragment extends Fragment {
                     Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
                 });
             }
+
+            // Check if item is bookmarked
+            isBookmarked = bookmarkDbHelper.isBookmarked(foodItem.getItemId());
+            updateBookmarkButton();
+            
+            // Set click listener
+            bookmarkButton.setOnClickListener(v -> handleBookmarkAction());
         }
 
         return view;
@@ -307,10 +309,10 @@ public class FoodDetailsFragment extends Fragment {
     private void checkUserRole() {
         if (auth.getCurrentUser() != null && foodItem != null) {
             String currentUserId = auth.getCurrentUser().getUid();
-            
+
             // Check if current user is the original seller of this item
             boolean isOwner = currentUserId.equals(foodItem.getOriginalSellerId());
-            
+
             // Show edit button if user is the owner
             if (optionsMenu != null) {
                 MenuItem editItem = optionsMenu.findItem(R.id.editListing);
@@ -334,5 +336,51 @@ public class FoodDetailsFragment extends Fragment {
         Intent intent = new Intent(getActivity(), EditFoodActivity.class);
         intent.putExtra("foodItem", foodItem);
         startActivity(intent);
+    }
+
+    private void handleLikeAction(DatabaseReference likedByRef, DatabaseReference itemRef) {
+        if (isLiked) {
+            // Unlike
+            likedByRef.removeValue().addOnSuccessListener(aVoid -> {
+                if (!isAdded()) return;
+                isLiked = false;
+                updateLikeButton();
+                
+                // Update likes count in database
+                itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                    long newLikeCount = snapshot.exists() ? snapshot.getChildrenCount() : 0;
+                    itemRef.child("likes").setValue(newLikeCount);
+                });
+            });
+        } else {
+            // Like
+            likedByRef.setValue(true).addOnSuccessListener(aVoid -> {
+                if (!isAdded()) return;
+                isLiked = true;
+                updateLikeButton();
+                
+                // Update likes count in database
+                itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                    long newLikeCount = snapshot.exists() ? snapshot.getChildrenCount() : 0;
+                    itemRef.child("likes").setValue(newLikeCount);
+                });
+            });
+        }
+    }
+
+    private void handleBookmarkAction() {
+        if (isBookmarked) {
+            bookmarkDbHelper.removeBookmark(foodItem.getItemId());
+            isBookmarked = false;
+        } else {
+            bookmarkDbHelper.addBookmark(foodItem);
+            isBookmarked = true;
+        }
+        updateBookmarkButton();
+    }
+
+    private void updateBookmarkButton() {
+        bookmarkButton.setImageResource(isBookmarked ?
+            R.drawable.ic_bookmark_filled : R.drawable.ic_bookmark_outline);
     }
 } 

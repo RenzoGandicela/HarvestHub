@@ -33,6 +33,9 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
   public final TextView listingText;
 
   @NonNull
+  public final ImageButton near;
+
+  @NonNull
   public final RecyclerView recyclerView;
 
   @NonNull
@@ -57,17 +60,21 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
   public final TextView textView2;
 
   @NonNull
+  public final TextView textView5;
+
+  @NonNull
   public final TextView welcomeText;
 
   private FoodRecyclerviewLayoutBinding(@NonNull FrameLayout rootView,
-      @NonNull ImageButton filterButton, @NonNull TextView listingText,
+      @NonNull ImageButton filterButton, @NonNull TextView listingText, @NonNull ImageButton near,
       @NonNull RecyclerView recyclerView, @NonNull FloatingActionButton scrollToTopButton,
       @NonNull NestedScrollView scrollView, @NonNull EditText searchEditText,
       @NonNull ImageView searchIcon, @NonNull Button startSharingButton, @NonNull TextView textView,
-      @NonNull TextView textView2, @NonNull TextView welcomeText) {
+      @NonNull TextView textView2, @NonNull TextView textView5, @NonNull TextView welcomeText) {
     this.rootView = rootView;
     this.filterButton = filterButton;
     this.listingText = listingText;
+    this.near = near;
     this.recyclerView = recyclerView;
     this.scrollToTopButton = scrollToTopButton;
     this.scrollView = scrollView;
@@ -76,6 +83,7 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
     this.startSharingButton = startSharingButton;
     this.textView = textView;
     this.textView2 = textView2;
+    this.textView5 = textView5;
     this.welcomeText = welcomeText;
   }
 
@@ -115,6 +123,12 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
       id = R.id.listingText;
       TextView listingText = ViewBindings.findChildViewById(rootView, id);
       if (listingText == null) {
+        break missingId;
+      }
+
+      id = R.id.near;
+      ImageButton near = ViewBindings.findChildViewById(rootView, id);
+      if (near == null) {
         break missingId;
       }
 
@@ -166,6 +180,12 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.textView5;
+      TextView textView5 = ViewBindings.findChildViewById(rootView, id);
+      if (textView5 == null) {
+        break missingId;
+      }
+
       id = R.id.welcomeText;
       TextView welcomeText = ViewBindings.findChildViewById(rootView, id);
       if (welcomeText == null) {
@@ -173,8 +193,8 @@ public final class FoodRecyclerviewLayoutBinding implements ViewBinding {
       }
 
       return new FoodRecyclerviewLayoutBinding((FrameLayout) rootView, filterButton, listingText,
-          recyclerView, scrollToTopButton, scrollView, searchEditText, searchIcon,
-          startSharingButton, textView, textView2, welcomeText);
+          near, recyclerView, scrollToTopButton, scrollView, searchEditText, searchIcon,
+          startSharingButton, textView, textView2, textView5, welcomeText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

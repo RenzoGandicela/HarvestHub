@@ -31,10 +31,10 @@ public class LogMealExtendedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
-        
+
         listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                 .getReference("listings");
 
@@ -77,17 +77,17 @@ public class LogMealExtendedActivity extends AppCompatActivity {
                 foodData.put("status", foodItem.isAvailable() ? "available" : "unavailable");
                 foodData.put("createdAt", timestamp);
                 foodData.put("updatedAt", timestamp);
-                
+
                 userItemsRef.child(key).setValue(foodData)
                         .addOnSuccessListener(aVoid -> {
                             Log.d(TAG, "Successfully saved to listings database");
                             setResult(RESULT_OK);
-                            
+
                             // Send broadcast with explicit intent
                             Intent intent = new Intent("com.sp.harvesthub.SELECT_HOME");
                             intent.setPackage(getPackageName());
                             sendBroadcast(intent);
-                            
+
                             finish();
                         })
                         .addOnFailureListener(e -> {

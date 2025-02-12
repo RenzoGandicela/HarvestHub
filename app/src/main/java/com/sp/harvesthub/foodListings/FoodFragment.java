@@ -1,8 +1,10 @@
 package com.sp.harvesthub.foodListings;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,11 +23,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.core.widget.NestedScrollView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +45,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,26 +64,44 @@ public class FoodFragment extends Fragment {
     private NestedScrollView scrollView;
     private FloatingActionButton scrollToTopButton;
     private BottomNavigationView bottomNavigationView;
-    private Button startSharingButton;
-    private FirebaseAuth auth;
+
+    /* from here is near me function */
+    private static final String API_KEY = "AIzaSyDe9keBYn2vZTd88FoC_1S8lWuw4JOaTY0"; // Replace with your Google API Key
+    private static final String GEOLOCATION_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY;
+
+    private ImageButton nearButton;
+    private final List<LatLng> fridgeLocations = new ArrayList<>();
+    /* here is the end of near me function */
+
+    private ValueEventListener listingsListener;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_recyclerview_layout, container, false);
-        
+
         // Initialize views
         searchEditText = view.findViewById(R.id.searchEditText);
         filterButton = view.findViewById(R.id.filterButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-        
+        nearButton = view.findViewById(R.id.near);
+
         // Setup RecyclerView
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
+        //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         allFoodItems = new ArrayList<>(); // Initialize allFoodItems
         foodList = new ArrayList<>();
         foodAdapter = new FoodAdapter(requireContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+        // Add fridge locations
+        fridgeLocations.add(new LatLng(1.4022, 103.9111)); // Punggol
+        fridgeLocations.add(new LatLng(1.3375, 103.9188)); // Bedok block 702
+        fridgeLocations.add(new LatLng(1.4418, 103.8012)); // Woodlands
+        fridgeLocations.add(new LatLng(1.3900, 103.7551)); // Teck Whye
+        // Nearest Me Button Click
+        nearButton.setOnClickListener(v -> getCurrentLocation());
 
         // Setup search functionality
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -94,12 +122,12 @@ public class FoodFragment extends Fragment {
 
         // Set welcome text with username
         TextView welcomeText = view.findViewById(R.id.welcomeText);
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                     .getReference("Users")
                     .child(auth.getCurrentUser().getUid());
-            
+
             userRef.child("username").get().addOnSuccessListener(snapshot -> {
                 String username = snapshot.getValue(String.class);
                 if (username != null) {
@@ -114,14 +142,14 @@ public class FoodFragment extends Fragment {
         bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
 
         // Set up scroll listener
-        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) 
-            (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                if (scrollY > 500) {
-                    scrollToTopButton.show();
-                } else {
-                    scrollToTopButton.hide();
-                }
-        });
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
+                (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY > 500) {
+                        scrollToTopButton.show();
+                    } else {
+                        scrollToTopButton.hide();
+                    }
+                });
 
         // Set up scroll to top button
         scrollToTopButton.setOnClickListener(v -> {
@@ -129,22 +157,28 @@ public class FoodFragment extends Fragment {
         });
 
         // Set up start sharing button
-        startSharingButton = view.findViewById(R.id.startSharingButton);
-        auth = FirebaseAuth.getInstance();
-
-        // Check user role and update button visibility
-        checkUserRoleAndUpdateUI();
+        Button startSharingButton = view.findViewById(R.id.startSharingButton);
+        setupStartSharingButton(view);
 
         fetchListingsData();
 
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (listingsListener != null) {
+            FirebaseDatabase.getInstance().getReference("listings")
+                .removeEventListener(listingsListener);
+        }
+    }
+
     private void filterFoodItems(String query) {
         List<FoodItem> filteredList = new ArrayList<>();
         for (FoodItem item : allFoodItems) {
             if (item.getDishName().toLowerCase().contains(query.toLowerCase()) ||
-                item.getLocation().toLowerCase().contains(query.toLowerCase())) {
+                    item.getLocation().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -173,7 +207,7 @@ public class FoodFragment extends Fragment {
             isHalalChecked = halalFilter.isChecked();
             isSpicyChecked = spicyFilter.isChecked();
             isAvailableChecked = availableFilter.isChecked();
-            
+
             applyFilters(isHalalChecked, isSpicyChecked, isAvailableChecked);
         };
 
@@ -190,120 +224,100 @@ public class FoodFragment extends Fragment {
         for (FoodItem item : allFoodItems) {
             FoodItemExtended extendedItem = (FoodItemExtended) item;
             boolean matches = true;
-            
+
             if (halal && !extendedItem.isHalal()) {
                 matches = false;
             }
             if (spicy && !extendedItem.isSpicy()) {
                 matches = false;
             }
-            if (available) {
-                // Debug log to check status
-                Log.d(TAG, "Item: " + extendedItem.getDishName() + " Status: " + extendedItem.getStatus());
-                
-                // Check if status is "available" (case-insensitive)
-                String status = extendedItem.getStatus();
-                if (status == null || !status.equalsIgnoreCase("available")) {
-                    matches = false;
-                }
+            if (available && !"available".equals(extendedItem.getStatus())) {
+                matches = false;
             }
-            
+
             if (matches) {
                 filteredList.add(item);
             }
         }
-        
+
         foodList.clear();
         foodList.addAll(filteredList);
         foodAdapter.notifyDataSetChanged();
     }
 
     private void fetchListingsData() {
-        DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            // Clear lists if not logged in
+            allFoodItems.clear();
+            foodList.clear();
+            foodAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        DatabaseReference listingsRef = FirebaseDatabase.getInstance()
                 .getReference("listings");
-        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+        DatabaseReference usersRef = FirebaseDatabase.getInstance()
                 .getReference("Users");
 
-        listingsRef.addValueEventListener(new ValueEventListener() {
+        listingsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                allFoodItems.clear();
+                if (auth.getCurrentUser() == null) return; // Skip if logged out
+                allFoodItems.clear(); // Clear both lists
                 foodList.clear();
-                
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey();
-                    
+
+                    // Fetch username for this user
                     usersRef.child(userId).child("username").get().addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String username = task.getResult().getValue(String.class);
-                            
-                            DataSnapshot itemsSnapshot = userSnapshot.child("items");
-                            if (!itemsSnapshot.exists()) {
-                                return;
-                            }
 
-                            for (DataSnapshot itemSnapshot : itemsSnapshot.getChildren()) {
+                            // Now process the food items with the username
+                            for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
                                 try {
-                                    // Create new food item
                                     FoodItemExtended foodItem = new FoodItemExtended();
-                                    
-                                    // Set basic info
                                     foodItem.setItemId(itemSnapshot.getKey());
-                                    foodItem.setOriginalSellerId(userId);
-                                    foodItem.setSellerId(username != null ? username : userId);
-                                    
-                                    // Get all values safely
-                                    foodItem.setDishName(getStringValue(itemSnapshot, "title"));
-                                    foodItem.setDescription(getStringValue(itemSnapshot, "description"));
-                                    foodItem.setLocation(getStringValue(itemSnapshot, "location"));
-                                    foodItem.setExpirationDate(getStringValue(itemSnapshot, "expiryDate"));
-                                    foodItem.setImageUrl(getStringValue(itemSnapshot, "imageUrl"));
-                                    foodItem.setCreatedAt(getStringValue(itemSnapshot, "createdAt"));
-                                    foodItem.setUpdatedAt(getStringValue(itemSnapshot, "updatedAt"));
-                                    foodItem.setStatus(getStringValue(itemSnapshot, "status"));
-                                    
-                                    // Handle quantity
-                                    Object quantityObj = itemSnapshot.child("quantity").getValue();
-                                    if (quantityObj != null) {
-                                        String quantity = String.valueOf(quantityObj);
-                                        foodItem.setQuantity(quantity);
-                                    } else {
-                                        foodItem.setQuantity("0");
+
+                                    // Store both the username for display and original sellerId for database operations
+                                    foodItem.setOriginalSellerId(userId); // Store original seller ID
+                                    foodItem.setSellerId(username != null ? username : userId); // Use username for display
+
+                                    // Safely get boolean values with default false
+                                    Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
+                                    Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
+                                    foodItem.setHalal(halal != null ? halal : false);
+                                    foodItem.setSpicy(spicy != null ? spicy : false);
+
+                                    // Map other fields
+                                    foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
+                                    foodItem.setLocation(itemSnapshot.child("location").getValue(String.class));
+                                    foodItem.setExpirationDate(itemSnapshot.child("expiryDate").getValue(String.class));
+                                    foodItem.setQuantity(itemSnapshot.child("quantity").getValue());
+                                    foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
+                                    foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
+                                    foodItem.setCreatedAt(itemSnapshot.child("createdAt").getValue(String.class));
+                                    foodItem.setUpdatedAt(itemSnapshot.child("updatedAt").getValue(String.class));
+                                    foodItem.setStatus(itemSnapshot.child("status").getValue(String.class));
+
+                                    // Get likes count
+                                    DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
+                                    if (likedBySnapshot.exists()) {
+                                        foodItem.setLikesCount((int) likedBySnapshot.getChildrenCount());
                                     }
-                                    
-                                    // Handle boolean values
-                                    foodItem.setHalal(getBooleanValue(itemSnapshot, "halal"));
-                                    foodItem.setSpicy(getBooleanValue(itemSnapshot, "spicy"));
-                                    
-                                    // Handle ingredients
+
+                                    // Handle ingredients list
                                     List<String> ingredients = new ArrayList<>();
                                     DataSnapshot ingredientsSnapshot = itemSnapshot.child("ingredients");
                                     if (ingredientsSnapshot.exists()) {
                                         for (DataSnapshot ingredient : ingredientsSnapshot.getChildren()) {
-                                            String value = ingredient.getValue(String.class);
-                                            if (value != null) {
-                                                ingredients.add(value);
-                                            }
+                                            ingredients.add(ingredient.getValue(String.class));
                                         }
                                     }
                                     foodItem.setIngredients(ingredients);
-                                    
-                                    // Handle likes count
-                                    DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
-                                    if (likedBySnapshot.exists()) {
-                                        foodItem.setLikesCount((int) likedBySnapshot.getChildrenCount());
-                                    } else {
-                                        Object likesObj = itemSnapshot.child("likes").getValue();
-                                        int likesCount = 0;
-                                        if (likesObj instanceof Long) {
-                                            likesCount = ((Long) likesObj).intValue();
-                                        } else if (likesObj instanceof Integer) {
-                                            likesCount = (Integer) likesObj;
-                                        }
-                                        foodItem.setLikesCount(likesCount);
-                                    }
 
-                                    allFoodItems.add(foodItem);
+                                    allFoodItems.add(foodItem); // Add to both lists
                                     foodList.add(foodItem);
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error parsing food item: " + e.getMessage(), e);
@@ -317,65 +331,127 @@ public class FoodFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Database error: " + error.getMessage());
+                if (auth.getCurrentUser() != null) { // Only show error if logged in
+                    Log.e(TAG, "Database error: " + error.getMessage());
+                }
             }
-        });
+        };
+
+        listingsRef.addValueEventListener(listingsListener);
     }
 
-    // Helper methods for safe value extraction
-    private String getStringValue(DataSnapshot snapshot, String key) {
-        Object value = snapshot.child(key).getValue();
-        return value != null ? String.valueOf(value) : "";
+    private void getCurrentLocation() {
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, GEOLOCATION_URL, null,
+                response -> {
+                    try {
+                        JSONObject location = response.getJSONObject("location");
+                        double userLat = location.getDouble("lat");
+                        double userLng = location.getDouble("lng");
+
+                        // Find the nearest fridge location name
+                        String nearestFridgeName = findNearestFridgeName(userLat, userLng);
+
+                        if (nearestFridgeName != null) {
+                            // Show a Toast message with the nearest fridge location name
+                            Toast.makeText(requireContext(), "Nearest fridge is at " + nearestFridgeName, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(requireContext(), "No fridge locations available", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(requireContext(), "Error getting location", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(requireContext(), "Failed to get location", Toast.LENGTH_SHORT).show()
+        );
+        queue.add(jsonObjectRequest);
     }
 
-    private boolean getBooleanValue(DataSnapshot snapshot, String key) {
-        Object value = snapshot.child(key).getValue();
-        if (value instanceof Boolean) {
-            return (Boolean) value;
+    private String findNearestFridgeName(double userLat, double userLng) {
+        double minDistance = Double.MAX_VALUE;
+        String nearestFridgeName = null;
+
+        // List of fridge locations with their names
+        List<FridgeLocation> fridgeLocations = new ArrayList<>();
+        fridgeLocations.add(new FridgeLocation("Punggol", 1.4022, 103.9111));
+        fridgeLocations.add(new FridgeLocation("Bedok", 1.3375, 103.9188));
+        fridgeLocations.add(new FridgeLocation("Woodlands", 1.4418, 103.8012));
+        fridgeLocations.add(new FridgeLocation("Teck Whye", 1.3900, 103.7551));
+
+        for (FridgeLocation fridge : fridgeLocations) {
+            double distance = haversine(userLat, userLng, fridge.latitude, fridge.longitude);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestFridgeName = fridge.name; // Store the nearest fridge name
+            }
         }
-        return false;
+        return nearestFridgeName;
     }
 
-    private void checkUserRoleAndUpdateUI() {
+    // Helper class to store fridge name and coordinates
+    private static class FridgeLocation {
+        String name;
+        double latitude;
+        double longitude;
+
+        FridgeLocation(String name, double latitude, double longitude) {
+            this.name = name;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+    private double haversine(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; // Earth radius in km
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Distance in km
+    }
+
+    private void setupStartSharingButton(View view) {
+        Button startSharingButton = view.findViewById(R.id.startSharingButton);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        
         if (auth.getCurrentUser() != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
                     .getReference("Users")
                     .child(auth.getCurrentUser().getUid());
-            
-            userRef.child("role").get().addOnCompleteListener(task -> {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    String role = task.getResult().getValue(String.class);
-                    Log.d(TAG, "User role for UI update: " + role); // Debug log
-                    
-                    // Show start sharing button only for sellers
-                    if (startSharingButton != null) {
-                        boolean isSeller = "seller".equalsIgnoreCase(role);
-                        startSharingButton.setVisibility(isSeller ? View.VISIBLE : View.GONE);
 
-                        // Set click listener only if button is visible
-                        if (isSeller) {
-                            startSharingButton.setOnClickListener(v -> {
-                                FragmentTransaction transaction = requireActivity()
-                                    .getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragment_container, new LogMealFragment());
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                                
-                                bottomNavigationView.setSelectedItemId(R.id.nav_add);
-                            });
-                        }
+            userRef.child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String role = snapshot.getValue(String.class);
+                    boolean isNotUser = !"user".equals(role);
+                    startSharingButton.setVisibility(isNotUser ? View.VISIBLE : View.GONE);
+
+                    if (isNotUser) {
+                        startSharingButton.setOnClickListener(v -> {
+                            FragmentTransaction transaction = requireActivity()
+                                .getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, new LogMealFragment());
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+
+                            // Select the nav_add item in bottom navigation
+                            bottomNavigationView.setSelectedItemId(R.id.nav_add);
+                        });
                     }
                 }
-            });
-        }
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Only check role if the user is logged in
-        if (auth.getCurrentUser() != null) {
-            checkUserRoleAndUpdateUI();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(requireContext(), 
+                        "Error checking user role: " + error.getMessage(), 
+                        Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            startSharingButton.setVisibility(View.GONE);
         }
     }
-} 
+}

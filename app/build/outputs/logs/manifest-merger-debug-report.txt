@@ -25,6 +25,7 @@ MERGED from [de.hdodenhof:circleimageview:3.1.0] C:\Users\renzo\.gradle\caches\t
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\058e2a5271b22cde0735ccd3874eecd2\transformed\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\5ee1298589c22a40513b0d299e730f9c\transformed\recyclerview-1.2.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-appcheck:18.0.0] C:\Users\renzo\.gradle\caches\transforms-3\266f54b0bb2ec220783800f1a8120ab6\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:15:1-34:12
 MERGED from [com.google.android.gms:play-services-measurement-api:22.2.0] C:\Users\renzo\.gradle\caches\transforms-3\3fdfb69cb01b76dcbe372436cc08a488\transformed\play-services-measurement-api-22.2.0\AndroidManifest.xml:17:1-39:12
 MERGED from [com.google.firebase:firebase-installations:18.0.0] C:\Users\renzo\.gradle\caches\transforms-3\8691d06e3e14fa6e1ebe1416acce10f0\transformed\firebase-installations-18.0.0\AndroidManifest.xml:2:1-24:12
@@ -513,6 +514,8 @@ MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\ca
 MERGED from [androidx.recyclerview:recyclerview:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\5ee1298589c22a40513b0d299e730f9c\transformed\recyclerview-1.2.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\renzo\.gradle\caches\transforms-3\af68e97d8e4cbfd3ec25768624725cfa\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
+MERGED from [com.android.volley:volley:1.2.1] C:\Users\renzo\.gradle\caches\transforms-3\f65a6ec8f99b76149ed505ed9faf76f2\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
 MERGED from [com.google.firebase:firebase-appcheck:18.0.0] C:\Users\renzo\.gradle\caches\transforms-3\266f54b0bb2ec220783800f1a8120ab6\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:18:5-44
 MERGED from [com.google.firebase:firebase-appcheck:18.0.0] C:\Users\renzo\.gradle\caches\transforms-3\266f54b0bb2ec220783800f1a8120ab6\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:18:5-44
 MERGED from [com.google.android.gms:play-services-measurement-api:22.2.0] C:\Users\renzo\.gradle\caches\transforms-3\3fdfb69cb01b76dcbe372436cc08a488\transformed\play-services-measurement-api-22.2.0\AndroidManifest.xml:20:5-44

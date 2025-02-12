@@ -3188,7 +3188,6 @@ drawable baseline_lock_reset_24
 drawable bg_message_input
 drawable bg_message_received
 drawable bg_message_sent
-drawable bookmark
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3246,7 +3245,8 @@ drawable ic_arrow_down_24dp
 drawable ic_arrow_up
 drawable ic_attach
 drawable ic_back
-drawable ic_bookmark
+drawable ic_bookmark_filled
+drawable ic_bookmark_outline
 drawable ic_calendar
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3360,6 +3360,7 @@ drawable mtrl_switch_track
 drawable mtrl_switch_track_decoration
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
+drawable nearest
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -3508,6 +3509,8 @@ id blinkFullImageView
 id blinkImage
 id blinksRecyclerView
 id blocking
+id bookmarkButton
+id bookmarkRecyclerView
 id bottom
 id bottomNavigationView
 id bounce
@@ -3624,6 +3627,7 @@ id elastic
 id emailBox
 id emailTxt
 id embed
+id emptyView
 id end
 id endToStart
 id enterAlways
@@ -3850,6 +3854,7 @@ id navigation_bar_item_labels_group
 id navigation_bar_item_large_label_view
 id navigation_bar_item_small_label_view
 id navigation_header_container
+id near
 id never
 id neverCompleteToEnd
 id neverCompleteToStart
@@ -4054,6 +4059,7 @@ id textView
 id textView2
 id textView3
 id textView4
+id textView5
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -4291,6 +4297,7 @@ layout food_card_tags_spicy
 layout food_recyclerview_layout
 layout fragment_announcement
 layout fragment_bookmark
+layout fragment_bookmark_details
 layout fragment_calendar
 layout fragment_favourites
 layout fragment_food_details

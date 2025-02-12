@@ -11,7 +11,7 @@ public class FoodItemExtended extends FoodItem implements Serializable {
     private String quantity;
     private boolean availability;
     private String sellerId;
-    private String status;
+    private String status = "available";
     private String createdAt;
     private String updatedAt;
     private String description;
@@ -25,7 +25,7 @@ public class FoodItemExtended extends FoodItem implements Serializable {
     }
 
     public FoodItemExtended(String dishName, boolean isHalal, boolean isSpicy, List<String> ingredients,
-                           String expirationDate, String location, String quantity, boolean availability) {
+                            String expirationDate, String location, String quantity, boolean availability) {
         super(dishName, isHalal, isSpicy, ingredients);
         this.expirationDate = expirationDate;
         this.location = location;
@@ -50,19 +50,18 @@ public class FoodItemExtended extends FoodItem implements Serializable {
         this.location = location;
     }
 
-    @Override
-    public void setQuantity(String quantity) {
-        if (quantity == null || quantity.isEmpty()) {
-            super.setQuantity("0");
+    public void setQuantity(Object quantityObj) {
+        if (quantityObj instanceof Long) {
+            this.quantity = String.valueOf(quantityObj);
+        } else if (quantityObj instanceof String) {
+            this.quantity = (String) quantityObj;
         } else {
-            super.setQuantity(quantity);
+            this.quantity = "0";
         }
     }
 
-    @Override
     public String getQuantity() {
-        String quantity = super.getQuantity();
-        return quantity != null ? quantity : "0";
+        return quantity;
     }
 
     public boolean isAvailable() {

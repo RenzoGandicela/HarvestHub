@@ -8,12 +8,12 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\color\\shape_fill_color.xml"
     },
     {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\menu_nav_menu.xml.flat",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\menu\\nav_menu.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_nav_header.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\nav_header.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\menu_nav_menu.xml.flat",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\menu\\nav_menu.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_activity_direct_chat.xml.flat",
@@ -110,6 +110,10 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_activity_location1.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_location1.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_bookmark_outline.xml.flat",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_bookmark_outline.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_message_input_background.xml.flat",
@@ -290,6 +294,10 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_item_user.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\item_user.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_fragment_bookmark_details.xml.flat",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\fragment_bookmark_details.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_order.png.flat",
@@ -480,16 +488,8 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\calendar.png"
     },
     {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_bookmark.xml.flat",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_bookmark.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ellipse_11.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ellipse_11.xml"
-    },
-    {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/menu_bottom_nav_menu.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/menu/bottom_nav_menu.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_teal_round.xml.flat",
@@ -524,6 +524,10 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\dialog_add_friend.xml"
     },
     {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_nearest.png.flat",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\nearest.png"
+    },
+    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_item_channel.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\item_channel.xml"
     },
@@ -546,10 +550,6 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_heart_filled.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_heart_filled.xml"
-    },
-    {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_bookmark.xml.flat",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\bookmark.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\font_agbalumo.xml.flat",
@@ -584,6 +584,10 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\sent_message_background.xml"
     },
     {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_bookmark_details.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_bookmark_details.xml"
+    },
+    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_calendar.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_calendar.xml"
     },
@@ -606,6 +610,10 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_tab_border.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\tab_border.xml"
+    },
+    {
+        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_bookmark_filled.xml.flat",
+        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_bookmark_filled.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable-night_bg_message_input.xml.flat",

@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class EditFoodActivity extends AppCompatActivity {
     private static final String TAG = "EditFoodActivity";
-    
+
     private ImageView imageView;
     private TextView foodNameText;
     private EditText descEdit, ingredientsEdit, expirationDateEdit, locationEdit, quantityEdit;
@@ -44,7 +44,7 @@ public class EditFoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_food);
-        
+
         // Enable back button in action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -80,19 +80,19 @@ public class EditFoodActivity extends AppCompatActivity {
         statusSwitch = findViewById(R.id.switchStatus);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
-        
+
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> onBackPressed());
 
         // Set up switch listeners
-        spicySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            spicySwitch.setText(isChecked ? "True" : "False"));
-        
-        halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            halalSwitch.setText(isChecked ? "True" : "False"));
-        
-        statusSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            statusSwitch.setText(isChecked ? "Available" : "Claimed"));
+        spicySwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+                spicySwitch.setText(isChecked ? "True" : "False"));
+
+        halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+                halalSwitch.setText(isChecked ? "True" : "False"));
+
+        statusSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+                statusSwitch.setText(isChecked ? "Available" : "Claimed"));
     }
 
     private void loadFoodData() {
@@ -111,21 +111,21 @@ public class EditFoodActivity extends AppCompatActivity {
                     String description = snapshot.child("description").getValue(String.class);
                     String location = snapshot.child("location").getValue(String.class);
                     Object quantityObj = snapshot.child("quantity").getValue();
-                    String quantity = (quantityObj instanceof Long) ? 
-                        String.valueOf(quantityObj) : (String) quantityObj;
+                    String quantity = (quantityObj instanceof Long) ?
+                            String.valueOf(quantityObj) : (String) quantityObj;
                     String expiryDate = snapshot.child("expiryDate").getValue(String.class);
                     String imageUrl = snapshot.child("imageUrl").getValue(String.class);
                     Boolean isHalal = snapshot.child("halal").getValue(Boolean.class);
                     Boolean isSpicy = snapshot.child("spicy").getValue(Boolean.class);
                     String status = snapshot.child("status").getValue(String.class);
-                    boolean isAvailable = "available".equals(status);
+                    boolean isAvailable = !"claimed".equalsIgnoreCase(status);
 
                     // Update UI
                     foodNameText.setText("Food: " + title);
                     descEdit.setText(description);
                     locationEdit.setText(location);
                     quantityEdit.setText(quantity);
-                    
+
                     if (expiryDate != null) {
                         expirationDateEdit.setText(expiryDate.replace("T", " "));
                     }
@@ -152,8 +152,8 @@ public class EditFoodActivity extends AppCompatActivity {
                     // Load image
                     if (imageUrl != null && !imageUrl.isEmpty()) {
                         Glide.with(EditFoodActivity.this)
-                            .load(imageUrl)
-                            .into(imageView);
+                                .load(imageUrl)
+                                .into(imageView);
                     }
                 }
             }
@@ -175,7 +175,7 @@ public class EditFoodActivity extends AppCompatActivity {
         updates.put("halal", halalSwitch.isChecked());
         updates.put("spicy", spicySwitch.isChecked());
         updates.put("status", statusSwitch.isChecked() ? "available" : "claimed");
-        
+
         String ingredientsText = ingredientsEdit.getText().toString();
         if (!ingredientsText.isEmpty()) {
             List<String> ingredients = new ArrayList<>();
@@ -186,7 +186,7 @@ public class EditFoodActivity extends AppCompatActivity {
         }
 
         // Update in Firebase
-        DatabaseReference listingRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+        DatabaseReference listingRef = FirebaseDatabase.getInstance()
                 .getReference("listings")
                 .child(sellerId)
                 .child("items")

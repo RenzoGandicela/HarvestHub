@@ -43,7 +43,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         FoodItemExtended foodItem = (FoodItemExtended) foodList.get(position);
         holder.foodName.setText(capitalizeDishName(foodItem.getDishName()));
-        
+
         // Handle tag visibility
         if (foodItem.isHalal() || foodItem.isSpicy()) {
             holder.halalTag.setVisibility(foodItem.isHalal() ? View.VISIBLE : View.GONE);
@@ -52,7 +52,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             holder.halalTag.setVisibility(View.INVISIBLE);
             holder.spicyTag.setVisibility(View.INVISIBLE);
         }
-        
+
         // Set location text with capitalization
         if (foodItem.getLocation() != null && !foodItem.getLocation().isEmpty()) {
             String location = foodItem.getLocation();
@@ -74,11 +74,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         }
 
         // Change overlay color based on status
-        LinearLayout overlay = holder.itemView.findViewById(R.id.foodOverlay);
         if ("claimed".equalsIgnoreCase(foodItem.getStatus())) {
-            overlay.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.claimed_overlay));
+            holder.foodOverlay.setBackgroundColor(
+                context.getResources().getColor(R.color.claimed_overlay)
+            );
         } else {
-            overlay.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.available_overlay));
+            holder.foodOverlay.setBackgroundColor(
+                context.getResources().getColor(R.color.available_overlay)
+            );
         }
 
         // Set click listener
@@ -105,6 +108,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         TextView foodName;
         LinearLayout halalTag, spicyTag;
         TextView locationText;
+        LinearLayout foodOverlay;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,6 +117,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             halalTag = itemView.findViewById(R.id.halalTag);
             spicyTag = itemView.findViewById(R.id.spicyTag);
             locationText = itemView.findViewById(R.id.locationText);
+            foodOverlay = itemView.findViewById(R.id.foodOverlay);
         }
     }
 
