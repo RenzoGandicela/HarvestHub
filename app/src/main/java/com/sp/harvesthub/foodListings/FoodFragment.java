@@ -54,9 +54,11 @@ public class FoodFragment extends Fragment {
     private NestedScrollView scrollView;
     private FloatingActionButton scrollToTopButton;
     private BottomNavigationView bottomNavigationView;
+    private Button startSharingButton;
+    private FirebaseAuth auth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_recyclerview_layout, container, false);
         
         // Initialize views
@@ -92,7 +94,7 @@ public class FoodFragment extends Fragment {
 
         // Set welcome text with username
         TextView welcomeText = view.findViewById(R.id.welcomeText);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
                     .getReference("Users")
@@ -127,17 +129,11 @@ public class FoodFragment extends Fragment {
         });
 
         // Set up start sharing button
-        Button startSharingButton = view.findViewById(R.id.startSharingButton);
-        startSharingButton.setOnClickListener(v -> {
-            // Navigate to LogMealFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new LogMealFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            
-            // Select the nav_add item in bottom navigation
-            bottomNavigationView.setSelectedItemId(R.id.nav_add);
-        });
+        startSharingButton = view.findViewById(R.id.startSharingButton);
+        auth = FirebaseAuth.getInstance();
+
+        // Check user role and update button visibility
+        checkUserRoleAndUpdateUI();
 
         fetchListingsData();
 
@@ -201,8 +197,15 @@ public class FoodFragment extends Fragment {
             if (spicy && !extendedItem.isSpicy()) {
                 matches = false;
             }
-            if (available && !"available".equals(extendedItem.getStatus())) {
-                matches = false;
+            if (available) {
+                // Debug log to check status
+                Log.d(TAG, "Item: " + extendedItem.getDishName() + " Status: " + extendedItem.getStatus());
+                
+                // Check if status is "available" (case-insensitive)
+                String status = extendedItem.getStatus();
+                if (status == null || !status.equalsIgnoreCase("available")) {
+                    matches = false;
+                }
             }
             
             if (matches) {
@@ -224,59 +227,83 @@ public class FoodFragment extends Fragment {
         listingsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                allFoodItems.clear(); // Clear both lists
+                allFoodItems.clear();
                 foodList.clear();
+                
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey();
                     
-                    // Fetch username for this user
                     usersRef.child(userId).child("username").get().addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String username = task.getResult().getValue(String.class);
                             
-                            // Now process the food items with the username
-                            for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
-                                try {
-                                    FoodItemExtended foodItem = new FoodItemExtended();
-                                    foodItem.setItemId(itemSnapshot.getKey());
-                                    
-                                    // Store both the username for display and original sellerId for database operations
-                                    foodItem.setOriginalSellerId(userId); // Store original seller ID
-                                    foodItem.setSellerId(username != null ? username : userId); // Use username for display
-                                    
-                                    // Safely get boolean values with default false
-                                    Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
-                                    Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
-                                    foodItem.setHalal(halal != null ? halal : false);
-                                    foodItem.setSpicy(spicy != null ? spicy : false);
-                                    
-                                    // Map other fields
-                                    foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
-                                    foodItem.setLocation(itemSnapshot.child("location").getValue(String.class));
-                                    foodItem.setExpirationDate(itemSnapshot.child("expiryDate").getValue(String.class));
-                                    foodItem.setQuantity(itemSnapshot.child("quantity").getValue(String.class));
-                                    foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
-                                    foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
-                                    foodItem.setCreatedAt(itemSnapshot.child("createdAt").getValue(String.class));
-                                    foodItem.setUpdatedAt(itemSnapshot.child("updatedAt").getValue(String.class));
-                                    
-                                    // Get likes count
-                                    DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
-                                    if (likedBySnapshot.exists()) {
-                                        foodItem.setLikesCount((int) likedBySnapshot.getChildrenCount());
-                                    }
+                            DataSnapshot itemsSnapshot = userSnapshot.child("items");
+                            if (!itemsSnapshot.exists()) {
+                                return;
+                            }
 
-                                    // Handle ingredients list
+                            for (DataSnapshot itemSnapshot : itemsSnapshot.getChildren()) {
+                                try {
+                                    // Create new food item
+                                    FoodItemExtended foodItem = new FoodItemExtended();
+                                    
+                                    // Set basic info
+                                    foodItem.setItemId(itemSnapshot.getKey());
+                                    foodItem.setOriginalSellerId(userId);
+                                    foodItem.setSellerId(username != null ? username : userId);
+                                    
+                                    // Get all values safely
+                                    foodItem.setDishName(getStringValue(itemSnapshot, "title"));
+                                    foodItem.setDescription(getStringValue(itemSnapshot, "description"));
+                                    foodItem.setLocation(getStringValue(itemSnapshot, "location"));
+                                    foodItem.setExpirationDate(getStringValue(itemSnapshot, "expiryDate"));
+                                    foodItem.setImageUrl(getStringValue(itemSnapshot, "imageUrl"));
+                                    foodItem.setCreatedAt(getStringValue(itemSnapshot, "createdAt"));
+                                    foodItem.setUpdatedAt(getStringValue(itemSnapshot, "updatedAt"));
+                                    foodItem.setStatus(getStringValue(itemSnapshot, "status"));
+                                    
+                                    // Handle quantity
+                                    Object quantityObj = itemSnapshot.child("quantity").getValue();
+                                    if (quantityObj != null) {
+                                        String quantity = String.valueOf(quantityObj);
+                                        foodItem.setQuantity(quantity);
+                                    } else {
+                                        foodItem.setQuantity("0");
+                                    }
+                                    
+                                    // Handle boolean values
+                                    foodItem.setHalal(getBooleanValue(itemSnapshot, "halal"));
+                                    foodItem.setSpicy(getBooleanValue(itemSnapshot, "spicy"));
+                                    
+                                    // Handle ingredients
                                     List<String> ingredients = new ArrayList<>();
                                     DataSnapshot ingredientsSnapshot = itemSnapshot.child("ingredients");
                                     if (ingredientsSnapshot.exists()) {
                                         for (DataSnapshot ingredient : ingredientsSnapshot.getChildren()) {
-                                            ingredients.add(ingredient.getValue(String.class));
+                                            String value = ingredient.getValue(String.class);
+                                            if (value != null) {
+                                                ingredients.add(value);
+                                            }
                                         }
                                     }
                                     foodItem.setIngredients(ingredients);
+                                    
+                                    // Handle likes count
+                                    DataSnapshot likedBySnapshot = itemSnapshot.child("likedBy");
+                                    if (likedBySnapshot.exists()) {
+                                        foodItem.setLikesCount((int) likedBySnapshot.getChildrenCount());
+                                    } else {
+                                        Object likesObj = itemSnapshot.child("likes").getValue();
+                                        int likesCount = 0;
+                                        if (likesObj instanceof Long) {
+                                            likesCount = ((Long) likesObj).intValue();
+                                        } else if (likesObj instanceof Integer) {
+                                            likesCount = (Integer) likesObj;
+                                        }
+                                        foodItem.setLikesCount(likesCount);
+                                    }
 
-                                    allFoodItems.add(foodItem); // Add to both lists
+                                    allFoodItems.add(foodItem);
                                     foodList.add(foodItem);
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error parsing food item: " + e.getMessage(), e);
@@ -295,29 +322,60 @@ public class FoodFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    // Helper methods for safe value extraction
+    private String getStringValue(DataSnapshot snapshot, String key) {
+        Object value = snapshot.child(key).getValue();
+        return value != null ? String.valueOf(value) : "";
+    }
+
+    private boolean getBooleanValue(DataSnapshot snapshot, String key) {
+        Object value = snapshot.child(key).getValue();
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return false;
+    }
+
+    private void checkUserRoleAndUpdateUI() {
+        if (auth.getCurrentUser() != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                    .getReference("Users")
+                    .child(auth.getCurrentUser().getUid());
+            
+            userRef.child("role").get().addOnCompleteListener(task -> {
+                if (task.isSuccessful() && task.getResult() != null) {
+                    String role = task.getResult().getValue(String.class);
+                    Log.d(TAG, "User role for UI update: " + role); // Debug log
+                    
+                    // Show start sharing button only for sellers
+                    if (startSharingButton != null) {
+                        boolean isSeller = "seller".equalsIgnoreCase(role);
+                        startSharingButton.setVisibility(isSeller ? View.VISIBLE : View.GONE);
+
+                        // Set click listener only if button is visible
+                        if (isSeller) {
+                            startSharingButton.setOnClickListener(v -> {
+                                FragmentTransaction transaction = requireActivity()
+                                    .getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, new LogMealFragment());
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+                                
+                                bottomNavigationView.setSelectedItemId(R.id.nav_add);
+                            });
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.food) {
-            // Replace current fragment with FoodFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new FoodFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
-        } else if (item.getItemId() == R.id.logMeal) {
-            // Replace current fragment with LogMealFragment
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new LogMealFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
+    public void onResume() {
+        super.onResume();
+        // Only check role if the user is logged in
+        if (auth.getCurrentUser() != null) {
+            checkUserRoleAndUpdateUI();
         }
-        return super.onOptionsItemSelected(item);
     }
 } 

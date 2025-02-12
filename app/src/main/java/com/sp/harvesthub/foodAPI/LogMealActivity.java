@@ -445,20 +445,4 @@ public class LogMealActivity extends AppCompatActivity {
         imageView.setImageResource(android.R.color.darker_gray);
         selectedImageFile = null;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.food) {
-            Intent intent = new Intent(this, FoodActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -105,20 +105,4 @@ public class HomeFragment extends Fragment {
         // Handle activity results (camera/gallery)
         // This will be handled by LogMealActivity
     }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.food) {
-            Intent intent = new Intent(getActivity(), FoodActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 } 

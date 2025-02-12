@@ -10,6 +10,7 @@ public class FoodItem implements Serializable {
     private List<String> ingredients;
     private String imageURL;
     private String location;
+    protected String quantity;
 
     public FoodItem() {}
     public FoodItem(String dishName, boolean halal, boolean spicy, List<String> ingredients) {
@@ -70,5 +71,13 @@ public class FoodItem implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }
