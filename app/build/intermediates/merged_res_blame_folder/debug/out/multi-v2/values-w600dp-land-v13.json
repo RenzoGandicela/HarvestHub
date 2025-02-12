@@ -4,7 +4,11 @@
             "outputFile": "com.sp.harvesthub.app-mergeDebugResources-3:/values-w600dp-land-v13/values-w600dp-land-v13.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\renzo\\.gradle\\caches\\transforms-3\\4a80d9bbb9c4befe7b1fff932a5aaba6\\transformed\\material-1.12.0\\res\\values-w600dp-land-v13\\values-w600dp-land-v13.xml",
+=======
+                    "source": "C:\\Users\\cripp\\.gradle\\caches\\transforms-3\\4a80d9bbb9c4befe7b1fff932a5aaba6\\transformed\\material-1.12.0\\res\\values-w600dp-land-v13\\values-w600dp-land-v13.xml",
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+<<<<<<< HEAD
+=======
+    xmlns:tools="http://schemas.android.com/tools"
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="300dp"
@@ -22,14 +30,43 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="@string/app_name"
         android:textSize="50sp"
         android:textColor="@color/white"
+=======
+        android:fontFamily="@font/carter_one"
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="4"
+<<<<<<< HEAD
         app:layout_constraintEnd_toEndOf="parent"
+=======
+        android:text="Harvest"
+        android:textColor="@color/dark_primary_variant"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="113dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/carter_one"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="Hub"
+        android:textColor="#FF9800"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.859"
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -37,17 +74,33 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="@string/app_slogan"
         android:textSize="16sp"
         android:textColor="@color/white"
+=======
+        android:fontFamily="@font/agbalumo"
+        android:gravity="center"
+        android:padding="16dp"
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         android:shadowColor="@color/black"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
+<<<<<<< HEAD
         android:gravity="center"
         android:padding="16dp"
+=======
+        android:text="@string/app_slogan"
+        android:textColor="@color/dark_primary"
+        android:textSize="16sp"
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+<<<<<<< HEAD
 </androidx.constraintlayout.widget.ConstraintLayout> 
+=======
+</androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb

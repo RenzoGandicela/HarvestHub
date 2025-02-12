@@ -1,5 +1,6 @@
 package com.sp.harvesthub.nav_fragment;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -104,5 +105,19 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         // Handle activity results (camera/gallery)
         // This will be handled by LogMealActivity
+=======
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.fragment.app.Fragment;
+import com.sp.harvesthub.R;
+
+public class HomeFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
 } 

@@ -5,7 +5,10 @@
         <item>@font/aoboshi_one</item>
         <item>@font/carter_one</item>
         <item>@font/caveat_brush</item>
+<<<<<<< HEAD
         <item>@font/young_serif</item>
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
     </array>
 </resources>

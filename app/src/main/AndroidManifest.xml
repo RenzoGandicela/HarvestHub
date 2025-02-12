@@ -11,6 +11,8 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
 
     <application
         android:allowBackup="true"
@@ -144,6 +146,12 @@
         <receiver
             android:name=".NavigationUpdateReceiver"
             android:exported="false" />
+        <activity
+        android:name=".activities.ChannelChatActivity"
+        android:exported="false"
+        android:theme="@style/Theme.HarvestHub.NoActionBar"
+        android:windowSoftInputMode="adjustResize"/>
+
     </application>
 
 </manifest>

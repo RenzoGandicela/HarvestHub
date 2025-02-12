@@ -43,6 +43,9 @@
     <color name="nav_menu_text_color">#66906c</color>
 
     <color name="gray">#757575</color>
+<<<<<<< HEAD
     <color name="available_overlay">#CBDAB3</color>
     <color name="claimed_overlay">#FFE4E1</color>
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 </resources>

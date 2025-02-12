@@ -43,7 +43,10 @@ public class ChatActivity extends AppCompatActivity {
     private List<User> users;
     private EditText searchInput;
     private EditText userSearchInput;
+<<<<<<< HEAD
     private TextView messagesCountText;
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     private LinearLayout searchLayout;
     private LinearLayout mainLayout;
     private DatabaseReference directMessagesRef;
@@ -105,11 +108,17 @@ public class ChatActivity extends AppCompatActivity {
         usersRecyclerView = findViewById(R.id.usersRecyclerView);
         searchInput = findViewById(R.id.searchInput);
         userSearchInput = findViewById(R.id.userSearchInput);
+<<<<<<< HEAD
         messagesCountText = findViewById(R.id.messagesCountText);
         searchLayout = findViewById(R.id.searchLayout);
         mainLayout = findViewById(R.id.mainLayout);
         ImageButton searchButton = findViewById(R.id.searchButton);
         ImageButton addFriendButton = findViewById(R.id.addFriendButton);
+=======
+        searchLayout = findViewById(R.id.searchLayout);
+        mainLayout = findViewById(R.id.mainLayout);
+        ImageButton searchButton = findViewById(R.id.searchButton);
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         ImageButton backButton = findViewById(R.id.backButton);
 
         // Set up back button
@@ -154,6 +163,7 @@ public class ChatActivity extends AppCompatActivity {
                 loadUsers();
             }
         });
+<<<<<<< HEAD
 
         // Set up add friend button
         addFriendButton.setOnClickListener(v -> {
@@ -161,6 +171,8 @@ public class ChatActivity extends AppCompatActivity {
             mainLayout.setVisibility(View.GONE);
             loadUsers();
         });
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
 
     private void setupRecyclerViews() {
@@ -187,7 +199,10 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     conversations.clear();
+<<<<<<< HEAD
                     int newMessages = 0;
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
                     for (DataSnapshot conversationSnap : snapshot.getChildren()) {
                         try {
@@ -203,6 +218,10 @@ public class ChatActivity extends AppCompatActivity {
                             String otherUsername = null;
                             String otherProfilePic = null;
 
+<<<<<<< HEAD
+=======
+                            // Find the other participant (not current user)
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                             for (DataSnapshot participantSnap : participantsSnap.getChildren()) {
                                 String participantId = participantSnap.child("id").getValue(String.class);
                                 if (!participantId.equals(currentUserId)) {
@@ -233,8 +252,11 @@ public class ChatActivity extends AppCompatActivity {
                     Collections.sort(conversations, 
                         (a, b) -> Long.compare(b.getLastMessageTimestamp(), a.getLastMessageTimestamp()));
                     conversationsAdapter.notifyDataSetChanged();
+<<<<<<< HEAD
 
                     messagesCountText.setText(String.format("You have %d new messages", newMessages));
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 }
 
                 @Override
@@ -254,11 +276,21 @@ public class ChatActivity extends AppCompatActivity {
                 users.clear();
                 for (DataSnapshot userSnap : snapshot.getChildren()) {
                     String userId = userSnap.getKey();
+<<<<<<< HEAD
                     if (!userId.equals(currentUserId)) {
                         String username = userSnap.child("username").getValue(String.class);
                         String profilePic = userSnap.child("profilePicture").getValue(String.class);
                         User user = new User(userId, username, profilePic);
                         users.add(user);
+=======
+                    if (userId != null && !userId.equals(currentUserId)) {
+                        String username = userSnap.child("username").getValue(String.class);
+                        String profilePic = userSnap.child("profilePicture").getValue(String.class);
+                        if (username != null) {  // Only add users with valid usernames
+                            User user = new User(userId, username, profilePic);
+                            users.add(user);
+                        }
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                     }
                 }
                 usersAdapter.notifyDataSetChanged();
@@ -274,14 +306,23 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void searchUsers(String query) {
+<<<<<<< HEAD
         if (query.isEmpty()) {
+=======
+        if (query == null || query.isEmpty()) {
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             loadUsers();
             return;
         }
 
         List<User> filteredList = new ArrayList<>();
         for (User user : users) {
+<<<<<<< HEAD
             if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
+=======
+            String username = user.getUsername();
+            if (username != null && username.toLowerCase().contains(query.toLowerCase())) {
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 filteredList.add(user);
             }
         }
@@ -289,15 +330,24 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void filterConversations(String query) {
+<<<<<<< HEAD
         if (query.isEmpty()) {
+=======
+        if (query == null || query.isEmpty()) {
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             loadConversations();
             return;
         }
 
         List<ChatConversation> filteredList = new ArrayList<>();
         for (ChatConversation conversation : conversations) {
+<<<<<<< HEAD
             if (conversation.getOtherUsername().toLowerCase()
                     .contains(query.toLowerCase())) {
+=======
+            String otherUsername = conversation.getOtherUsername();
+            if (otherUsername != null && otherUsername.toLowerCase().contains(query.toLowerCase())) {
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 filteredList.add(conversation);
             }
         }
@@ -305,6 +355,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void createOrOpenConversation(User user) {
+<<<<<<< HEAD
         // Check if conversation already exists
         directMessagesRef.child(currentUserId)
             .orderByChild("otherUserId")
@@ -376,6 +427,20 @@ public class ChatActivity extends AppCompatActivity {
         intent.putExtra("conversationId", conversationId);
         intent.putExtra("otherUserId", otherUserId);
         intent.putExtra("otherUsername", otherUsername);
+=======
+        // Generate a unique conversation ID using Firebase push
+        String conversationId = FirebaseDatabase.getInstance()
+            .getReference("directMessages")
+            .push().getKey();
+
+        if (conversationId == null) return;
+
+        // Open DirectChatActivity with the conversation ID
+        Intent intent = new Intent(this, DirectChatActivity.class);
+        intent.putExtra("conversationId", conversationId);
+        intent.putExtra("otherUserId", user.getUserId());
+        intent.putExtra("otherUsername", user.getUsername());
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         startActivity(intent);
     }
 

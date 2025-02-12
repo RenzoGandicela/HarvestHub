@@ -16,18 +16,30 @@ import androidx.fragment.app.Fragment;
 import android.view.Menu;
 
 import com.bumptech.glide.Glide;
+<<<<<<< HEAD
 import com.sp.harvesthub.activities.LoginActivity;
 import com.sp.harvesthub.activities.ChatActivity;
+=======
+import com.sp.harvesthub.activities.ChatActivity;
+import com.sp.harvesthub.activities.LoginActivity;
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
 import com.sp.harvesthub.nav_fragment.BookmarkFragment;
 import com.sp.harvesthub.nav_fragment.CalendarFragment;
 import com.sp.harvesthub.nav_fragment.SettingFragment;
 import com.sp.harvesthub.nav_fragment.SocialFragment;
+<<<<<<< HEAD
 import com.sp.harvesthub.nav_fragment.LogMealFragment;
 import com.sp.harvesthub.nav_fragment.MapFragment;
 import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;
 import com.sp.harvesthub.foodListings.FoodFragment;
+=======
+import com.sp.harvesthub.nav_fragment.HomeFragment;
+import com.sp.harvesthub.nav_fragment.MapFragment;
+import com.sp.harvesthub.nav_fragment.FavouritesFragment;
+import com.sp.harvesthub.nav_fragment.ProfileFragment;
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
@@ -114,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             
+<<<<<<< HEAD
             // Clear drawer selection
             nav_view.getMenu().setGroupCheckable(0, true, false);
             for (int i = 0; i < nav_view.getMenu().size(); i++) {
@@ -123,10 +136,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             
             if (itemId == R.id.nav_home) {
                 replaceFragment(new FoodFragment());
+=======
+            // Clear drawer selection when using bottom nav
+            nav_view.setCheckedItem(R.id.nav_none);
+            
+            if (itemId == R.id.nav_home) {
+                replaceFragment(new HomeFragment());
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
                 setTitle(getString(R.string.home));
             } else if (itemId == R.id.nav_map) {
                 replaceFragment(new MapFragment());
                 setTitle(getString(R.string.map));
+<<<<<<< HEAD
             } else if (itemId == R.id.nav_add) {
                 replaceFragment(new LogMealFragment());
                 setTitle("Add Food");
@@ -134,6 +155,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else if (itemId == R.id.nav_favorites) {
                 replaceFragment(new FavouritesFragment());
                 setTitle(getString(R.string.favorites));
+=======
+            } else if (itemId == R.id.nav_social) {
+                replaceFragment(new SocialFragment());
+                setTitle(getString(R.string.social));
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             } else if (itemId == R.id.nav_profile) {
                 replaceFragment(new ProfileFragment());
                 setTitle(getString(R.string.profile));
@@ -142,12 +168,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         });
 
+<<<<<<< HEAD
         // Set default selected item
         updateNavigationToHome();
+=======
+        // Show home fragment by default
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+            replaceFragment(new HomeFragment());
+            setTitle(getString(R.string.home));
+        }
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
 
     private void replaceFragment(Fragment fragment) {
         // Clear selection of navigation drawer
+<<<<<<< HEAD
         nav_view.getMenu().setGroupCheckable(0, true, false);
         for (int i = 0; i < nav_view.getMenu().size(); i++) {
             nav_view.getMenu().getItem(i).setChecked(false);
@@ -165,6 +201,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bottomNavigationView.getMenu().getItem(i).setChecked(false);
             }
             bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
+=======
+        nav_view.setCheckedItem(R.id.nav_none);
+        
+        // Clear selection of bottom navigation
+        if (!(fragment instanceof HomeFragment) && 
+            !(fragment instanceof MapFragment) && 
+            !(fragment instanceof FavouritesFragment) && 
+            !(fragment instanceof ProfileFragment)) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_none);
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         }
         
         getSupportFragmentManager()
@@ -215,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // Clear bottom navigation selection when using drawer
+<<<<<<< HEAD
         bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
         for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
             bottomNavigationView.getMenu().getItem(i).setChecked(false);
@@ -223,6 +270,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_home) {
             replaceFragment(new FoodFragment());
+=======
+        bottomNavigationView.setSelectedItemId(R.id.nav_none);
+
+        if (id == R.id.nav_home) {
+            replaceFragment(new HomeFragment());
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             setTitle(getString(R.string.home));
         } else if (id == R.id.nav_announcement) {
             replaceFragment(new AnnouncementFragment());
@@ -236,11 +289,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_setting) {
             replaceFragment(new SettingFragment());
             setTitle(getString(R.string.setting));
+<<<<<<< HEAD
         } else if (id == R.id.nav_social) {
             replaceFragment(new SocialFragment());
             setTitle(getString(R.string.social));
         } else if (id == R.id.nav_share) {
             Toast.makeText(this, getString(R.string.share), Toast.LENGTH_SHORT).show();
+=======
+        } else if (id == R.id.nav_share) {
+            shareApp();
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         } else if (id == R.id.nav_logout) {
             auth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
@@ -268,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+<<<<<<< HEAD
 
     public void updateNavigationToHome() {
         // Set the home fragment as default
@@ -281,5 +340,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             nav_view.getMenu().getItem(i).setChecked(false);
         }
         nav_view.getMenu().setGroupCheckable(0, true, true);
+=======
+    private void shareApp() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app: https://yourapp.com");
+
+        startActivity(Intent.createChooser(shareIntent, "Share via"));
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
 }

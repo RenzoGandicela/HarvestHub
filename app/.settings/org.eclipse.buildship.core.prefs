@@ -2,7 +2,11 @@ arguments=--init-script C\:\\Users\\cripp\\AppData\\Roaming\\TabNine\\language-s
 auto.sync=false
 build.scans.enabled=false
 connection.gradle.distribution=GRADLE_DISTRIBUTION(VERSION(7.4.2))
+<<<<<<< HEAD
 connection.project.dir=..
+=======
+connection.project.dir=
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 eclipse.preferences.version=1
 gradle.user.home=
 java.home=C\:/Users/cripp/.jbr/jbr_jcef-17.0.6-windows-x64-b653.34

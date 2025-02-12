@@ -9,7 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sp.harvesthub.R;
+<<<<<<< HEAD
 import com.sp.harvesthub.activities.ChatActivity;
+=======
+import com.sp.harvesthub.activities.ChannelChatActivity;
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 import com.sp.harvesthub.models.Channel;
 import java.util.List;
 
@@ -37,7 +41,11 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         holder.channelNameTxt.setText(channel.getName());
 
         holder.itemView.setOnClickListener(v -> {
+<<<<<<< HEAD
             Intent intent = new Intent(context, ChatActivity.class);
+=======
+            Intent intent = new Intent(context, ChannelChatActivity.class);
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
             intent.putExtra("serverId", serverId);
             intent.putExtra("channelId", channel.getId());
             intent.putExtra("channelName", channel.getName());

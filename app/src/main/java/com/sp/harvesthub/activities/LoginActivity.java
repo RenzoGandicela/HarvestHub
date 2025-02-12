@@ -151,10 +151,12 @@ public class LoginActivity extends AppCompatActivity {
                     if ("User".equalsIgnoreCase(role)) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("showHome", true);
                         startActivity(intent);
                     } else if ("Seller".equalsIgnoreCase(role)) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class); 
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("showHome", true);
                         startActivity(intent);
                     }
                     finish();

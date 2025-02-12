@@ -28,18 +28,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
+<<<<<<< HEAD
             android:textStyle="bold"/>
+=======
+            android:textStyle="bold"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="🎉"/>
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <TextView
             android:id="@+id/featured_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginTop="4dp"/>
+=======
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="🍴"/>
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <TextView
             android:id="@+id/featured_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginTop="4dp"/>
 
         <TextView
@@ -47,15 +60,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"/>
+=======
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="📍"/>
+
+        <TextView
+            android:id="@+id/featured_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="📅"/>
+
+        <TextView
+            android:id="@+id/featured_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="🕒"/>
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <Button
             android:id="@+id/remindButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+<<<<<<< HEAD
             android:text="Set Reminder"
             android:backgroundTint="@color/primary_green"
             android:textColor="@color/white"/>
+=======
+            android:backgroundTint="#D68917"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="📅 Remind Me"
+            android:textColor="@color/dark_primary" />
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
     </LinearLayout>
 

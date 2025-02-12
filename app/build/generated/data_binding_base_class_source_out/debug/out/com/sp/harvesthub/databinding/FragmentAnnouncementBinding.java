@@ -30,18 +30,30 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
   public final Button addEventButtonType2;
 
   @NonNull
+<<<<<<< HEAD
+=======
+  public final EditText eventDate;
+
+  @NonNull
+  public final EditText eventDateType2;
+
+  @NonNull
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
   public final EditText eventDescription;
 
   @NonNull
   public final EditText eventDescriptionType2;
 
   @NonNull
+<<<<<<< HEAD
   public final EditText eventDetails;
 
   @NonNull
   public final EditText eventDetails2;
 
   @NonNull
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
   public final LinearLayout eventFormLayout;
 
   @NonNull
@@ -60,6 +72,15 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
   public final EditText eventLocationType2;
 
   @NonNull
+<<<<<<< HEAD
+=======
+  public final EditText eventTime;
+
+  @NonNull
+  public final EditText eventTimeType2;
+
+  @NonNull
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
   public final EditText eventTitle;
 
   @NonNull
@@ -84,12 +105,22 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
   public final Button uploadImageButton2;
 
   private FragmentAnnouncementBinding(@NonNull ScrollView rootView, @NonNull Button addEventButton,
+<<<<<<< HEAD
       @NonNull Button addEventButtonType2, @NonNull EditText eventDescription,
       @NonNull EditText eventDescriptionType2, @NonNull EditText eventDetails,
       @NonNull EditText eventDetails2, @NonNull LinearLayout eventFormLayout,
       @NonNull LinearLayout eventFormLayoutType2, @NonNull ImageView eventImagePreview,
       @NonNull ImageView eventImagePreview2, @NonNull EditText eventLocation,
       @NonNull EditText eventLocationType2, @NonNull EditText eventTitle,
+=======
+      @NonNull Button addEventButtonType2, @NonNull EditText eventDate,
+      @NonNull EditText eventDateType2, @NonNull EditText eventDescription,
+      @NonNull EditText eventDescriptionType2, @NonNull LinearLayout eventFormLayout,
+      @NonNull LinearLayout eventFormLayoutType2, @NonNull ImageView eventImagePreview,
+      @NonNull ImageView eventImagePreview2, @NonNull EditText eventLocation,
+      @NonNull EditText eventLocationType2, @NonNull EditText eventTime,
+      @NonNull EditText eventTimeType2, @NonNull EditText eventTitle,
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       @NonNull EditText eventTitleType2, @NonNull RecyclerView featuredRecycler,
       @NonNull RecyclerView featuredRecyclerType2, @NonNull Button submitEventButton,
       @NonNull Button submitEventButton2, @NonNull Button uploadImageButton,
@@ -97,16 +128,28 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
     this.rootView = rootView;
     this.addEventButton = addEventButton;
     this.addEventButtonType2 = addEventButtonType2;
+<<<<<<< HEAD
     this.eventDescription = eventDescription;
     this.eventDescriptionType2 = eventDescriptionType2;
     this.eventDetails = eventDetails;
     this.eventDetails2 = eventDetails2;
+=======
+    this.eventDate = eventDate;
+    this.eventDateType2 = eventDateType2;
+    this.eventDescription = eventDescription;
+    this.eventDescriptionType2 = eventDescriptionType2;
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.eventFormLayout = eventFormLayout;
     this.eventFormLayoutType2 = eventFormLayoutType2;
     this.eventImagePreview = eventImagePreview;
     this.eventImagePreview2 = eventImagePreview2;
     this.eventLocation = eventLocation;
     this.eventLocationType2 = eventLocationType2;
+<<<<<<< HEAD
+=======
+    this.eventTime = eventTime;
+    this.eventTimeType2 = eventTimeType2;
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     this.eventTitle = eventTitle;
     this.eventTitleType2 = eventTitleType2;
     this.featuredRecycler = featuredRecycler;
@@ -156,6 +199,21 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
+<<<<<<< HEAD
+=======
+      id = R.id.event_date;
+      EditText eventDate = ViewBindings.findChildViewById(rootView, id);
+      if (eventDate == null) {
+        break missingId;
+      }
+
+      id = R.id.event_date_type2;
+      EditText eventDateType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventDateType2 == null) {
+        break missingId;
+      }
+
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.event_description;
       EditText eventDescription = ViewBindings.findChildViewById(rootView, id);
       if (eventDescription == null) {
@@ -168,6 +226,7 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
+<<<<<<< HEAD
       id = R.id.event_details;
       EditText eventDetails = ViewBindings.findChildViewById(rootView, id);
       if (eventDetails == null) {
@@ -180,6 +239,8 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.event_form_layout;
       LinearLayout eventFormLayout = ViewBindings.findChildViewById(rootView, id);
       if (eventFormLayout == null) {
@@ -216,6 +277,21 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
         break missingId;
       }
 
+<<<<<<< HEAD
+=======
+      id = R.id.event_time;
+      EditText eventTime = ViewBindings.findChildViewById(rootView, id);
+      if (eventTime == null) {
+        break missingId;
+      }
+
+      id = R.id.event_time_type2;
+      EditText eventTimeType2 = ViewBindings.findChildViewById(rootView, id);
+      if (eventTimeType2 == null) {
+        break missingId;
+      }
+
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
       id = R.id.event_title;
       EditText eventTitle = ViewBindings.findChildViewById(rootView, id);
       if (eventTitle == null) {
@@ -265,11 +341,19 @@ public final class FragmentAnnouncementBinding implements ViewBinding {
       }
 
       return new FragmentAnnouncementBinding((ScrollView) rootView, addEventButton,
+<<<<<<< HEAD
           addEventButtonType2, eventDescription, eventDescriptionType2, eventDetails, eventDetails2,
           eventFormLayout, eventFormLayoutType2, eventImagePreview, eventImagePreview2,
           eventLocation, eventLocationType2, eventTitle, eventTitleType2, featuredRecycler,
           featuredRecyclerType2, submitEventButton, submitEventButton2, uploadImageButton,
           uploadImageButton2);
+=======
+          addEventButtonType2, eventDate, eventDateType2, eventDescription, eventDescriptionType2,
+          eventFormLayout, eventFormLayoutType2, eventImagePreview, eventImagePreview2,
+          eventLocation, eventLocationType2, eventTime, eventTimeType2, eventTitle, eventTitleType2,
+          featuredRecycler, featuredRecyclerType2, submitEventButton, submitEventButton2,
+          uploadImageButton, uploadImageButton2);
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

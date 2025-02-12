@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
@@ -22,6 +23,15 @@
         android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature
+=======
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <uses-feature
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         android:glEsVersion="0x00020000"
         android:required="true" />
 
@@ -72,9 +82,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBx9hPyev6cP5-8ZHPokIagPP2OM2ZelJI" />
+<<<<<<< HEAD
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+=======
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
 
         <!-- Splash Screen - Main Launcher -->
         <activity
@@ -141,6 +154,7 @@
             android:theme="@style/Theme.HarvestHub.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
+<<<<<<< HEAD
             android:name="com.sp.harvesthub.foodAPI.LogMealActivity"
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar" />
@@ -178,6 +192,14 @@
                 android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
                 android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
         </service> <!-- Needs to be explicitly declared on P+ -->
+=======
+            android:name="com.sp.harvesthub.activities.ChannelChatActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HarvestHub.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Needs to be explicitly declared on P+ -->
+>>>>>>> 4e5a6c21f9b5bbb4a762c3f15e95787e4d05c8fb
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

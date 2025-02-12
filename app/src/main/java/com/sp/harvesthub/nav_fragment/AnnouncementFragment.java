@@ -48,14 +48,15 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
     private Button uploadImageButton, uploadImageButton2;
     private ImageView eventImagePreview, eventImagePreview2;
     private LinearLayout eventFormLayout, eventFormLayoutType2;
-    private EditText eventTitle, eventDescription, eventDetails, eventLocation;
-    private EditText eventTitleType2, eventDescriptionType2, eventDetails2, eventLocationType2;
+    private EditText eventTitle, eventDescription, eventDate, eventTime, eventLocation;
+    private EditText eventTitleType2, eventDescriptionType2, eventDateType2, eventTimeType2, eventLocationType2;
     private ArrayList<FeaturedHelperClass> eventList, donationList;
     private DatabaseReference eventsRef, donationRef;
     private StorageReference storageRef;
     private Uri imageUri1, imageUri2;
     private String currentEditingEventId;
     private int currentUploadType = 0;
+    private boolean isFormVisible = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,13 +99,15 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         // Initialize EditTexts for regular events
         eventTitle = view.findViewById(R.id.event_title);
         eventDescription = view.findViewById(R.id.event_description);
-        eventDetails = view.findViewById(R.id.event_details);
+        eventDate = view.findViewById(R.id.event_date);
+        eventTime = view.findViewById(R.id.event_time);
         eventLocation = view.findViewById(R.id.event_location);
 
         // Initialize EditTexts for donation events
         eventTitleType2 = view.findViewById(R.id.event_title_type2);
         eventDescriptionType2 = view.findViewById(R.id.event_description_type2);
-        eventDetails2 = view.findViewById(R.id.event_details2);
+        eventDateType2 = view.findViewById(R.id.event_date_type2);
+        eventTimeType2 = view.findViewById(R.id.event_time_type2);
         eventLocationType2 = view.findViewById(R.id.event_location_type2);
 
         // Initially hide forms
@@ -120,8 +123,8 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         featuredRecycler.setAdapter(featuredAdapter);
 
         // Setup donation events RecyclerView
-        featuredRecyclerType2.setLayoutManager(new LinearLayoutManager(getContext(), 
-            LinearLayoutManager.HORIZONTAL, false));
+        featuredRecyclerType2.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
         donationAdapter = new FeaturedAdapter(requireContext(), donationList);
         featuredRecyclerType2.setAdapter(donationAdapter);
     }
@@ -131,12 +134,10 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         addEventButtonType2.setOnClickListener(v -> toggleEventForm(true, 2));
         submitEventButton.setOnClickListener(v -> submitEvent(1));
         submitEventButtonType2.setOnClickListener(v -> submitEvent(2));
-        
         uploadImageButton.setOnClickListener(v -> {
             currentUploadType = 1;
             openImageChooser();
         });
-        
         uploadImageButton2.setOnClickListener(v -> {
             currentUploadType = 2;
             openImageChooser();
@@ -169,24 +170,41 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         }
     }
 
+
     private void toggleEventForm(boolean show, int type) {
         if (type == 1) {
-            eventFormLayout.setVisibility(show ? View.VISIBLE : View.GONE);
-            addEventButton.setText(show ? "Cancel" : "Add Event");
+            if (eventFormLayout.getVisibility() == View.VISIBLE) {
+                eventFormLayout.setVisibility(View.GONE);
+                addEventButton.setText("Add Community Cooking");
+            } else {
+                eventFormLayout.setVisibility(View.VISIBLE);
+                addEventButton.setText("Cancel");
+                eventFormLayoutType2.setVisibility(View.GONE);
+                addEventButtonType2.setText("Add Donation Drive");
+            }
         } else {
-            eventFormLayoutType2.setVisibility(show ? View.VISIBLE : View.GONE);
-            addEventButtonType2.setText(show ? "Cancel" : "Add Donation Drive");
+            if (eventFormLayoutType2.getVisibility() == View.VISIBLE) {
+                eventFormLayoutType2.setVisibility(View.GONE);
+                addEventButtonType2.setText("Add Donation Drive");
+            } else {
+                eventFormLayoutType2.setVisibility(View.VISIBLE);
+                addEventButtonType2.setText("Cancel");
+                eventFormLayout.setVisibility(View.GONE);
+                addEventButton.setText("Add Community Cooking");
+            }
         }
     }
+
 
     private void submitEvent(int type) {
         String title = type == 1 ? eventTitle.getText().toString() : eventTitleType2.getText().toString();
         String description = type == 1 ? eventDescription.getText().toString() : eventDescriptionType2.getText().toString();
-        String details = type == 1 ? eventDetails.getText().toString() : eventDetails2.getText().toString();
+        String date = type == 1 ? eventDate.getText().toString() : eventDateType2.getText().toString();
+        String time = type == 1 ? eventTime.getText().toString() : eventTimeType2.getText().toString();
         String location = type == 1 ? eventLocation.getText().toString() : eventLocationType2.getText().toString();
         Uri imageUri = type == 1 ? imageUri1 : imageUri2;
 
-        if (title.isEmpty() || description.isEmpty() || details.isEmpty() || location.isEmpty()) {
+        if (title.isEmpty() || description.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty()) {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -204,42 +222,44 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         StorageReference imageRef = storageRef.child(imageFileName);
 
         imageRef.putFile(imageUri)
-            .addOnSuccessListener(taskSnapshot -> {
-                // Get the download URL
-                imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
-                    // Now save the event with the image URL
-                    DatabaseReference ref = type == 1 ? eventsRef : donationRef;
-                    
-                    FeaturedHelperClass event = new FeaturedHelperClass(
-                        downloadUri.toString(),
-                        title,
-                        description,
-                        location,
-                        details,
-                        type
-                    );
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Get the download URL
+                    imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                        // Now save the event with the image URL
+                        DatabaseReference ref = type == 1 ? eventsRef : donationRef;
 
-                    String eventId = currentEditingEventId != null ? currentEditingEventId : ref.push().getKey();
-                    
-                    if (eventId != null) {
-                        ref.child(eventId).setValue(event)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(getContext(), 
-                                    currentEditingEventId != null ? "Event updated successfully!" : "Event added successfully!", 
-                                    Toast.LENGTH_SHORT).show();
-                                toggleEventForm(false, type);
-                                clearForm();
-                                currentEditingEventId = null;
-                            })
-                            .addOnFailureListener(e -> Toast.makeText(getContext(), 
-                                "Failed to save event: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-                });
-            })
-            .addOnFailureListener(e -> Toast.makeText(getContext(), 
-                "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        FeaturedHelperClass event = new FeaturedHelperClass(
+                                downloadUri.toString(),
+                                title,
+                                description,
+                                location,
+                                date,
+                                time,
+                                type
+                        );
+
+                        String eventId = currentEditingEventId != null ? currentEditingEventId : ref.push().getKey();
+
+                        if (eventId != null) {
+                            ref.child(eventId).setValue(event)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(getContext(),
+                                                currentEditingEventId != null ? "Event updated successfully!" : "Event added successfully!",
+                                                Toast.LENGTH_SHORT).show();
+                                        toggleEventForm(false, type);
+                                        clearForm();
+                                        currentEditingEventId = null;
+                                    })
+                                    .addOnFailureListener(e -> Toast.makeText(getContext(),
+                                            "Failed to save event: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        }
+                    });
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(),
+                        "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
+    /*
     @Override
     public void onEventClick(FeaturedHelperClass event, int position) {
         // Load event data into form for editing
@@ -252,7 +272,8 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
                     if (event.getEventType() == 1) {
                         eventTitle.setText(event.getTitle());
                         eventDescription.setText(event.getDescription());
-                        eventDetails.setText(event.getDetails());
+                        eventDate.setText(event.getDate());
+                        eventTime.setText(event.getTime());
                         eventLocation.setText(event.getLocation());
                         eventImagePreview.setVisibility(View.VISIBLE);
                         Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview);
@@ -260,7 +281,8 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
                     } else {
                         eventTitleType2.setText(event.getTitle());
                         eventDescriptionType2.setText(event.getDescription());
-                        eventDetails2.setText(event.getDetails());
+                        eventDateType2.setText(event.getDate());
+                        eventTimeType2.setText(event.getTime());
                         eventLocationType2.setText(event.getLocation());
                         eventImagePreview2.setVisibility(View.VISIBLE);
                         Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview2);
@@ -275,7 +297,67 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
                 Toast.makeText(getContext(), "Error loading event: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    } */
+
+
+    @Override
+    public void onEventClick(FeaturedHelperClass event, int position) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("role");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String role = snapshot.getValue(String.class);
+                if ("seller".equalsIgnoreCase(role)) {
+                    // Sellers can edit event data
+                    DatabaseReference ref = event.getEventType() == 1 ? eventsRef : donationRef;
+                    ref.orderByChild("title").equalTo(event.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot eventSnapshot : snapshot.getChildren()) {
+                                currentEditingEventId = eventSnapshot.getKey();
+                                if (event.getEventType() == 1) {
+                                    eventTitle.setText(event.getTitle());
+                                    eventDescription.setText(event.getDescription());
+                                    eventDate.setText(event.getDate());
+                                    eventTime.setText(event.getTime());
+                                    eventLocation.setText(event.getLocation());
+                                    eventImagePreview.setVisibility(View.VISIBLE);
+                                    Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview);
+                                    toggleEventForm(true, 1);
+                                } else {
+                                    eventTitleType2.setText(event.getTitle());
+                                    eventDescriptionType2.setText(event.getDescription());
+                                    eventDateType2.setText(event.getDate());
+                                    eventTimeType2.setText(event.getTime());
+                                    eventLocationType2.setText(event.getLocation());
+                                    eventImagePreview2.setVisibility(View.VISIBLE);
+                                    Glide.with(requireContext()).load(event.getImage()).into(eventImagePreview2);
+                                    toggleEventForm(true, 2);
+                                }
+                                break;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getContext(), "Error loading event: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // Show a message to non-sellers
+                    Toast.makeText(getContext(), "You are not authorized to edit events.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to fetch user role: " + error.getMessage());
+            }
+        });
     }
+
 
     private void loadEvents() {
         // Load regular events
@@ -283,35 +365,35 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 eventList.clear();
-                
                 for (DataSnapshot eventSnapshot : snapshot.getChildren()) {
                     try {
                         String title = eventSnapshot.child("title").getValue(String.class);
                         String description = eventSnapshot.child("description").getValue(String.class);
-                        String details = eventSnapshot.child("details").getValue(String.class);
+                        String date = eventSnapshot.child("date").getValue(String.class);
+                        String time = eventSnapshot.child("time").getValue(String.class);
                         String location = eventSnapshot.child("location").getValue(String.class);
                         String image = eventSnapshot.child("image").getValue(String.class);
                         Integer eventType = eventSnapshot.child("eventType").getValue(Integer.class);
 
                         if (eventType != null && eventType == 1) {
-                            eventList.add(new FeaturedHelperClass(image, title, description, location, details, eventType));
+                            eventList.add(new FeaturedHelperClass(image, title, description, location, date, time, eventType));
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error parsing regular event: " + e.getMessage());
                     }
                 }
-                
+
                 if (eventList.isEmpty()) {
-                    addDefaultAnnouncements();
+                    //addDefaultAnnouncements();
                 }
-                
+
                 featuredAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, "Error loading regular events: " + error.getMessage());
-                addDefaultAnnouncements();
+                //addDefaultAnnouncements();
                 featuredAdapter.notifyDataSetChanged();
             }
         });
@@ -321,24 +403,23 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 donationList.clear();
-                
                 for (DataSnapshot eventSnapshot : snapshot.getChildren()) {
                     try {
                         String title = eventSnapshot.child("title").getValue(String.class);
                         String description = eventSnapshot.child("description").getValue(String.class);
-                        String details = eventSnapshot.child("details").getValue(String.class);
+                        String date = eventSnapshot.child("date").getValue(String.class);
+                        String time = eventSnapshot.child("time").getValue(String.class);
                         String location = eventSnapshot.child("location").getValue(String.class);
                         String image = eventSnapshot.child("image").getValue(String.class);
                         Integer eventType = eventSnapshot.child("eventType").getValue(Integer.class);
 
                         if (eventType != null && eventType == 2) {
-                            donationList.add(new FeaturedHelperClass(image, title, description, location, details, eventType));
+                            donationList.add(new FeaturedHelperClass(image, title, description, location, date, time, eventType));
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error parsing donation event: " + e.getMessage());
                     }
                 }
-                
                 donationAdapter.notifyDataSetChanged();
             }
 
@@ -350,32 +431,10 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
         });
     }
 
-    private void addDefaultAnnouncements() {
-        // Regular event
-        eventList.add(new FeaturedHelperClass(
-            "food_sharing", 
-                "Food Sharing Event @Dover",
-                "Join us for a vibrant food-sharing event at Dover Community Hub!",
-                "\uD83D\uDCCD Dover Community Hub",
-            "\uD83D\uDCC5 Date: 10/10/2025\n⏰ Time: 6:00 PM - 9:00 PM",
-            1  // Type 1 event
-        ));
-
-        // Donation drive
-        donationList.add(new FeaturedHelperClass(
-            "donation_drive", 
-            "Food Donation Drive",
-            "Help us collect food items for families in need",
-                "\uD83D\uDCCD Tampines Hub",
-            "\uD83D\uDCC5 Date: 15/10/2025\n⏰ Time: 9:00 AM - 12:00 PM",
-            2  // Type 2 event
-        ));
-    }
 
     private void checkUserRole() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-        
         userRef.child(userId).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -401,11 +460,13 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
     private void clearForm() {
         eventTitle.setText("");
         eventDescription.setText("");
-        eventDetails.setText("");
+        eventDate.setText("");
+        eventTime.setText("");
         eventLocation.setText("");
         eventTitleType2.setText("");
         eventDescriptionType2.setText("");
-        eventDetails2.setText("");
+        eventDateType2.setText("");
+        eventTimeType2.setText("");
         eventLocationType2.setText("");
         eventImagePreview.setVisibility(View.GONE);
         eventImagePreview2.setVisibility(View.GONE);
@@ -429,19 +490,20 @@ public class AnnouncementFragment extends Fragment implements FeaturedAdapter.On
             // Create bundle with event info
             Bundle args = new Bundle();
             args.putString("eventTitle", event.getTitle());
-            args.putString("eventDate", event.getDetails()); // Already in correct format
+            args.putString("eventDate", event.getDate()); // Already in correct format
+            args.putString("eventTime", event.getTime()); // Already in correct format
             args.putString("description", event.getDescription());
             args.putString("location", event.getLocation());
-            
+
             // Navigate to Calendar Fragment
             CalendarFragment calendarFragment = new CalendarFragment();
             calendarFragment.setArguments(args);
-            
+
             requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, calendarFragment)
-                .addToBackStack(null)
-                .commit();
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, calendarFragment)
+                    .addToBackStack(null)
+                    .commit();
         } catch (Exception e) {
             Log.e(TAG, "Error setting reminder: " + e.getMessage());
             Toast.makeText(requireContext(), "Error setting reminder", Toast.LENGTH_SHORT).show();

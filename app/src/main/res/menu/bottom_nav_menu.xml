@@ -16,9 +16,9 @@
         android:iconTint="#4CAF50"
         android:title="Add" />
     <item
-        android:id="@+id/nav_favorites"
-        android:icon="@drawable/ic_heart"
-        android:title="@string/favorites"/>
+        android:id="@+id/nav_social"
+        android:icon="@drawable/ic_social"
+        android:title="@string/social"/>
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
