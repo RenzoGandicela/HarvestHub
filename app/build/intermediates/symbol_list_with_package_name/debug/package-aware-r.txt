@@ -3248,6 +3248,8 @@ drawable ic_arrow_up
 drawable ic_attach
 drawable ic_back
 drawable ic_bookmark
+drawable ic_bookmark_filled
+drawable ic_bookmark_outline
 drawable ic_calendar
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3509,6 +3511,8 @@ id blinkFullImageView
 id blinkImage
 id blinksRecyclerView
 id blocking
+id bookmarkButton
+id bookmarkRecyclerView
 id bottom
 id bottomNavigationView
 id bounce
@@ -3625,6 +3629,7 @@ id elastic
 id emailBox
 id emailTxt
 id embed
+id emptyView
 id end
 id endToStart
 id enterAlways
@@ -4295,6 +4300,7 @@ layout food_card_tags_spicy
 layout food_recyclerview_layout
 layout fragment_announcement
 layout fragment_bookmark
+layout fragment_bookmark_details
 layout fragment_calendar
 layout fragment_favourites
 layout fragment_food_details

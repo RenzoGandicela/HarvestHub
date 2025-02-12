@@ -18,6 +18,9 @@ import com.sp.harvesthub.foodListings.FoodItemExtended;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import android.view.MenuItem;
+import com.sp.harvesthub.MainActivity;
+import com.google.android.material.navigation.NavigationView;
 
 public class BookmarkDetailsFragment extends Fragment {
     private static final String ARG_FOOD_ITEM = "food_item";
@@ -103,17 +106,18 @@ public class BookmarkDetailsFragment extends Fragment {
         }
 
         undoButton.setOnClickListener(v -> {
-            // Go back to BookmarkFragment
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().popBackStack();
                 // Ensure BookmarkFragment is visible
                 if (getActivity() instanceof MainActivity) {
-                    MenuItem bookmarkItem = ((MainActivity) getActivity())
-                        .findViewById(R.id.nav_view)
-                        .getMenu()
-                        .findItem(R.id.nav_bookmark);
-                    if (bookmarkItem != null) {
-                        bookmarkItem.setChecked(true);
+                    NavigationView navigationView = ((MainActivity) getActivity())
+                        .findViewById(R.id.nav_view);
+                    if (navigationView != null) {
+                        MenuItem bookmarkItem = navigationView.getMenu()
+                            .findItem(R.id.nav_bookmark);
+                        if (bookmarkItem != null) {
+                            bookmarkItem.setChecked(true);
+                        }
                     }
                 }
             }

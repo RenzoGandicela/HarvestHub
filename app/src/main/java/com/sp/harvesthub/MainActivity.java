@@ -275,4 +275,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
+
+    public void updateNavigationToHome() {
+        // Set the home fragment as default
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        replaceFragment(new FoodFragment());
+        setTitle(getString(R.string.home));
+        
+        // Clear drawer selection
+        nav_view.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < nav_view.getMenu().size(); i++) {
+            nav_view.getMenu().getItem(i).setChecked(false);
+        }
+        nav_view.getMenu().setGroupCheckable(0, true, true);
+    }
 }
