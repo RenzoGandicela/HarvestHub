@@ -27,6 +27,7 @@ import com.sp.harvesthub.nav_fragment.LogMealFragment;
 import com.sp.harvesthub.nav_fragment.MapFragment;
 import com.sp.harvesthub.nav_fragment.FavouritesFragment;
 import com.sp.harvesthub.nav_fragment.ProfileFragment;
+import com.sp.harvesthub.foodListings.FoodFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
@@ -121,14 +122,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             nav_view.getMenu().setGroupCheckable(0, true, true);
             
             if (itemId == R.id.nav_home) {
-                replaceFragment(new LogMealFragment());
+                replaceFragment(new FoodFragment());
                 setTitle(getString(R.string.home));
             } else if (itemId == R.id.nav_map) {
                 replaceFragment(new MapFragment());
                 setTitle(getString(R.string.map));
             } else if (itemId == R.id.nav_add) {
-                // Handle add action
-                // For example: startActivity(new Intent(this, AddFoodActivity.class));
+                replaceFragment(new LogMealFragment());
+                setTitle("Add Food");
                 return true;
             } else if (itemId == R.id.nav_favorites) {
                 replaceFragment(new FavouritesFragment());
@@ -154,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view.getMenu().setGroupCheckable(0, true, true);
         
         // Clear selection of bottom navigation if not a main navigation item
-        if (!(fragment instanceof LogMealFragment) && 
+        if (!(fragment instanceof FoodFragment) && 
+            !(fragment instanceof LogMealFragment) && 
             !(fragment instanceof MapFragment) && 
             !(fragment instanceof FavouritesFragment) && 
             !(fragment instanceof ProfileFragment)) {
@@ -213,10 +215,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // Clear bottom navigation selection when using drawer
-        bottomNavigationView.setSelectedItemId(R.id.nav_none);
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            bottomNavigationView.getMenu().getItem(i).setChecked(false);
+        }
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
 
         if (id == R.id.nav_home) {
-            replaceFragment(new LogMealFragment());
+            replaceFragment(new FoodFragment());
             setTitle(getString(R.string.home));
         } else if (id == R.id.nav_announcement) {
             replaceFragment(new AnnouncementFragment());
@@ -266,10 +272,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void updateNavigationToHome() {
         // Set the home fragment as default
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
-        replaceFragment(new LogMealFragment());
+        replaceFragment(new FoodFragment());
         setTitle(getString(R.string.home));
         
         // Clear drawer selection
-        nav_view.setCheckedItem(R.id.nav_none);
+        nav_view.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < nav_view.getMenu().size(); i++) {
+            nav_view.getMenu().getItem(i).setChecked(false);
+        }
+        nav_view.getMenu().setGroupCheckable(0, true, true);
     }
 }
