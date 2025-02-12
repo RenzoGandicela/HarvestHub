@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/foodImage"
-            android:background="@color/available_overlay"
+            android:background="#CBDAB3"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="1dp">
@@ -55,7 +55,7 @@
                 android:fontFamily="@font/young_serif"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <!-- Halal & Spicy Indicators -->
             <LinearLayout

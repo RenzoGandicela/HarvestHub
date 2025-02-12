@@ -184,10 +184,6 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_blink_viewer.xml"
     },
     {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_ic_edit.xml.flat",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\ic_edit.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_story_ring.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\story_ring.xml"
     },
@@ -254,10 +250,6 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_add_circle.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\add_circle.xml"
-    },
-    {
-        "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_activity_edit_food.xml.flat",
-        "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\activity_edit_food.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_message_sent_background.xml.flat",
@@ -396,10 +388,6 @@
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\bg_message_received.xml"
     },
     {
-        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_food_card.xml.flat",
-        "source": "com.sp.harvesthub.app-main-7:/layout/food_card.xml"
-    },
-    {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\layout_food_card.xml.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\layout\\food_card.xml"
     },
@@ -502,6 +490,10 @@
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\drawable_community_garden.jpg.flat",
         "source": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-main-7:\\drawable\\community_garden.jpg"
+    },
+    {
+        "merged": "com.sp.harvesthub.app-merged_res-5:/layout_fragment_food_details.xml.flat",
+        "source": "com.sp.harvesthub.app-main-7:/layout/fragment_food_details.xml"
     },
     {
         "merged": "C:\\Users\\renzo\\.gradle\\daemon\\8.0\\com.sp.harvesthub.app-merged_res-5:\\mipmap-xhdpi_ic_launcher_round.webp.flat",

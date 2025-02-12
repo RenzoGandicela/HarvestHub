@@ -1,9 +1,6 @@
 package com.sp.harvesthub;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 
 import com.sp.harvesthub.activities.LoginActivity;
 import com.sp.harvesthub.nav_fragment.AnnouncementFragment;
@@ -35,8 +31,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView userNameTxt, emailTxt;
     private ImageView profileImg;
     private FirebaseAuth auth;
-    private NavigationUpdateReceiver navigationReceiver;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
@@ -61,13 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer_layout.closeDrawer(GravityCompat.START);
         } else {
             finish();
-        }
-    }
-
-    public void updateNavigationToHome() {
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_home);
         }
     }
 
@@ -172,57 +158,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Set default selected item to home
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
-        // Initialize and register the receiver
-        navigationReceiver = new NavigationUpdateReceiver();
-        registerReceiver(navigationReceiver, 
-            new IntentFilter("com.sp.harvesthub.SELECT_HOME"),
-            Context.RECEIVER_NOT_EXPORTED);
-
-        // Check user role and update menu visibility
-        checkUserRoleAndUpdateMenu();
-    }
-
-    private void checkUserRoleAndUpdateMenu() {
-        if (auth.getCurrentUser() != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
-                    .getReference("Users")
-                    .child(auth.getCurrentUser().getUid());
-            
-            userRef.child("role").get().addOnCompleteListener(task -> {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    String role = task.getResult().getValue(String.class);
-
-                    // Hide add listing option for non-sellers
-                    MenuItem addItem = bottomNavigationView.getMenu().findItem(R.id.nav_add);
-                    if (addItem != null) {
-                        boolean isSeller = "seller".equalsIgnoreCase(role);
-                        addItem.setVisible(isSeller);
-                        
-                        // If current fragment is LogMealFragment and user is not a seller,
-                        // switch to home fragment
-                        if (!isSeller && bottomNavigationView.getSelectedItemId() == R.id.nav_add) {
-                            bottomNavigationView.setSelectedItemId(R.id.nav_home);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check role again when activity resumes
-        checkUserRoleAndUpdateMenu();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (navigationReceiver != null) {
-            unregisterReceiver(navigationReceiver);
-        }
     }
 
     @Override

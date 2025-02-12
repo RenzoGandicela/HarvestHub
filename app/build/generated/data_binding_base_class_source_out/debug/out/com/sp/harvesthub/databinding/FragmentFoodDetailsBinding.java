@@ -41,9 +41,6 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
   public final FoodCardTagsHalalBinding halalTag;
 
   @NonNull
-  public final TextView ingredientsListText;
-
-  @NonNull
   public final ImageButton likeButton;
 
   @NonNull
@@ -70,11 +67,11 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
   private FragmentFoodDetailsBinding(@NonNull RelativeLayout rootView,
       @NonNull TextView descriptionText, @NonNull TextView descriptionTitle,
       @NonNull TextView expiryDateText, @NonNull ImageView foodImage, @NonNull TextView foodName,
-      @NonNull FoodCardTagsHalalBinding halalTag, @NonNull TextView ingredientsListText,
-      @NonNull ImageButton likeButton, @NonNull TextView likeCountText,
-      @NonNull TextView locationText, @NonNull TextView quantityText,
-      @NonNull TextView sellerIdText, @NonNull FoodCardTagsSpicyBinding spicyTag,
-      @NonNull Button undoButton, @NonNull TextView uploadTimeText) {
+      @NonNull FoodCardTagsHalalBinding halalTag, @NonNull ImageButton likeButton,
+      @NonNull TextView likeCountText, @NonNull TextView locationText,
+      @NonNull TextView quantityText, @NonNull TextView sellerIdText,
+      @NonNull FoodCardTagsSpicyBinding spicyTag, @NonNull Button undoButton,
+      @NonNull TextView uploadTimeText) {
     this.rootView = rootView;
     this.descriptionText = descriptionText;
     this.descriptionTitle = descriptionTitle;
@@ -82,7 +79,6 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
     this.foodImage = foodImage;
     this.foodName = foodName;
     this.halalTag = halalTag;
-    this.ingredientsListText = ingredientsListText;
     this.likeButton = likeButton;
     this.likeCountText = likeCountText;
     this.locationText = locationText;
@@ -157,12 +153,6 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
       }
       FoodCardTagsHalalBinding binding_halalTag = FoodCardTagsHalalBinding.bind(halalTag);
 
-      id = R.id.ingredientsListText;
-      TextView ingredientsListText = ViewBindings.findChildViewById(rootView, id);
-      if (ingredientsListText == null) {
-        break missingId;
-      }
-
       id = R.id.likeButton;
       ImageButton likeButton = ViewBindings.findChildViewById(rootView, id);
       if (likeButton == null) {
@@ -213,9 +203,9 @@ public final class FragmentFoodDetailsBinding implements ViewBinding {
       }
 
       return new FragmentFoodDetailsBinding((RelativeLayout) rootView, descriptionText,
-          descriptionTitle, expiryDateText, foodImage, foodName, binding_halalTag,
-          ingredientsListText, likeButton, likeCountText, locationText, quantityText, sellerIdText,
-          binding_spicyTag, undoButton, uploadTimeText);
+          descriptionTitle, expiryDateText, foodImage, foodName, binding_halalTag, likeButton,
+          likeCountText, locationText, quantityText, sellerIdText, binding_spicyTag, undoButton,
+          uploadTimeText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

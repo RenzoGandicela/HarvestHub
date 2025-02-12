@@ -125,16 +125,6 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/ingredientsListText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/young_serif"
-                    android:text="Ingredients: -"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/descriptionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

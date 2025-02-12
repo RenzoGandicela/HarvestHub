@@ -124,9 +124,6 @@
             android:name="com.sp.harvesthub.foodListings.FoodActivity"
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar" />
-        <activity
-            android:name="com.sp.harvesthub.foodListings.EditFoodActivity"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -137,10 +134,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <receiver
-            android:name="com.sp.harvesthub.NavigationUpdateReceiver"
-            android:exported="false" />
 
         <service
             android:name="androidx.camera.core.impl.MetadataHolderService"

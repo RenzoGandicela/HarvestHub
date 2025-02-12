@@ -1487,7 +1487,6 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
-color available_overlay
 color backgroundColor
 color background_floating_material_dark
 color background_floating_material_light
@@ -1514,7 +1513,6 @@ color cardview_dark_background
 color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
-color claimed_overlay
 color common_google_signin_btn_text_dark
 color common_google_signin_btn_text_dark_default
 color common_google_signin_btn_text_dark_disabled
@@ -3252,7 +3250,6 @@ drawable ic_call_decline_low
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_delete
-drawable ic_edit
 drawable ic_favorite
 drawable ic_filter
 drawable ic_hashtag
@@ -3482,7 +3479,6 @@ id autoCompleteToEnd
 id autoCompleteToStart
 id available
 id axisRelative
-id backButton
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -3558,13 +3554,11 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
-id deleteButton
 id deleteNote
 id deltaRelative
 id dependency_ordering
 id desc
 id descEdit
-id description
 id descriptionText
 id descriptionTitle
 id design_bottom_sheet
@@ -3598,7 +3592,6 @@ id easeInOut
 id easeOut
 id east
 id edge
-id editListing
 id editNote
 id edit_query
 id edit_text_id
@@ -3660,6 +3653,7 @@ id fixed
 id flip
 id floating
 id follow_system
+id food
 id foodImage
 id foodName
 id foodNameText
@@ -3705,7 +3699,6 @@ id included
 id indeterminate
 id info
 id ingredientsEdit
-id ingredientsListText
 id ingredientsText
 id invisible
 id inward
@@ -3732,6 +3725,7 @@ id locale
 id location
 id locationEdit
 id locationText
+id logMeal
 id loginRedirectText
 id login_button
 id login_email
@@ -3906,7 +3900,6 @@ id rounded
 id row_index_key
 id rtl
 id satellite
-id saveButton
 id saveDescriptionButton
 id saveNote
 id save_non_transition_alpha
@@ -3988,7 +3981,6 @@ id startToEnd
 id startVertical
 id staticLayout
 id staticPostLayout
-id statusText
 id stop
 id stretch
 id submenuarrow
@@ -3998,7 +3990,6 @@ id submit_event_button_type2
 id supportScrollUp
 id switchHalal
 id switchSpicy
-id switchStatus
 id switchWidget
 id tabMode
 id tag_accessibility_actions
@@ -4211,7 +4202,6 @@ layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
 layout activity_dashboard
-layout activity_edit_food
 layout activity_food
 layout activity_login
 layout activity_logmeal

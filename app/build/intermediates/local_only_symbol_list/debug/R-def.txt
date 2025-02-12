@@ -9,12 +9,10 @@ array preloaded_fonts
 array roles_array
 attr beigeBackground
 attr chatTextColor
-color available_overlay
 color backgroundColor
 color background_green
 color beige
 color black
-color claimed_overlay
 color dark_background
 color dark_beige
 color dark_on_background
@@ -77,7 +75,6 @@ drawable ic_attach
 drawable ic_bookmark
 drawable ic_calendar
 drawable ic_delete
-drawable ic_edit
 drawable ic_favorite
 drawable ic_filter
 drawable ic_hashtag
@@ -129,7 +126,6 @@ id add_event_button_type2
 id analyzeButton
 id attachButton
 id available
-id backButton
 id blinkFullImageView
 id blinkImage
 id blinksRecyclerView
@@ -142,18 +138,15 @@ id cardView
 id channelNameTxt
 id channelsRecyclerView
 id chatImageView
-id deleteButton
 id deleteNote
 id desc
 id descEdit
-id description
 id descriptionText
 id descriptionTitle
 id dialogBox
 id dialogForgot
 id displayNote
 id drawer_layout
-id editListing
 id editNote
 id emailBox
 id emailTxt
@@ -186,6 +179,7 @@ id filterAvailable
 id filterButton
 id filterHalal
 id filterSpicy
+id food
 id foodImage
 id foodName
 id foodNameText
@@ -197,7 +191,6 @@ id halalTag
 id halalText
 id imageView
 id ingredientsEdit
-id ingredientsListText
 id ingredientsText
 id leftSpace
 id likeButton
@@ -206,6 +199,7 @@ id listingText
 id location
 id locationEdit
 id locationText
+id logMeal
 id loginRedirectText
 id login_button
 id login_email
@@ -246,7 +240,6 @@ id recyclerView
 id remindButton
 id rightSpace
 id role_spinner
-id saveButton
 id saveDescriptionButton
 id saveNote
 id scrollToTopButton
@@ -270,12 +263,10 @@ id slogan_name
 id spicyTag
 id spicyText
 id startSharingButton
-id statusText
 id submit_event_button
 id submit_event_button_type2
 id switchHalal
 id switchSpicy
-id switchStatus
 id textView
 id textView2
 id textView3
@@ -295,7 +286,6 @@ layout activity_announcements
 layout activity_blink_viewer
 layout activity_chat
 layout activity_dashboard
-layout activity_edit_food
 layout activity_food
 layout activity_login
 layout activity_logmeal

@@ -41,21 +41,21 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-        FoodItemExtended foodItem = (FoodItemExtended) foodList.get(position);
-        holder.foodName.setText(capitalizeDishName(foodItem.getDishName()));
+        FoodItemExtended food = (FoodItemExtended) foodList.get(position);
+        holder.foodName.setText(capitalizeDishName(food.getDishName()));
         
         // Handle tag visibility
-        if (foodItem.isHalal() || foodItem.isSpicy()) {
-            holder.halalTag.setVisibility(foodItem.isHalal() ? View.VISIBLE : View.GONE);
-            holder.spicyTag.setVisibility(foodItem.isSpicy() ? View.VISIBLE : View.GONE);
+        if (food.isHalal() || food.isSpicy()) {
+            holder.halalTag.setVisibility(food.isHalal() ? View.VISIBLE : View.GONE);
+            holder.spicyTag.setVisibility(food.isSpicy() ? View.VISIBLE : View.GONE);
         } else {
             holder.halalTag.setVisibility(View.INVISIBLE);
             holder.spicyTag.setVisibility(View.INVISIBLE);
         }
         
         // Set location text with capitalization
-        if (foodItem.getLocation() != null && !foodItem.getLocation().isEmpty()) {
-            String location = foodItem.getLocation();
+        if (food.getLocation() != null && !food.getLocation().isEmpty()) {
+            String location = food.getLocation();
             location = location.substring(0, 1).toUpperCase() + location.substring(1);
             holder.locationText.setText(location);
             holder.locationText.setVisibility(View.VISIBLE);
@@ -64,7 +64,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         }
 
         // Load image
-        String imageUrl = foodItem.getImageUrl();
+        String imageUrl = food.getImageUrl();
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(context)
                     .load(imageUrl)
@@ -73,19 +73,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                     .into(holder.foodImage);
         }
 
-        // Change overlay color based on status
-        LinearLayout overlay = holder.itemView.findViewById(R.id.foodOverlay);
-        if ("claimed".equalsIgnoreCase(foodItem.getStatus())) {
-            overlay.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.claimed_overlay));
-        } else {
-            overlay.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.available_overlay));
-        }
-
         // Set click listener
         holder.itemView.setOnClickListener(v -> {
             if (context instanceof FragmentActivity) {
                 FragmentActivity activity = (FragmentActivity) context;
-                FoodDetailsFragment detailsFragment = FoodDetailsFragment.newInstance(foodItem);
+                FoodDetailsFragment detailsFragment = FoodDetailsFragment.newInstance(food);
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, detailsFragment)

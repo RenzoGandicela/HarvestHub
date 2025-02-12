@@ -19,12 +19,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Map;
 import com.sp.harvesthub.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -102,10 +100,24 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
                                 //save user to firebase database
-                                FirebaseUser firebaseUser = auth.getCurrentUser();
-                                if (firebaseUser != null) {
-                                    saveUserToDatabase(firebaseUser);
-                                }
+                                String userId = auth.getCurrentUser().getUid();
+                                HashMap<String, String> userMap = new HashMap<>();
+                                userMap.put("username", username); // Save username
+                                userMap.put("email", email);
+                                userMap.put("role", selectedRole);
+
+                                databaseReference.child(userId).setValue(userMap)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(SignUpActivity.this, "Failed to save user data: " + e.getMessage(), 
+                                            Toast.LENGTH_SHORT).show();
+                                    });
+
                             } else {
                                 Toast.makeText(SignUpActivity.this, "SignUp Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -124,40 +136,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void saveUserToDatabase(FirebaseUser firebaseUser) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
-                .getReference("Users")
-                .child(firebaseUser.getUid());
-
-        Map<String, Object> userData = new HashMap<>();
-        userData.put("email", firebaseUser.getEmail());
-        userData.put("username", usernameFromEmail(firebaseUser.getEmail()));
-        userData.put("role", "user"); // Set default role as user
-
-        userRef.setValue(userData)
-            .addOnSuccessListener(aVoid -> {
-                Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            })
-            .addOnFailureListener(e -> {
-                Toast.makeText(SignUpActivity.this, "Failed to save user data: " + e.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
-            });
-    }
-
-    private String usernameFromEmail(String email) {
-        if (email == null) {
-            return null;
-        }
-        String[] parts = email.split("@");
-        if (parts.length > 0) {
-            return parts[0];
-        } else {
-            return null;
-        }
     }
 } 

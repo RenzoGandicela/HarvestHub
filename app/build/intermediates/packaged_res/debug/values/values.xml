@@ -28,12 +28,10 @@
     </string-array>
     <attr format="color" name="beigeBackground"/>
     <attr format="color" name="chatTextColor"/>
-    <color name="available_overlay">#CBDAB3</color>
     <color name="backgroundColor">#66906c</color>
     <color name="background_green">#CBDAB4</color>
     <color name="beige">#FEF8E1</color>
     <color name="black">#FF000000</color>
-    <color name="claimed_overlay">#FFE4E1</color>
     <color name="dark_background">#121212</color>
     <color name="dark_beige">#2C2924</color>
     <color name="dark_on_background">#FFFFFF</color>

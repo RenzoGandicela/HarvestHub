@@ -97,10 +97,6 @@
             android:exported="false"
             android:theme="@style/Theme.HarvestHub.NoActionBar"/>
 
-        <activity
-            android:name=".foodListings.EditFoodActivity"
-            android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.sp.harvesthub.fileprovider"
@@ -110,10 +106,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <receiver
-            android:name=".NavigationUpdateReceiver"
-            android:exported="false" />
     </application>
 
 </manifest>

@@ -3,9 +3,6 @@ package com.sp.harvesthub.foodListings;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,10 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import android.widget.ImageButton;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.sp.harvesthub.nav_fragment.LogMealFragment;
-import android.content.Intent;
-import java.util.List;
 
 public class FoodDetailsFragment extends Fragment {
     private static final String ARG_FOOD_ITEM = "food_item";
@@ -43,8 +35,6 @@ public class FoodDetailsFragment extends Fragment {
     private FirebaseAuth auth;
     private DatabaseReference listingsRef;
     private boolean isLiked = false;
-    private Menu optionsMenu;
-    private boolean isUserSeller = false;
 
     public static FoodDetailsFragment newInstance(FoodItemExtended foodItem) {
         FoodDetailsFragment fragment = new FoodDetailsFragment();
@@ -57,26 +47,9 @@ public class FoodDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         if (getArguments() != null) {
             foodItem = (FoodItemExtended) getArguments().getSerializable(ARG_FOOD_ITEM);
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        this.optionsMenu = menu;
-        
-        // Hide menu item by default
-        MenuItem editItem = menu.findItem(R.id.editListing);
-        if (editItem != null) {
-            editItem.setVisible(false);
-        }
-        
-        // Check user role immediately
-        checkUserRole();
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -117,22 +90,7 @@ public class FoodDetailsFragment extends Fragment {
 
             // Set texts with capitalized dish name
             foodName.setText(capitalizeDishName(foodItem.getDishName()));
-            
-            // Update quantity/status display
-            if ("claimed".equalsIgnoreCase(foodItem.getStatus())) {
-                quantityText.setText("Unavailable");
-                quantityText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            } else {
-                String quantity = foodItem.getQuantity();
-                if (quantity != null && !quantity.isEmpty()) {
-                    quantityText.setText("Available Quantity: " + quantity);
-                    quantityText.setTextColor(getResources().getColor(android.R.color.black));
-                } else {
-                    quantityText.setText("Available Quantity: 0");
-                    quantityText.setTextColor(getResources().getColor(android.R.color.black));
-                }
-            }
-
+            quantityText.setText("Available Quantity: " + foodItem.getQuantity());
             sellerIdText.setText("Supplied by: @" + foodItem.getSellerId());
 
             // Capitalize location
@@ -176,74 +134,111 @@ public class FoodDetailsFragment extends Fragment {
                 spicyTag.setVisibility(View.INVISIBLE);
             }
 
-            // Set ingredients
-            TextView ingredientsListText = view.findViewById(R.id.ingredientsListText);
-            List<String> ingredients = foodItem.getIngredients();
-            if (ingredients != null && !ingredients.isEmpty()) {
-                ingredientsListText.setText("Ingredients: " + String.join(", ", ingredients));
-            } else {
-                ingredientsListText.setText("Ingredients: Not specified");
-            }
-
-            // Initialize likes count from likedBy node
-            DatabaseReference itemRef = listingsRef
-                .child(foodItem.getOriginalSellerId())
-                .child("items")
-                .child(foodItem.getItemId());
-
-            itemRef.child("likedBy").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!isAdded()) return;
-                    
-                    if (snapshot.exists()) {
-                        long likeCount = snapshot.getChildrenCount();
-                        likeCountText.setText(String.valueOf(likeCount));
-                    } else {
-                        likeCountText.setText("0");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e(TAG, "Error fetching likes count: " + error.getMessage());
-                }
-            });
-
-            // Handle likes for logged-in users
+            // Check if user has liked this item
             if (auth.getCurrentUser() != null) {
                 String userId = auth.getCurrentUser().getUid();
-                DatabaseReference likedByRef = itemRef.child("likedBy").child(userId);
+                String itemId = foodItem.getItemId();
+                String originalSellerId = foodItem.getOriginalSellerId(); // Use original seller ID
+                
+                // Get total likes count and check if user liked
+                listingsRef.child(originalSellerId) // Use original seller ID here
+                        .child("items")
+                        .child(itemId)
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                // Check if likedBy node exists
+                                DataSnapshot likedBySnapshot = snapshot.child("likedBy");
+                                if (likedBySnapshot.exists()) {
+                                    // Update total likes count
+                                    long likeCount = likedBySnapshot.getChildrenCount();
+                                    likeCountText.setText(String.valueOf(likeCount));
+                                    
+                                    // Check if current user has liked
+                                    isLiked = likedBySnapshot.hasChild(userId);
+                                    updateLikeButton();
+                                } else {
+                                    likeCountText.setText("0");
+                                    isLiked = false;
+                                    updateLikeButton();
+                                }
+                            }
 
-                likedByRef.get().addOnSuccessListener(snapshot -> {
-                    if (!isAdded()) return;
-                    isLiked = snapshot.exists();
-                    updateLikeButton();
-                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e(TAG, "Error fetching likes: " + error.getMessage());
+                            }
+                        });
 
+                // Update like button click listener
                 likeButton.setOnClickListener(v -> {
-                    if (!isAdded()) return;
+                    if (auth.getCurrentUser() != null) {
+                        DatabaseReference itemRef = listingsRef
+                                .child(originalSellerId)
+                                .child("items")
+                                .child(itemId);
 
-                    if (isLiked) {
-                        // Unlike
-                        likedByRef.removeValue().addOnSuccessListener(aVoid -> {
-                            if (!isAdded()) return;
-                            isLiked = false;
-                            updateLikeButton();
-                        });
+                        if (isLiked) {
+                            // Unlike - update both likedBy and likes count
+                            itemRef.child("likedBy").child(userId).removeValue()
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Update likes count
+                                        itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                                            int newLikeCount = (int) snapshot.getChildrenCount();
+                                            itemRef.child("likes").setValue(newLikeCount)
+                                                    .addOnSuccessListener(unused -> {
+                                                        isLiked = false;
+                                                        updateLikeButton();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e(TAG, "Failed to update likes count: " + e.getMessage());
+                                                        Toast.makeText(getContext(), "Failed to update likes count", 
+                                                            Toast.LENGTH_SHORT).show();
+                                                    });
+                                        });
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "Unlike failed: " + e.getMessage());
+                                        Toast.makeText(getContext(), "Failed to unlike: " + e.getMessage(), 
+                                            Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            // Like - update both likedBy and likes count
+                            itemRef.child("likedBy").child(userId).setValue(true)
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Update likes count
+                                        itemRef.child("likedBy").get().addOnSuccessListener(snapshot -> {
+                                            int newLikeCount = (int) snapshot.getChildrenCount();
+                                            itemRef.child("likes").setValue(newLikeCount)
+                                                    .addOnSuccessListener(unused -> {
+                                                        isLiked = true;
+                                                        updateLikeButton();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e(TAG, "Failed to update likes count: " + e.getMessage());
+                                                        Toast.makeText(getContext(), "Failed to update likes count", 
+                                                            Toast.LENGTH_SHORT).show();
+                                                    });
+                                        });
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "Like failed: " + e.getMessage());
+                                        Toast.makeText(getContext(), "Failed to like: " + e.getMessage(), 
+                                            Toast.LENGTH_SHORT).show();
+                                    });
+                        }
                     } else {
-                        // Like
-                        likedByRef.setValue(true).addOnSuccessListener(aVoid -> {
-                            if (!isAdded()) return;
-                            isLiked = true;
-                            updateLikeButton();
-                        });
+                        Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
                 // User not logged in
+                likeCountText.setText("0");
                 likeButton.setOnClickListener(v -> {
+                    // Prompt user to login
                     Toast.makeText(getContext(), "Please login to like items", Toast.LENGTH_SHORT).show();
+                    // Optionally redirect to login
+                    // startActivity(new Intent(requireContext(), LoginActivity.class));
                 });
             }
         }
@@ -272,19 +267,10 @@ public class FoodDetailsFragment extends Fragment {
     }
 
     private void updateLikeButton() {
-        // Check if fragment is attached before proceeding
-        if (!isAdded()) {
-            return;
-        }
-
-        try {
-            if (isLiked) {
-                likeButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_heart_filled));
-            } else {
-                likeButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_heart_outline));
-            }
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "Failed to update like button: Fragment not attached", e);
+        if (isLiked) {
+            likeButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_heart_filled));
+        } else {
+            likeButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_heart_outline));
         }
     }
 
@@ -302,37 +288,5 @@ public class FoodDetailsFragment extends Fragment {
             }
         }
         return capitalizedName.toString().trim();
-    }
-
-    private void checkUserRole() {
-        if (auth.getCurrentUser() != null && foodItem != null) {
-            String currentUserId = auth.getCurrentUser().getUid();
-            
-            // Check if current user is the original seller of this item
-            boolean isOwner = currentUserId.equals(foodItem.getOriginalSellerId());
-            
-            // Show edit button if user is the owner
-            if (optionsMenu != null) {
-                MenuItem editItem = optionsMenu.findItem(R.id.editListing);
-                if (editItem != null) {
-                    editItem.setVisible(isOwner);
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.editListing) {
-            editListing();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void editListing() {
-        Intent intent = new Intent(getActivity(), EditFoodActivity.class);
-        intent.putExtra("foodItem", foodItem);
-        startActivity(intent);
     }
 } 
