@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HarvestHub</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+    <string name="setting">Settings</string>
+    <string name="announcement">Announcements</string>
+    <string name="bookmark">Bookmarks</string>
+    <string name="calendar">Calendar</string>
+    <string name="social">Social</string>
+    <string name="home">Home</string>
+    <string name="map">Map</string>
+    <string name="favorites">Favorites</string>
+    <string name="profile">Profile</string>
+    <string name="type_message">Type a message…</string>
+    <string name="select_image">Select Image</string>
+    <string name="appearance">Appearance</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="notifications">Notifications</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="about">About</string>
+    <string name="app_version">Version 1.0.0</string>
+    
+    <!-- Login/Signup Related -->
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Role Related -->
+    <string name="user">User</string>
+    <string name="seller">Seller</string>
+    
+    <!-- Error Messages -->
+    <string name="error_email_empty">Email cannot be empty</string>
+    <string name="error_password_empty">Password cannot be empty</string>
+    <string name="error_invalid_email">Please enter valid email</string>
+    <string name="error_login_failed">Login Failed</string>
+    
+    <!-- New strings from the code block -->
+    <string name="app_slogan">Growing Community, Harvesting Together</string>
+    <string name="remind_me">Remind Me</string>
+    <string name="enter_note">Enter note</string>
+    <string name="save_note">Save Note</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="featured_events">Featured Events</string>
+    <string name="profile_saved">Profile updated successfully</string>
+    <string name="profile_save_error">Failed to update profile</string>
+    <string name="about_me">About Me</string>
+    <string name="save_description">Save Description</string>
+    
+    <!-- Add these profile-related strings -->
+    <string name="label_username">Username</string>
+    <string name="label_email">Email</string>
+    <string name="label_role">Role</string>
+    <string name="hint_about_me">Tell us about yourself...</string>
+</resources>
