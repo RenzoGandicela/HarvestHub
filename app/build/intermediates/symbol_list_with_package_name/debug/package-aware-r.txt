@@ -3457,7 +3457,6 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
-id addFriendButton
 id add_event_button
 id add_event_button_type2
 id adjust_height
@@ -3748,7 +3747,6 @@ id messageContainer
 id messageImage
 id messageInput
 id messageText
-id messagesCountText
 id messagesRecyclerView
 id middle
 id mini

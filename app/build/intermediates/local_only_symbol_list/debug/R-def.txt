@@ -123,7 +123,6 @@ font carter_one
 font caveat_brush
 id action_chat
 id action_clear_chat
-id addFriendButton
 id add_event_button
 id add_event_button_type2
 id attachButton
@@ -197,7 +196,6 @@ id messageContainer
 id messageImage
 id messageInput
 id messageText
-id messagesCountText
 id messagesRecyclerView
 id navFragment
 id nav_announcement

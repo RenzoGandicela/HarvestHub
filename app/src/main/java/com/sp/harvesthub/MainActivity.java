@@ -132,6 +132,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             
             return true;
         });
+
+        // Show home fragment by default
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+            replaceFragment(new HomeFragment());
+            setTitle(getString(R.string.home));
+        }
     }
 
     private void replaceFragment(Fragment fragment) {

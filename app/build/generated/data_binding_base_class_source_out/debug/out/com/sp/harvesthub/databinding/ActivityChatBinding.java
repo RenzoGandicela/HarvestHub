@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -20,22 +19,6 @@ import java.lang.Override;
 public final class ActivityChatBinding implements ViewBinding {
   @NonNull
   private final LinearLayout rootView;
-
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-night/</li>
-   * </ul>
-   */
-  @Nullable
-  public final ImageButton addFriendButton;
 
   /**
    * This binding is not available in all configurations.
@@ -116,22 +99,6 @@ public final class ActivityChatBinding implements ViewBinding {
    */
   @Nullable
   public final EditText messageInput;
-
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-night/</li>
-   * </ul>
-   */
-  @Nullable
-  public final TextView messagesCountText;
 
   /**
    * This binding is not available in all configurations.
@@ -261,22 +228,19 @@ public final class ActivityChatBinding implements ViewBinding {
   @Nullable
   public final RecyclerView usersRecyclerView;
 
-  private ActivityChatBinding(@NonNull LinearLayout rootView, @Nullable ImageButton addFriendButton,
-      @Nullable ImageButton attachButton, @Nullable ImageButton backButton,
-      @Nullable RecyclerView chatsRecyclerView, @Nullable LinearLayout mainLayout,
-      @Nullable EditText messageInput, @Nullable TextView messagesCountText,
+  private ActivityChatBinding(@NonNull LinearLayout rootView, @Nullable ImageButton attachButton,
+      @Nullable ImageButton backButton, @Nullable RecyclerView chatsRecyclerView,
+      @Nullable LinearLayout mainLayout, @Nullable EditText messageInput,
       @Nullable RecyclerView messagesRecyclerView, @Nullable ImageButton searchButton,
       @Nullable EditText searchInput, @Nullable LinearLayout searchLayout,
       @Nullable ImageButton sendButton, @Nullable Toolbar toolbar,
       @Nullable EditText userSearchInput, @Nullable RecyclerView usersRecyclerView) {
     this.rootView = rootView;
-    this.addFriendButton = addFriendButton;
     this.attachButton = attachButton;
     this.backButton = backButton;
     this.chatsRecyclerView = chatsRecyclerView;
     this.mainLayout = mainLayout;
     this.messageInput = messageInput;
-    this.messagesCountText = messagesCountText;
     this.messagesRecyclerView = messagesRecyclerView;
     this.searchButton = searchButton;
     this.searchInput = searchInput;
@@ -310,8 +274,6 @@ public final class ActivityChatBinding implements ViewBinding {
 
   @NonNull
   public static ActivityChatBinding bind(@NonNull View rootView) {
-    ImageButton addFriendButton = ViewBindings.findChildViewById(rootView, R.id.addFriendButton);
-
     ImageButton attachButton = ViewBindings.findChildViewById(rootView, R.id.attachButton);
 
     ImageButton backButton = ViewBindings.findChildViewById(rootView, R.id.backButton);
@@ -321,8 +283,6 @@ public final class ActivityChatBinding implements ViewBinding {
     LinearLayout mainLayout = ViewBindings.findChildViewById(rootView, R.id.mainLayout);
 
     EditText messageInput = ViewBindings.findChildViewById(rootView, R.id.messageInput);
-
-    TextView messagesCountText = ViewBindings.findChildViewById(rootView, R.id.messagesCountText);
 
     RecyclerView messagesRecyclerView = ViewBindings.findChildViewById(rootView, R.id.messagesRecyclerView);
 
@@ -340,9 +300,8 @@ public final class ActivityChatBinding implements ViewBinding {
 
     RecyclerView usersRecyclerView = ViewBindings.findChildViewById(rootView, R.id.usersRecyclerView);
 
-    return new ActivityChatBinding((LinearLayout) rootView, addFriendButton, attachButton,
-        backButton, chatsRecyclerView, mainLayout, messageInput, messagesCountText,
-        messagesRecyclerView, searchButton, searchInput, searchLayout, sendButton, toolbar,
-        userSearchInput, usersRecyclerView);
+    return new ActivityChatBinding((LinearLayout) rootView, attachButton, backButton,
+        chatsRecyclerView, mainLayout, messageInput, messagesRecyclerView, searchButton,
+        searchInput, searchLayout, sendButton, toolbar, userSearchInput, usersRecyclerView);
   }
 }

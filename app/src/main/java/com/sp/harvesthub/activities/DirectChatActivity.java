@@ -55,14 +55,10 @@ public class DirectChatActivity extends AppCompatActivity {
         otherUserId = getIntent().getStringExtra("otherUserId");
         otherUsername = getIntent().getStringExtra("otherUsername");
         
-        // Create conversation ID by combining user IDs
-        conversationId = getIntent().getStringExtra("conversationId");
-        if (conversationId == null) {
-            // Generate a unique conversation ID using Firebase push
-            conversationId = FirebaseDatabase.getInstance()
-                .getReference("directMessages")
-                .push().getKey();
-        }
+        // Create conversation ID by combining user IDs in alphabetical order
+        String[] userIds = {currentUserId, otherUserId};
+        java.util.Arrays.sort(userIds);
+        conversationId = userIds[0] + "-" + userIds[1];
 
         if (otherUserId == null) {
             Toast.makeText(this, "Error: Missing user information", Toast.LENGTH_SHORT).show();
@@ -182,51 +178,93 @@ public class DirectChatActivity extends AppCompatActivity {
     }
 
     private void createConversation() {
-        DatabaseReference conversationRef = FirebaseDatabase.getInstance()
+        final DatabaseReference conversationRef = FirebaseDatabase.getInstance()
             .getReference("directMessages")
             .child(conversationId);
 
-        long timestamp = System.currentTimeMillis();
+        final long timestamp = System.currentTimeMillis();
 
         // Create conversation data
-        Map<String, Object> conversationData = new HashMap<>();
-        conversationData.put("conversationId", conversationId);
-        conversationData.put("lastMessage", "Say hi to your new friend!");
-        conversationData.put("lastMessageTimestamp", timestamp);
-        conversationData.put("online", false);
-        conversationData.put("otherUserId", otherUserId);
-        
-        // Get other user's profile picture
-        DatabaseReference otherUserRef = FirebaseDatabase.getInstance()
+        final Map<String, Object> conversationData = new HashMap<>();
+        conversationData.put("createdAt", timestamp);
+        conversationData.put("lastUpdated", timestamp);
+
+        // Create initial lastMessage
+        final Map<String, Object> lastMessage = new HashMap<>();
+        lastMessage.put("content", "");
+        lastMessage.put("senderId", currentUserId);
+        lastMessage.put("timestamp", timestamp);
+        lastMessage.put("lastUpdated", timestamp);
+        conversationData.put("lastMessage", lastMessage);
+
+        // Get current user data
+        DatabaseReference currentUserRef = FirebaseDatabase.getInstance()
             .getReference("Users")
-            .child(otherUserId);
+            .child(currentUserId);
             
-        otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String otherUserProfilePic = snapshot.child("profilePicture").getValue(String.class);
-                if (otherUserProfilePic == null) {
-                    otherUserProfilePic = "/default-avatar.jpg";
-                }
-                
-                conversationData.put("otherUserProfilePic", otherUserProfilePic);
-                conversationData.put("otherUsername", otherUsername);
+                final String currentUsername = snapshot.child("username").getValue(String.class);
+                final String currentProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ? 
+                    snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
 
-                // Create the conversation
-                conversationRef.setValue(conversationData)
-                    .addOnSuccessListener(aVoid -> {
-                        // Conversation created successfully
-                    })
-                    .addOnFailureListener(e -> 
+                // Get other user data
+                DatabaseReference otherUserRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(otherUserId);
+                    
+                otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        final String otherUserProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ? 
+                            snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
+                        final String otherUsername = snapshot.child("username").getValue(String.class);
+
+                        // Create participants data
+                        final Map<String, Object> participants = new HashMap<>();
+                        
+                        // Current user participant
+                        Map<String, Object> currentUserParticipant = new HashMap<>();
+                        currentUserParticipant.put("id", currentUserId);
+                        currentUserParticipant.put("username", currentUsername);
+                        currentUserParticipant.put("profilePicture", currentProfilePic);
+                        participants.put(currentUserId, currentUserParticipant);
+
+                        // Other user participant
+                        Map<String, Object> otherUserParticipant = new HashMap<>();
+                        otherUserParticipant.put("id", otherUserId);
+                        otherUserParticipant.put("username", otherUsername);
+                        otherUserParticipant.put("profilePicture", otherUserProfilePic);
+                        participants.put(otherUserId, otherUserParticipant);
+
+                        // Add participants to conversation data
+                        conversationData.put("participants", participants);
+
+                        // Create the conversation
+                        conversationRef.setValue(conversationData)
+                            .addOnSuccessListener(aVoid -> {
+                                // Conversation created successfully
+                            })
+                            .addOnFailureListener(e -> 
+                                Toast.makeText(DirectChatActivity.this, 
+                                    "Failed to create conversation: " + e.getMessage(), 
+                                    Toast.LENGTH_SHORT).show());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
                         Toast.makeText(DirectChatActivity.this, 
-                            "Failed to create conversation: " + e.getMessage(), 
-                            Toast.LENGTH_SHORT).show());
+                            "Error getting other user data: " + error.getMessage(), 
+                            Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(DirectChatActivity.this, 
-                    "Error getting user data: " + error.getMessage(), 
+                    "Error getting current user data: " + error.getMessage(), 
                     Toast.LENGTH_SHORT).show();
             }
         });
@@ -259,8 +297,12 @@ public class DirectChatActivity extends AppCompatActivity {
         // Create updates map for atomic update
         Map<String, Object> updates = new HashMap<>();
         updates.put("/messages/" + messageId, messageData);
-        updates.put("/lastMessage", content != null ? content : "");
-        updates.put("/lastMessageTimestamp", timestamp);
+        
+        // Update lastMessage
+        Map<String, Object> lastMessage = new HashMap<>(messageData);
+        lastMessage.put("lastUpdated", timestamp);
+        updates.put("/lastMessage", lastMessage);
+        updates.put("/lastUpdated", timestamp);
 
         // Perform atomic update
         conversationRef.updateChildren(updates)

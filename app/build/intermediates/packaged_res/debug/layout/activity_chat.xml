@@ -49,14 +49,6 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Search"/>
 
-            <ImageButton
-                android:id="@+id/addFriendButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_add_friend"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginStart="8dp"
-                android:contentDescription="Add Friend"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -90,15 +82,6 @@
                     android:drawableStart="@drawable/ic_search_small"
                     android:drawablePadding="8dp"/>
             </LinearLayout>
-
-            <!-- Messages Count -->
-            <TextView
-                android:id="@+id/messagesCountText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You have 0 new messages"
-                android:textColor="@color/gray"
-                android:padding="16dp"/>
 
             <!-- Chat List -->
             <androidx.recyclerview.widget.RecyclerView
