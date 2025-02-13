@@ -9,18 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import com.sp.harvesthub.R;
+import com.sp.harvesthub.foodListings.FoodAdapter;
+import com.sp.harvesthub.foodListings.FoodItem;
+import com.sp.harvesthub.foodListings.FoodItemExtended;
 import java.util.ArrayList;
+import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,11 +35,29 @@ public class Location1Activity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private EditText messageInput;
     private ListView chatListView;
+    
+    // Add these for food listings
+    private RecyclerView foodRecyclerView;
+    private FoodAdapter foodAdapter;
+    private List<FoodItem> foodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location1);
+
+        // Initialize food listings
+        foodList = new ArrayList<>();
+        foodRecyclerView = findViewById(R.id.FridgeListingsRecyclerView);
+        foodAdapter = new FoodAdapter(this, foodList);
+        
+        // Set up grid layout like in the main food listings
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        foodRecyclerView.setLayoutManager(layoutManager);
+        foodRecyclerView.setAdapter(foodAdapter);
+
+        // Fetch Bedok listings
+        fetchBedokListings();
 
         // Set title for the location
         setTitle("Bedok Block 702 Community Fridge");
@@ -65,7 +84,7 @@ public class Location1Activity extends AppCompatActivity {
 
         liveCameraView.setWebViewClient(new WebViewClient());
         // Update stream URL for Bedok Block 702 location
-        liveCameraView.loadUrl("https://www.youtube.com/embed/bedok_block_702_stream?autoplay=1&controls=0&mute=1&modestbranding=1&disablekb=1&fs=0&showinfo=0&rel=0");
+        liveCameraView.loadUrl("https://www.youtube.com/embed/mRuglupSUgI?autoplay=1&controls=0&mute=1&modestbranding=1&disablekb=1&fs=0&showinfo=0&rel=0");
 
         // Chat ListView with custom layout for better visibility
         chatListView = findViewById(R.id.chatListView);
@@ -144,6 +163,73 @@ public class Location1Activity extends AppCompatActivity {
                         "Failed to send message", Toast.LENGTH_SHORT).show());
             });
         }
+    }
+
+    private void fetchBedokListings() {
+        DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("listings");
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("Users");
+
+        listingsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    String userId = userSnapshot.getKey();
+
+                    // Fetch username for this user
+                    usersRef.child(userId).child("username").get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String username = task.getResult().getValue(String.class);
+
+                            for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
+                                try {
+                                    String location = itemSnapshot.child("location").getValue(String.class);
+                                    if (location != null && location.toLowerCase().contains("bedok")) {
+                                        FoodItemExtended foodItem = new FoodItemExtended();
+                                        foodItem.setItemId(itemSnapshot.getKey());
+                                        foodItem.setOriginalSellerId(userId);
+                                        foodItem.setSellerId(username != null ? username : userId);
+
+                                        // Get all the necessary fields
+                                        foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
+                                        foodItem.setLocation(location);
+                                        foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
+                                        foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
+                                        
+                                        // Get status
+                                        String status = itemSnapshot.child("status").getValue(String.class);
+                                        foodItem.setStatus(status != null ? status : "available");
+                                        
+                                        // Get boolean values
+                                        Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
+                                        Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
+                                        foodItem.setHalal(halal != null ? halal : false);
+                                        foodItem.setSpicy(spicy != null ? spicy : false);
+
+                                        // Only add if the item is available
+                                        if ("available".equalsIgnoreCase(foodItem.getStatus())) {
+                                            foodList.add(foodItem);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            foodAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Location1Activity.this, 
+                    "Error loading food listings: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

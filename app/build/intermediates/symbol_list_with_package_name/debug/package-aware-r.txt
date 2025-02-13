@@ -3407,6 +3407,7 @@ id BOTTOM_END
 id BOTTOM_START
 id CTRL
 id FUNCTION
+id FridgeListingsRecyclerView
 id META
 id NO_DEBUG
 id SHIFT
@@ -4024,7 +4025,6 @@ id startToEnd
 id startVertical
 id staticLayout
 id staticPostLayout
-id statusText
 id stop
 id stretch
 id submenuarrow
@@ -4036,7 +4036,6 @@ id submit_event_button_type2
 id supportScrollUp
 id switchHalal
 id switchSpicy
-id switchStatus
 id switchWidget
 id tabMode
 id tag_accessibility_actions

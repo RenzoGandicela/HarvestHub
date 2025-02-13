@@ -138,6 +138,7 @@ font aoboshi_one
 font carter_one
 font caveat_brush
 font young_serif
+id FridgeListingsRecyclerView
 id action_chat
 id action_clear_chat
 id add_event_button
@@ -303,14 +304,12 @@ id slogan_name
 id spicyTag
 id spicyText
 id startSharingButton
-id statusText
 id submitEventButton
 id submitEventButton2
 id submit_event_button
 id submit_event_button_type2
 id switchHalal
 id switchSpicy
-id switchStatus
 id textView
 id textView2
 id textView3

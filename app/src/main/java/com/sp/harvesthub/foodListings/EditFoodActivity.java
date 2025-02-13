@@ -77,7 +77,6 @@ public class EditFoodActivity extends AppCompatActivity {
         quantityEdit = findViewById(R.id.quantityEdit);
         spicySwitch = findViewById(R.id.switchSpicy);
         halalSwitch = findViewById(R.id.switchHalal);
-        statusSwitch = findViewById(R.id.switchStatus);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
         

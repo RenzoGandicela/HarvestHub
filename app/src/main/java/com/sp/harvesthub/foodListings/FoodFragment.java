@@ -254,7 +254,7 @@ public class FoodFragment extends Fragment {
             if (spicy && !extendedItem.isSpicy()) {
                 matches = false;
             }
-            if (available && !"available".equals(extendedItem.getStatus())) {
+            if (available && !"available".equalsIgnoreCase(extendedItem.getStatus())) {
                 matches = false;
             }
 
@@ -297,6 +297,10 @@ public class FoodFragment extends Fragment {
                                     foodItem.setOriginalSellerId(userId); // Store original seller ID
                                     foodItem.setSellerId(username != null ? username : userId); // Use username for display
 
+                                    // Get the status field from the database
+                                    String status = itemSnapshot.child("status").getValue(String.class);
+                                    foodItem.setStatus(status != null ? status : "available"); // Default to available if null
+
                                     // Safely get boolean values with default false
                                     Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
                                     Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
@@ -329,7 +333,7 @@ public class FoodFragment extends Fragment {
                                     }
                                     foodItem.setIngredients(ingredients);
 
-                                    allFoodItems.add(foodItem); // Add to both lists
+                                    allFoodItems.add(foodItem);
                                     foodList.add(foodItem);
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error parsing food item: " + e.getMessage(), e);

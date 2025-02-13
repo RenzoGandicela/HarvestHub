@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.sp.harvesthub.R;
@@ -20,7 +21,10 @@ import java.lang.String;
 
 public final class ActivityLocation1Binding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
+
+  @NonNull
+  public final RecyclerView FridgeListingsRecyclerView;
 
   @NonNull
   public final ListView chatListView;
@@ -34,9 +38,11 @@ public final class ActivityLocation1Binding implements ViewBinding {
   @NonNull
   public final Button sendButton;
 
-  private ActivityLocation1Binding(@NonNull LinearLayout rootView, @NonNull ListView chatListView,
+  private ActivityLocation1Binding(@NonNull ScrollView rootView,
+      @NonNull RecyclerView FridgeListingsRecyclerView, @NonNull ListView chatListView,
       @NonNull WebView liveCameraView, @NonNull EditText messageInput, @NonNull Button sendButton) {
     this.rootView = rootView;
+    this.FridgeListingsRecyclerView = FridgeListingsRecyclerView;
     this.chatListView = chatListView;
     this.liveCameraView = liveCameraView;
     this.messageInput = messageInput;
@@ -45,7 +51,7 @@ public final class ActivityLocation1Binding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -70,6 +76,12 @@ public final class ActivityLocation1Binding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.FridgeListingsRecyclerView;
+      RecyclerView FridgeListingsRecyclerView = ViewBindings.findChildViewById(rootView, id);
+      if (FridgeListingsRecyclerView == null) {
+        break missingId;
+      }
+
       id = R.id.chatListView;
       ListView chatListView = ViewBindings.findChildViewById(rootView, id);
       if (chatListView == null) {
@@ -94,8 +106,8 @@ public final class ActivityLocation1Binding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityLocation1Binding((LinearLayout) rootView, chatListView, liveCameraView,
-          messageInput, sendButton);
+      return new ActivityLocation1Binding((ScrollView) rootView, FridgeListingsRecyclerView,
+          chatListView, liveCameraView, messageInput, sendButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

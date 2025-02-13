@@ -3406,6 +3406,7 @@ int id BOTTOM_END 0x7f0a0001
 int id BOTTOM_START 0x7f0a0002
 int id CTRL 0x7f0a0003
 int id FUNCTION 0x7f0a0004
+int id FridgeListingsRecyclerView 0x7f0a02de
 int id META 0x7f0a0005
 int id NO_DEBUG 0x7f0a0006
 int id SHIFT 0x7f0a0007
@@ -4023,7 +4024,6 @@ int id startToEnd 0x7f0a0269
 int id startVertical 0x7f0a026a
 int id staticLayout 0x7f0a026b
 int id staticPostLayout 0x7f0a026c
-int id statusText 0x7f0a026d
 int id stop 0x7f0a026e
 int id stretch 0x7f0a026f
 int id submenuarrow 0x7f0a0270
@@ -4035,7 +4035,6 @@ int id submit_event_button_type2 0x7f0a0275
 int id supportScrollUp 0x7f0a0276
 int id switchHalal 0x7f0a0277
 int id switchSpicy 0x7f0a0278
-int id switchStatus 0x7f0a0279
 int id switchWidget 0x7f0a027a
 int id tabMode 0x7f0a027b
 int id tag_accessibility_actions 0x7f0a027c

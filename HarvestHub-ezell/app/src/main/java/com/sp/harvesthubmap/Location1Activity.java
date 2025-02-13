@@ -8,33 +8,38 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.database.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Location1Activity extends AppCompatActivity {
 
-    private ArrayList<String> chatMessages;  // List to hold chat messages
-    private ArrayAdapter<String> chatAdapter;  // Adapter for the ListView
-    private DatabaseReference chatDatabase;  // Firebase Database Reference
-    private ValueEventListener chatListener;  // Listener to track database changes
+    private ArrayList<String> chatMessages;
+    private ArrayAdapter<String> chatAdapter;
+    private DatabaseReference chatDatabase;
+    private ValueEventListener chatListener;
+    private RecyclerView fridgeListingsRecyclerView;
+    private FoodAdapter fridgeListingsAdapter;
+    private List<FoodItem> fridgeListings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location1);
 
-        // Initialize Firebase Database Reference with the correct URL
-        chatDatabase = FirebaseDatabase.getInstance("https://fridgeforum-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("chat");
+        // Initialize RecyclerView for Bedok listings
+        fridgeListingsRecyclerView = findViewById(R.id.FridgeListingsRecyclerView);
+        fridgeListings = new ArrayList<>();
+        fridgeListingsAdapter = new FoodAdapter(this, fridgeListings);
+        fridgeListingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        fridgeListingsRecyclerView.setAdapter(fridgeListingsAdapter);
+
+        // Initialize Firebase and fetch Bedok listings
+        fetchBedokListings();
 
         // Livestream WebView
         WebView liveCameraView = findViewById(R.id.liveCameraView);
@@ -72,6 +77,45 @@ public class Location1Activity extends AppCompatActivity {
                 // Save the message to Firebase
                 chatDatabase.push().setValue("User: " + message);
                 messageInput.setText(""); // Clear the input field
+            }
+        });
+    }
+
+    private void fetchBedokListings() {
+        DatabaseReference listingsRef = FirebaseDatabase.getInstance("https://splashcreen2-default-rtdb.firebaseio.com/")
+                .getReference("listings");
+
+        listingsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                fridgeListings.clear();
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot itemSnapshot : userSnapshot.child("items").getChildren()) {
+                        String location = itemSnapshot.child("location").getValue(String.class);
+                        if (location != null && location.toLowerCase().contains("bedok")) {
+                            FoodItemExtended foodItem = new FoodItemExtended();
+                            foodItem.setItemId(itemSnapshot.getKey());
+                            foodItem.setDishName(itemSnapshot.child("title").getValue(String.class));
+                            foodItem.setLocation(location);
+                            foodItem.setImageUrl(itemSnapshot.child("imageUrl").getValue(String.class));
+                            foodItem.setDescription(itemSnapshot.child("description").getValue(String.class));
+                            
+                            // Add other necessary fields
+                            Boolean halal = itemSnapshot.child("halal").getValue(Boolean.class);
+                            Boolean spicy = itemSnapshot.child("spicy").getValue(Boolean.class);
+                            foodItem.setHalal(halal != null ? halal : false);
+                            foodItem.setSpicy(spicy != null ? spicy : false);
+                            
+                            fridgeListings.add(foodItem);
+                        }
+                    }
+                }
+                fridgeListingsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
             }
         });
     }

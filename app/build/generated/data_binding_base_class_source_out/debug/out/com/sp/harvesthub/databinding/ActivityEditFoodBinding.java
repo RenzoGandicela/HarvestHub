@@ -75,16 +75,10 @@ public final class ActivityEditFoodBinding implements ViewBinding {
   public final TextView spicyText;
 
   @NonNull
-  public final TextView statusText;
-
-  @NonNull
   public final Switch switchHalal;
 
   @NonNull
   public final Switch switchSpicy;
-
-  @NonNull
-  public final Switch switchStatus;
 
   private ActivityEditFoodBinding(@NonNull FrameLayout rootView, @NonNull Button backButton,
       @NonNull Button deleteButton, @NonNull EditText descEdit, @NonNull TextView description,
@@ -93,8 +87,7 @@ public final class ActivityEditFoodBinding implements ViewBinding {
       @NonNull EditText ingredientsEdit, @NonNull TextView ingredientsText,
       @NonNull TextView location, @NonNull EditText locationEdit, @NonNull TextView quantity,
       @NonNull EditText quantityEdit, @NonNull Button saveButton, @NonNull TextView spicyText,
-      @NonNull TextView statusText, @NonNull Switch switchHalal, @NonNull Switch switchSpicy,
-      @NonNull Switch switchStatus) {
+      @NonNull Switch switchHalal, @NonNull Switch switchSpicy) {
     this.rootView = rootView;
     this.backButton = backButton;
     this.deleteButton = deleteButton;
@@ -113,10 +106,8 @@ public final class ActivityEditFoodBinding implements ViewBinding {
     this.quantityEdit = quantityEdit;
     this.saveButton = saveButton;
     this.spicyText = spicyText;
-    this.statusText = statusText;
     this.switchHalal = switchHalal;
     this.switchSpicy = switchSpicy;
-    this.switchStatus = switchStatus;
   }
 
   @Override
@@ -248,12 +239,6 @@ public final class ActivityEditFoodBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.statusText;
-      TextView statusText = ViewBindings.findChildViewById(rootView, id);
-      if (statusText == null) {
-        break missingId;
-      }
-
       id = R.id.switchHalal;
       Switch switchHalal = ViewBindings.findChildViewById(rootView, id);
       if (switchHalal == null) {
@@ -266,16 +251,10 @@ public final class ActivityEditFoodBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.switchStatus;
-      Switch switchStatus = ViewBindings.findChildViewById(rootView, id);
-      if (switchStatus == null) {
-        break missingId;
-      }
-
       return new ActivityEditFoodBinding((FrameLayout) rootView, backButton, deleteButton, descEdit,
           description, expirationDate, expirationDateEdit, foodNameText, halalText, imageView,
           ingredientsEdit, ingredientsText, location, locationEdit, quantity, quantityEdit,
-          saveButton, spicyText, statusText, switchHalal, switchSpicy, switchStatus);
+          saveButton, spicyText, switchHalal, switchSpicy);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

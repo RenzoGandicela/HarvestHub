@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CircleImageView profileImg;
     private FirebaseAuth auth;
     private DatabaseReference userRef;
+    private ValueEventListener userDataListener;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String userId = auth.getCurrentUser().getUid();
             userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
-            userRef.addValueEventListener(new ValueEventListener() {
+            // Store the listener in a field so we can remove it later
+            userDataListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
@@ -206,7 +208,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "Error loading user data: " + error.getMessage(), 
                         Toast.LENGTH_SHORT).show();
                 }
-            });
+            };
+            userRef.addValueEventListener(userDataListener);
         }
     }
 
@@ -242,10 +245,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
             shareApp();
         } else if (id == R.id.nav_logout) {
+            // Remove database listener before logging out
+            if (userRef != null && userDataListener != null) {
+                userRef.removeEventListener(userDataListener);
+            }
+            
+            // Clear user data from UI
+            userNameTxt.setText("");
+            emailTxt.setText("");
+            profileImg.setImageResource(R.drawable.default_profile);
+            
+            // Sign out and navigate to login
             auth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return true;
         }
 
         drawer_layout.closeDrawer(GravityCompat.START);
@@ -271,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void shareApp() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app: https://yourapp.com");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app: https://csad-blush.vercel.app/");
 
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
@@ -288,5 +303,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             nav_view.getMenu().getItem(i).setChecked(false);
         }
         nav_view.getMenu().setGroupCheckable(0, true, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Remove database listener when activity is destroyed
+        if (userRef != null && userDataListener != null) {
+            userRef.removeEventListener(userDataListener);
+        }
     }
 }
