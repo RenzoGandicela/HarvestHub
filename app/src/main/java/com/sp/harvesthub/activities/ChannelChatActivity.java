@@ -151,14 +151,18 @@ public class ChannelChatActivity extends AppCompatActivity {
 
             // Create message data with all required fields
             Map<String, Object> messageData = new HashMap<>();
-            messageData.put("content", content.isEmpty() ? "(image)" : content);
             messageData.put("senderId", currentUserId);
             messageData.put("timestamp", System.currentTimeMillis());
             messageData.put("username", username);
 
-            // Add images if present
+            // If there are images, set the message type and imageUrl
             if (imageUrls != null && !imageUrls.isEmpty()) {
-                messageData.put("images", imageUrls);
+                messageData.put("messageType", "image");
+                messageData.put("imageUrl", imageUrls.get(0)); // Store single image URL directly
+                messageData.put("content", ""); // Empty content for image messages
+            } else {
+                messageData.put("messageType", "text");
+                messageData.put("content", content);
             }
 
             // Push the message
@@ -190,30 +194,21 @@ public class ChannelChatActivity extends AppCompatActivity {
                 messagesList.clear();
                 for (DataSnapshot messageSnap : snapshot.getChildren()) {
                     try {
-                        String content = messageSnap.child("content").getValue(String.class);
                         String senderId = messageSnap.child("senderId").getValue(String.class);
                         String username = messageSnap.child("username").getValue(String.class);
                         Long timestamp = messageSnap.child("timestamp").getValue(Long.class);
+                        String messageType = messageSnap.child("messageType").getValue(String.class);
 
-                        if (content != null && senderId != null && timestamp != null) {
-                            Message message = new Message(content, null, senderId, username, null, timestamp);
-
-                            // Handle images if present
-                            if (messageSnap.hasChild("images")) {
-                                List<String> images = new ArrayList<>();
-                                for (DataSnapshot imageSnap : messageSnap.child("images").getChildren()) {
-                                    String imageUrl = imageSnap.getValue(String.class);
-                                    if (imageUrl != null) {
-                                        images.add(imageUrl);
-                                    }
-                                }
-                                if (!images.isEmpty()) {
-                                    message.setImageUrl(images.get(0)); // For now, just use the first image
-                                }
-                            }
-
-                            messagesList.add(message);
+                        Message message;
+                        if ("image".equals(messageType)) {
+                            String imageUrl = messageSnap.child("imageUrl").getValue(String.class);
+                            message = new Message("", imageUrl, senderId, username, null, timestamp);
+                        } else {
+                            String content = messageSnap.child("content").getValue(String.class);
+                            message = new Message(content, null, senderId, username, null, timestamp);
                         }
+
+                        messagesList.add(message);
                     } catch (Exception e) {
                         Log.e("ChatActivity", "Error parsing message: " + e.getMessage());
                     }
@@ -262,62 +257,29 @@ public class ChannelChatActivity extends AppCompatActivity {
 
     private void uploadImage(Uri imageUri) {
         if (imageUri != null) {
-            // Show progress to user
-            Toast.makeText(this, "Preparing image for upload...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show();
 
-            try {
-                // Convert Uri to File
-                InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                File file = new File(getCacheDir(), "temp_image_" + System.currentTimeMillis() + ".jpg");
-                copyInputStreamToFile(inputStream, file);
+            // Create a reference to chat_images folder
+            StorageReference fileRef = FirebaseStorage.getInstance().getReference()
+                    .child("chat_images")
+                    .child(System.currentTimeMillis() + "-" + imageUri.getLastPathSegment());
 
-                // Create Retrofit instance
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.imgur.com/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                ImgurService service = retrofit.create(ImgurService.class);
-
-                // Prepare the image file for upload
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-
-                // Show upload started
-                Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show();
-
-                // Make API call
-                service.uploadImage(body).enqueue(new Callback<ImageResponse>() {
-                    @Override
-                    public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-                        if (response.isSuccessful() && response.body() != null && response.body().data != null) {
-                            String imageUrl = response.body().data.link;
-                            // Send message with image URL
-                            sendMessage(List.of(imageUrl));
-                            // Clean up the temp file
-                            file.delete();
-                        } else {
-                            Toast.makeText(ChannelChatActivity.this,
-                                    "Upload failed: " + (response.errorBody() != null ? response.errorBody().toString() : "Unknown error"),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ImageResponse> call, Throwable t) {
+            fileRef.putFile(imageUri)
+                    .addOnProgressListener(snapshot -> {
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        // You could add a progress indicator here if desired
+                    })
+                    .addOnSuccessListener(taskSnapshot -> {
+                        fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                            // Send message with the image URL
+                            sendMessage(List.of(downloadUri.toString()));
+                        });
+                    })
+                    .addOnFailureListener(e -> {
                         Toast.makeText(ChannelChatActivity.this,
-                                "Upload failed: " + t.getMessage(),
+                                "Failed to upload image: " + e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
-                        // Clean up the temp file
-                        file.delete();
-                    }
-                });
-
-            } catch (IOException e) {
-                Toast.makeText(this,
-                        "Error preparing image: " + e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
+                    });
         }
     }
 
@@ -374,9 +336,9 @@ public class ChannelChatActivity extends AppCompatActivity {
                     Toast.makeText(this, "All messages deleted", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, 
-                        "Failed to delete messages: " + e.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,
+                            "Failed to delete messages: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 }

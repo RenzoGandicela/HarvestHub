@@ -77,6 +77,7 @@ public class EditFoodActivity extends AppCompatActivity {
         quantityEdit = findViewById(R.id.quantityEdit);
         spicySwitch = findViewById(R.id.switchSpicy);
         halalSwitch = findViewById(R.id.switchHalal);
+        statusSwitch = findViewById(R.id.statusSwitch);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
         
@@ -90,8 +91,10 @@ public class EditFoodActivity extends AppCompatActivity {
         halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
             halalSwitch.setText(isChecked ? "True" : "False"));
         
-        statusSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            statusSwitch.setText(isChecked ? "Available" : "Claimed"));
+        if (statusSwitch != null) {
+            statusSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> 
+                statusSwitch.setText(isChecked ? " Available" : " Claimed"));
+        }
     }
 
     private void loadFoodData() {

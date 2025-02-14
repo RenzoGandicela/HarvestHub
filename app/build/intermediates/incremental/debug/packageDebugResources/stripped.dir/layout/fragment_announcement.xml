@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Type 1 Events Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="Community Cooking"
+            android:textColor="#258129"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/add_event_button"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="Add Community Cooking" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/featured_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
+
+        <!-- Type 1 Event Form -->
+        <LinearLayout
+            android:id="@+id/event_form_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:background="@drawable/form_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/uploadImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Image"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/eventImagePreview"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Title"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="YYYY-MM-DD"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Time"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/submitEventButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Cooking Event"/>
+        </LinearLayout>
+
+
+
+        <!-- Type 2 Events Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="Donation Drives"
+            android:textColor="#FB744A"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/add_event_button_type2"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#ED9D27"
+            android:fontFamily="@font/aoboshi_one"
+            android:text="Add Donation Drive" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/featured_recycler_type2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
+
+        <!-- Type 2 Event Form -->
+        <LinearLayout
+            android:id="@+id/event_form_layout_type2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:background="@drawable/form_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/uploadImageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Image"
+                    android:backgroundTint="@color/secondary_dark_orange"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/eventImagePreview2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/event_title_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Donation Drive Title"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_description_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_date_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="YYYY-MM-DD"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_time_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Time"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/event_location_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/submitEventButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/secondary_dark_orange"
+                android:text="Submit Donation Drive"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

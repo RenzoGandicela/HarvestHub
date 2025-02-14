@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEF8E1"
     android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FEF8E1"
+        android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false">
+        android:paddingBottom="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="#FEF8E1"
             android:elevation="2dp"
             android:orientation="vertical"
             android:padding="16dp">
@@ -29,28 +31,28 @@
 
                 <Button
                     android:id="@+id/camButton"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/primary_green"
                     android:fontFamily="@font/young_serif"
                     android:text="Take a photo"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
-                    app:cornerRadius="16dp"
-                    android:layout_marginEnd="4dp"/>
+                    app:cornerRadius="16dp" />
 
                 <Button
                     android:id="@+id/uploadButton"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/primary_green"
                     android:fontFamily="@font/young_serif"
                     android:text="Upload Image"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
-                    android:layout_marginStart="4dp"
                     app:cornerRadius="16dp" />
             </LinearLayout>
 
@@ -66,15 +68,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/analyzeButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/primary_green"
                     android:fontFamily="@font/young_serif"
                     android:text="Analyze Image"
@@ -86,8 +88,8 @@
                     android:id="@+id/saveButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="4dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/primary_green"
                     android:fontFamily="@font/young_serif"
                     android:text="Save Listing"
@@ -158,8 +160,8 @@
                     android:id="@+id/switchSpicy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/young_serif"
                     android:layout_weight="1"
+                    android:fontFamily="@font/young_serif"
                     android:text=" False"
                     android:textSize="16sp" />
 
@@ -178,10 +180,10 @@
                     android:id="@+id/switchHalal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/young_serif"
                     android:layout_weight="1"
+                    android:fontFamily="@font/young_serif"
                     android:text=" False"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -287,10 +289,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/deleteButton"

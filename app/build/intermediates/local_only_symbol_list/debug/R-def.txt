@@ -40,6 +40,7 @@ color primary_orange
 color purple_200
 color purple_500
 color purple_700
+color received_message_bg
 color rippleColor
 color secondary_dark_orange
 color secondary_green
@@ -304,6 +305,8 @@ id slogan_name
 id spicyTag
 id spicyText
 id startSharingButton
+id statusSwitch
+id statusText
 id submitEventButton
 id submitEventButton2
 id submit_event_button

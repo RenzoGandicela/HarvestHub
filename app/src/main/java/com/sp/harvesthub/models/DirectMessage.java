@@ -6,6 +6,7 @@ public class DirectMessage {
     private String imageUrl;
     private String senderId;
     private String username;
+    private String profilePictureUrl;
     private long timestamp;
 
     public DirectMessage() {
@@ -15,12 +16,13 @@ public class DirectMessage {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public DirectMessage(String messageId, String content, String imageUrl, String senderId, String username, long timestamp) {
+    public DirectMessage(String messageId, String content, String imageUrl, String senderId, String username, String profilePictureUrl, long timestamp) {
         this.messageId = messageId != null ? messageId : "";
         this.content = content != null ? content : "";
         this.imageUrl = imageUrl;
         this.senderId = senderId;
         this.username = username;
+        this.profilePictureUrl = profilePictureUrl;
         this.timestamp = timestamp;
     }
 
@@ -39,6 +41,7 @@ public class DirectMessage {
     public String getSenderId() { return senderId; }
     public String getUsername() { return username; }
     public long getTimestamp() { return timestamp; }
+    public String getProfilePictureUrl() { return profilePictureUrl; }
 
     public void setMessageId(String messageId) { this.messageId = messageId != null ? messageId : ""; }
     public void setContent(String content) { this.content = content != null ? content : ""; }
@@ -46,4 +49,5 @@ public class DirectMessage {
     public void setSenderId(String senderId) { this.senderId = senderId; }
     public void setUsername(String username) { this.username = username; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public void setProfilePictureUrl(String profilePictureUrl) { this.profilePictureUrl = profilePictureUrl; }
 } 

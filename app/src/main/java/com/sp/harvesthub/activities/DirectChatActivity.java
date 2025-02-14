@@ -54,7 +54,7 @@ public class DirectChatActivity extends AppCompatActivity {
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         otherUserId = getIntent().getStringExtra("otherUserId");
         otherUsername = getIntent().getStringExtra("otherUsername");
-        
+
         // Create conversation ID by combining user IDs in alphabetical order
         String[] userIds = {currentUserId, otherUserId};
         java.util.Arrays.sort(userIds);
@@ -68,8 +68,8 @@ public class DirectChatActivity extends AppCompatActivity {
 
         // Check if conversation exists, if not create it
         DatabaseReference conversationRef = FirebaseDatabase.getInstance()
-            .getReference("directMessages")
-            .child(conversationId);
+                .getReference("directMessages")
+                .child(conversationId);
 
         conversationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -81,9 +81,9 @@ public class DirectChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DirectChatActivity.this, 
-                    "Error checking conversation: " + error.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(DirectChatActivity.this,
+                        "Error checking conversation: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,9 +137,9 @@ public class DirectChatActivity extends AppCompatActivity {
 
     private void loadMessages() {
         DatabaseReference messagesRef = FirebaseDatabase.getInstance()
-            .getReference("directMessages")
-            .child(conversationId)
-            .child("messages");
+                .getReference("directMessages")
+                .child(conversationId)
+                .child("messages");
 
         messagesListener = messagesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -150,14 +150,18 @@ public class DirectChatActivity extends AppCompatActivity {
                     String senderId = messageSnap.child("senderId").getValue(String.class);
                     Long timestamp = messageSnap.child("timestamp").getValue(Long.class);
                     String imageUrl = messageSnap.child("imageUrl").getValue(String.class);
+                    String username = messageSnap.child("username").getValue(String.class);
+                    String profilePictureUrl = messageSnap.child("profilePictureUrl").getValue(String.class);
 
                     if (senderId != null && timestamp != null) {
                         DirectMessage message = new DirectMessage(
-                            messageSnap.getKey(),
-                            content,
-                            imageUrl,
-                            senderId,
-                            timestamp
+                                messageSnap.getKey(),
+                                content,
+                                imageUrl,
+                                senderId,
+                                username,
+                                profilePictureUrl,
+                                timestamp
                         );
                         messagesList.add(message);
                     }
@@ -170,17 +174,17 @@ public class DirectChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DirectChatActivity.this, 
-                    "Error loading messages: " + error.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(DirectChatActivity.this,
+                        "Error loading messages: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void createConversation() {
         final DatabaseReference conversationRef = FirebaseDatabase.getInstance()
-            .getReference("directMessages")
-            .child(conversationId);
+                .getReference("directMessages")
+                .child(conversationId);
 
         final long timestamp = System.currentTimeMillis();
 
@@ -199,31 +203,31 @@ public class DirectChatActivity extends AppCompatActivity {
 
         // Get current user data
         DatabaseReference currentUserRef = FirebaseDatabase.getInstance()
-            .getReference("Users")
-            .child(currentUserId);
-            
+                .getReference("Users")
+                .child(currentUserId);
+
         currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final String currentUsername = snapshot.child("username").getValue(String.class);
-                final String currentProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ? 
-                    snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
+                final String currentProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ?
+                        snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
 
                 // Get other user data
                 DatabaseReference otherUserRef = FirebaseDatabase.getInstance()
-                    .getReference("Users")
-                    .child(otherUserId);
-                    
+                        .getReference("Users")
+                        .child(otherUserId);
+
                 otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        final String otherUserProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ? 
-                            snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
+                        final String otherUserProfilePic = snapshot.child("profilePicture").getValue(String.class) != null ?
+                                snapshot.child("profilePicture").getValue(String.class) : "/default-avatar.jpg";
                         final String otherUsername = snapshot.child("username").getValue(String.class);
 
                         // Create participants data
                         final Map<String, Object> participants = new HashMap<>();
-                        
+
                         // Current user participant
                         Map<String, Object> currentUserParticipant = new HashMap<>();
                         currentUserParticipant.put("id", currentUserId);
@@ -243,29 +247,29 @@ public class DirectChatActivity extends AppCompatActivity {
 
                         // Create the conversation
                         conversationRef.setValue(conversationData)
-                            .addOnSuccessListener(aVoid -> {
-                                // Conversation created successfully
-                            })
-                            .addOnFailureListener(e -> 
-                                Toast.makeText(DirectChatActivity.this, 
-                                    "Failed to create conversation: " + e.getMessage(), 
-                                    Toast.LENGTH_SHORT).show());
+                                .addOnSuccessListener(aVoid -> {
+                                    // Conversation created successfully
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(DirectChatActivity.this,
+                                                "Failed to create conversation: " + e.getMessage(),
+                                                Toast.LENGTH_SHORT).show());
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(DirectChatActivity.this, 
-                            "Error getting other user data: " + error.getMessage(), 
-                            Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DirectChatActivity.this,
+                                "Error getting other user data: " + error.getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DirectChatActivity.this, 
-                    "Error getting current user data: " + error.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(DirectChatActivity.this,
+                        "Error getting current user data: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -276,46 +280,62 @@ public class DirectChatActivity extends AppCompatActivity {
         }
 
         DatabaseReference conversationRef = FirebaseDatabase.getInstance()
-            .getReference("directMessages")
-            .child(conversationId);
+                .getReference("directMessages")
+                .child(conversationId);
 
-        long timestamp = System.currentTimeMillis();
+        // Get current user data first
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(currentUserId);
 
-        // Create message data
-        Map<String, Object> messageData = new HashMap<>();
-        messageData.put("content", content != null ? content.trim() : "");
-        messageData.put("senderId", currentUserId);
-        messageData.put("timestamp", timestamp);
-        if (imageUrl != null) {
-            messageData.put("imageUrl", imageUrl);
-        }
+        userRef.get().addOnSuccessListener(userSnapshot -> {
+            String username = userSnapshot.child("username").getValue(String.class);
+            String profilePictureUrl = userSnapshot.child("profilePicture").getValue(String.class);
 
-        // Get a new push ID for the message
-        String messageId = conversationRef.child("messages").push().getKey();
-        if (messageId == null) return;
+            long timestamp = System.currentTimeMillis();
 
-        // Create updates map for atomic update
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("/messages/" + messageId, messageData);
-        
-        // Update lastMessage
-        Map<String, Object> lastMessage = new HashMap<>(messageData);
-        lastMessage.put("lastUpdated", timestamp);
-        updates.put("/lastMessage", lastMessage);
-        updates.put("/lastUpdated", timestamp);
+            // Create message data
+            Map<String, Object> messageData = new HashMap<>();
+            messageData.put("content", content != null ? content.trim() : "");
+            messageData.put("senderId", currentUserId);
+            messageData.put("timestamp", timestamp);
+            messageData.put("username", username);
+            messageData.put("profilePictureUrl", profilePictureUrl);
 
-        // Perform atomic update
-        conversationRef.updateChildren(updates)
-            .addOnSuccessListener(aVoid -> {
-                if (content != null) {
-                    messageInput.setText("");
-                }
-                messagesRecyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
-            })
-            .addOnFailureListener(e -> 
-                Toast.makeText(DirectChatActivity.this, 
-                    "Failed to send message: " + e.getMessage(), 
-                    Toast.LENGTH_SHORT).show());
+            if (imageUrl != null) {
+                messageData.put("imageUrl", imageUrl);
+            }
+
+            // Get a new push ID for the message
+            String messageId = conversationRef.child("messages").push().getKey();
+            if (messageId == null) return;
+
+            // Create updates map for atomic update
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("/messages/" + messageId, messageData);
+
+            // Update lastMessage
+            Map<String, Object> lastMessage = new HashMap<>(messageData);
+            lastMessage.put("lastUpdated", timestamp);
+            updates.put("/lastMessage", lastMessage);
+            updates.put("/lastUpdated", timestamp);
+
+            // Perform atomic update
+            conversationRef.updateChildren(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        if (content != null) {
+                            messageInput.setText("");
+                        }
+                        messagesRecyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(DirectChatActivity.this,
+                                    "Failed to send message: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e ->
+                Toast.makeText(DirectChatActivity.this,
+                        "Failed to get user data: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show());
     }
 
     private void sendMessage() {
@@ -334,7 +354,7 @@ public class DirectChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
+
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             if (imageUri != null) {
@@ -345,7 +365,7 @@ public class DirectChatActivity extends AppCompatActivity {
 
     private void uploadImage(Uri imageUri) {
         Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show();
-        
+
         FirebaseImageUploader.uploadImages(List.of(imageUri), new FirebaseImageUploader.OnUploadCompleteListener() {
             @Override
             public void onComplete(List<String> imageUrls) {
@@ -357,9 +377,9 @@ public class DirectChatActivity extends AppCompatActivity {
             @Override
             public void onError(Exception e) {
                 runOnUiThread(() -> {
-                    Toast.makeText(DirectChatActivity.this, 
-                        "Failed to upload image: " + e.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DirectChatActivity.this,
+                            "Failed to upload image: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                 });
             }
         });

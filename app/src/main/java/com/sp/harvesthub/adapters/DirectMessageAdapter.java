@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sp.harvesthub.R;
 import com.sp.harvesthub.models.DirectMessage;
 import java.text.SimpleDateFormat;
@@ -45,6 +48,52 @@ public class DirectMessageAdapter extends RecyclerView.Adapter<DirectMessageAdap
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         DirectMessage message = messages.get(position);
+        boolean isSentMessage = getItemViewType(position) == VIEW_TYPE_SENT;
+
+        // Set username only for received messages
+        if (holder.usernameText != null) {
+            if (!isSentMessage) {
+                holder.usernameText.setText(message.getUsername());
+                holder.usernameText.setVisibility(View.VISIBLE);
+            } else {
+                holder.usernameText.setVisibility(View.GONE);
+            }
+        }
+
+        if (holder.profileImage != null) {
+            // Load profile picture
+            String profileUrl = message.getProfilePictureUrl();
+            if (profileUrl != null && !profileUrl.isEmpty()) {
+                Glide.with(context)
+                        .load(profileUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .placeholder(R.drawable.default_profile)
+                        .into(holder.profileImage);
+            } else {
+                // If no profile picture URL, load from Firebase using senderId
+                DatabaseReference userRef = FirebaseDatabase.getInstance()
+                        .getReference("Users")
+                        .child(message.getSenderId());
+
+                userRef.get().addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()) {
+                        String profilePicUrl = snapshot.child("profilePicture").getValue(String.class);
+                        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+                            // Update the message object with the profile picture URL
+                            message.setProfilePictureUrl(profilePicUrl);
+
+                            // Load the profile picture
+                            Glide.with(context)
+                                    .load(profilePicUrl)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .placeholder(R.drawable.default_profile)
+                                    .into(holder.profileImage);
+                        }
+                    }
+                });
+            }
+            holder.profileImage.setVisibility(View.VISIBLE);
+        }
 
         // Set message text
         if (message.getContent() != null && !message.getContent().isEmpty()) {
@@ -58,8 +107,8 @@ public class DirectMessageAdapter extends RecyclerView.Adapter<DirectMessageAdap
         if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()) {
             holder.messageImage.setVisibility(View.VISIBLE);
             Glide.with(context)
-                .load(message.getImageUrl())
-                .into(holder.messageImage);
+                    .load(message.getImageUrl())
+                    .into(holder.messageImage);
         } else {
             holder.messageImage.setVisibility(View.GONE);
         }
@@ -79,12 +128,12 @@ public class DirectMessageAdapter extends RecyclerView.Adapter<DirectMessageAdap
     public int getItemViewType(int position) {
         DirectMessage message = messages.get(position);
         String senderId = message.getSenderId();
-        
+
         // Default to received message if senderId is null or currentUserId is null
         if (senderId == null || currentUserId == null) {
             return VIEW_TYPE_RECEIVED;
         }
-        
+
         return senderId.equals(currentUserId) ? VIEW_TYPE_SENT : VIEW_TYPE_RECEIVED;
     }
 
@@ -97,12 +146,16 @@ public class DirectMessageAdapter extends RecyclerView.Adapter<DirectMessageAdap
         TextView messageText;
         ImageView messageImage;
         TextView timestamp;
+        TextView usernameText;
+        ImageView profileImage;
 
         MessageViewHolder(View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.messageText);
             messageImage = itemView.findViewById(R.id.messageImage);
             timestamp = itemView.findViewById(R.id.timestamp);
+            usernameText = itemView.findViewById(R.id.usernameText);
+            profileImage = itemView.findViewById(R.id.profileImage);
         }
     }
 } 

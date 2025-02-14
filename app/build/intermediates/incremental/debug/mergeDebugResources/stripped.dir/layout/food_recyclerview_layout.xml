@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEF8E1"
     android:fitsSystemWindows="true">
 
     <androidx.core.widget.NestedScrollView
@@ -63,11 +64,11 @@
                         android:id="@+id/near"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:padding="4dp"
-                        android:src="@drawable/nearest"/>
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/nearest" />
 
                 </LinearLayout>
 
@@ -233,10 +234,10 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="8dp"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
                 android:layout_marginBottom="60dp"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2" />
 
@@ -250,8 +251,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="80dp"
         android:src="@drawable/ic_arrow_up"
         android:visibility="gone"

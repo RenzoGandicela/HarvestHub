@@ -45,4 +45,6 @@
     <color name="gray">#757575</color>
     <color name="available_overlay">#CBDAB3</color>
     <color name="claimed_overlay">#FFE4E1</color>
+
+    <color name="received_message_bg">#FEF8E1</color>
 </resources>

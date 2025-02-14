@@ -27,14 +27,23 @@ public final class ItemMessageSentBinding implements ViewBinding {
   public final TextView messageText;
 
   @NonNull
+  public final ImageView profileImage;
+
+  @NonNull
   public final TextView timestamp;
 
+  @NonNull
+  public final TextView usernameText;
+
   private ItemMessageSentBinding(@NonNull LinearLayout rootView, @NonNull ImageView messageImage,
-      @NonNull TextView messageText, @NonNull TextView timestamp) {
+      @NonNull TextView messageText, @NonNull ImageView profileImage, @NonNull TextView timestamp,
+      @NonNull TextView usernameText) {
     this.rootView = rootView;
     this.messageImage = messageImage;
     this.messageText = messageText;
+    this.profileImage = profileImage;
     this.timestamp = timestamp;
+    this.usernameText = usernameText;
   }
 
   @Override
@@ -76,14 +85,26 @@ public final class ItemMessageSentBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.profileImage;
+      ImageView profileImage = ViewBindings.findChildViewById(rootView, id);
+      if (profileImage == null) {
+        break missingId;
+      }
+
       id = R.id.timestamp;
       TextView timestamp = ViewBindings.findChildViewById(rootView, id);
       if (timestamp == null) {
         break missingId;
       }
 
+      id = R.id.usernameText;
+      TextView usernameText = ViewBindings.findChildViewById(rootView, id);
+      if (usernameText == null) {
+        break missingId;
+      }
+
       return new ItemMessageSentBinding((LinearLayout) rootView, messageImage, messageText,
-          timestamp);
+          profileImage, timestamp, usernameText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
